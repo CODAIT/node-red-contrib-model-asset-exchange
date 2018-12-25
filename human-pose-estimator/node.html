@@ -1,0 +1,153 @@
+<script type="text/javascript">
+    RED.nodes.registerType('human-pose-estimator', {
+        category: 'Model Asset eXchange',
+        color: '#BBE9BA',
+        defaults: {
+            service: { value: "", type: "human-pose-estimator-service", required: true },
+            method: { value: "predict", required: true },
+            predict_body: { value: "" },
+            predict_bodyType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.svg',
+        label: function () {
+            return this.name || "human-pose-estimator";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-predict_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-predict_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#predict_body").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'predict') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'predict') {
+
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'predict') {
+
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+            $('#node-input-row-method').hide();
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="human-pose-estimator">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="ModelAssetExchangeServer.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row" id="node-input-row-method">
+        <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="ModelAssetExchangeServer.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="predict" data-i18n="ModelAssetExchangeServer.parameters.predict"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="ModelAssetExchangeServer.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="predict_body">
+        <label for="node-input-predict_body"><i class="fa fa-list"></i> <span data-i18n="ModelAssetExchangeServer.parameters.body"></span></label>
+
+        <input type="text" id="node-input-predict_body" placeholder="An image encoded as JPEG, PNG, or TIFF" style="width:70%">
+        <input type="hidden" id="node-input-predict_bodyType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="human-pose-estimator">
+
+    <p>This model detects humans and their poses in a given image. The model first detects the humans in the input image and then identifies the body parts, including nose, neck, eyes, shoulders, elbows, wrists, hips, knees, and ankles. Next, each pair of associated body parts is connected by a pose line. The pose lines are assembled into full body poses for each of the humans detected in the image. The model is based on the TF implementation of OpenPose model.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+       <dt>payload<span class="property-type">Buffer</span></dt>
+       <dd>Buffer data of jpeg image.</dd>
+    </dl>
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload<span class="property-type">object</span></dt>
+        <dd>Predicted data.</dd>
+    </dl>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('human-pose-estimator-service', {
+        category: 'config',
+        defaults: {
+            host: { value: "https://max-human-pose-estimator.max.us-south.containers.appdomain.cloud", required: true },
+
+
+            name: { value: "cloud" },
+        },
+        credentials: {
+            temp: { type:"text" }
+        },
+        label: function () {
+            return this.name;
+        },
+        oneditprepare: function () {
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="human-pose-estimator-service">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="ModelAssetExchangeServer.label.host"></span></label>
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:5000">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="human-pose-estimator-service">
+    <p>You can set URL to access Human Pose Estimator container on cloud or localhost.</p>
+    <h3>cloud</h3>
+        <p><b>Host</b>: https://max-human-pose-estimator.max.us-south.containers.appdomain.cloud</p>
+        <p><b>Name</b>: cloud</p>
+    <h3>localhost</h3>
+        <p><b>Host</b>: http://localhost:5000</p>
+        <p><b>Name</b>: localhost</p>
+        <p>Note: Deploy Human Pose Estimator container before using this node.</p>
+        <pre>docker run -it -p 5000:5000 codait/max-human-pose-estimator</pre>
+</script>

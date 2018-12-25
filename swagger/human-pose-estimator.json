@@ -1,0 +1,177 @@
+{
+  "swagger": "2.0",
+  "_basePath": "/",
+  "paths": {
+    "/model/predict": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ModelPredictResponse"
+            }
+          }
+        },
+        "summary": "Make a prediction given input data",
+        "operationId": "predict",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "An image encoded as JPEG, PNG, or TIFF"
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "model"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Model Asset Exchange Server",
+    "version": "0.1",
+    "description": "This model detects humans and their poses in a given image. The model first detects the humans in the input image and then identifies the body parts, including nose, neck, eyes, shoulders, elbows, wrists, hips, knees, and ankles. Next, each pair of associated body parts is connected by a pose line. The pose lines are assembled into full body poses for each of the humans detected in the image. The model is based on the TF implementation of OpenPose model."
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "model",
+      "description": "Model information and inference operations"
+    }
+  ],
+  "definitions": {
+    "ModelMetadata": {
+      "required": [
+        "description",
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Model identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Model name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Model description"
+        },
+        "license": {
+          "type": "string",
+          "description": "Model license"
+        }
+      },
+      "type": "object"
+    },
+    "ModelPredictResponse": {
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Response status message"
+        },
+        "predictions": {
+          "type": "array",
+          "description": "Predicted labels and probabilities",
+          "items": {
+            "$ref": "#/definitions/LabelPrediction"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "LabelPrediction": {
+      "required": [
+        "human_id"
+      ],
+      "properties": {
+        "human_id": {
+          "type": "integer",
+          "description": "ID for the detected person"
+        },
+        "pose_lines": {
+          "type": "array",
+          "description": "Detected pose lines for a person",
+          "items": {
+            "$ref": "#/definitions/LinePrediction"
+          }
+        },
+        "body_parts": {
+          "type": "array",
+          "description": "Detected body parts for a person",
+          "items": {
+            "$ref": "#/definitions/body_parts_prediction"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "LinePrediction": {
+      "properties": {
+        "line": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "description": "Coordinates for line connecting two body parts, in the format [x1, y1, x2, y2]; (x1, y1) represents the starting point of the line, while (x2, y2) represents the ending point"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "body_parts_prediction": {
+      "required": [
+        "part_id",
+        "part_name",
+        "score",
+        "x",
+        "y"
+      ],
+      "properties": {
+        "part_id": {
+          "type": "integer",
+          "description": "ID for the body part"
+        },
+        "part_name": {
+          "type": "string",
+          "description": "Name of the body part"
+        },
+        "score": {
+          "type": "number",
+          "description": "The prediction score for the body part"
+        },
+        "x": {
+          "type": "integer",
+          "description": "X coordinate of the center point of the body part"
+        },
+        "y": {
+          "type": "integer",
+          "description": "Y coordinate of the center point of the body part"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}

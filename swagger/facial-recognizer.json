@@ -1,0 +1,137 @@
+{
+  "swagger": "2.0",
+  "_basePath": "/",
+  "_host": "max-facial-recognizer.max.us-south.containers.appdomain.cloud",
+  "_schemes": [
+    "https"
+  ],
+  "paths": {
+    "/model/predict": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ModelPredictResponse"
+            }
+          }
+        },
+        "summary": "Make a prediction given input data",
+        "operationId": "predict",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "formData",
+            "type": "file",
+            "required": true,
+            "description": "An image file encoded as PNG, Tiff or JPEG with an arbitrary size"
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "model"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Model Asset Exchange Server",
+    "version": "0.1",
+    "description": "The model detects faces in an input image and then generates an embedding vector for each face. The generated embeddings can be used for downstream tasks such as classification, clustering, verification etc. The model accepts an image as input and returns the bounding box coordinates, probability and embedding vector for each face detected in the image. The model is based on the the FaceNet model."
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "model",
+      "description": "Model information and inference operations"
+    }
+  ],
+  "definitions": {
+    "ModelMetadata": {
+      "required": [
+        "description",
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Model identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Model name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Model description"
+        },
+        "license": {
+          "type": "string",
+          "description": "Model license"
+        }
+      },
+      "type": "object"
+    },
+    "ModelPredictResponse": {
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Response status message"
+        },
+        "predictions": {
+          "type": "array",
+          "description": "Bounding boxes, probabilities, and embeddings for the detected faces",
+          "items": {
+            "$ref": "#/definitions/LabelPrediction"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "LabelPrediction": {
+      "required": [
+        "probability"
+      ],
+      "properties": {
+        "detection_box": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "description": "Bounding box for the detected face"
+          }
+        },
+        "probability": {
+          "type": "number",
+          "description": "Probability of the detected face"
+        },
+        "embedding": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "description": "Embedding for the detected face"
+          }
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}

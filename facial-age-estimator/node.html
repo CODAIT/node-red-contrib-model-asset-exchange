@@ -1,0 +1,153 @@
+<script type="text/javascript">
+    RED.nodes.registerType('facial-age-estimator', {
+        category: 'Model Asset eXchange',
+        color: '#BBE9BA',
+        defaults: {
+            service: { value: "", type: "facial-age-estimator-service", required: true },
+            method: { value: "predict", required: true },
+            predict_body: { value: "" },
+            predict_bodyType: { value: "str" },
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'icon.svg',
+        label: function () {
+            return this.name || "facial-age-estimator";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+            $('#node-input-row-method').hide();
+
+            var showParameters = function () {
+
+                $("#node-input-predict_body").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-predict_bodyType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#predict_body").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'predict') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'predict') {
+
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'predict') {
+
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="facial-age-estimator">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="ModelAssetExchangeServer.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row" id="node-input-row-method">
+        <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="ModelAssetExchangeServer.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="predict" data-i18n="ModelAssetExchangeServer.parameters.predict"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="ModelAssetExchangeServer.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="predict_body">
+        <label for="node-input-predict_body"><i class="fa fa-list"></i> <span data-i18n="ModelAssetExchangeServer.parameters.body"></span></label>
+
+        <input type="text" id="node-input-predict_body" placeholder="" style="width:70%">
+        <input type="hidden" id="node-input-predict_bodyType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="facial-age-estimator">
+
+    <p>This repository contains code to instantiate and deploy a facial age estimation model. The model detects faces in an image, extracts facial features for each face detected and finally predicts the age of each face. The model uses a coarse-to-fine strategy to perform multi-class classification and regression for age estimation. The input to the model is an image and the output is a list of estimated ages and bounding box coordinates of each face detected in the image. The format of the bounding box coordinates is [xmin, ymin, width, height]. The model is based on the SSR-Net model. The model files are hosted on IBM Cloud Object Storage. The code in this repository deploys the model as a web service in a Docker container. This repository was developed as part of the IBM Code Model Asset Exchange.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+       <dt>payload<span class="property-type">Buffer</span></dt>
+       <dd>Buffer data of PNG or JPEG image.</dd>
+    </dl>
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload<span class="property-type">object</span></dt>
+        <dd>Predicted data.</dd>
+    </dl>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('facial-age-estimator-service', {
+        category: 'config',
+        defaults: {
+            host: { value: "https://max-facial-age-estimator.max.us-south.containers.appdomain.cloud", required: true },
+
+
+            name: { value: "cloud" },
+        },
+        credentials: {
+            temp: { type:"text" }
+        },
+        label: function () {
+            return this.name;
+        },
+        oneditprepare: function () {
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="facial-age-estimator-service">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="ModelAssetExchangeServer.label.host"></span></label>
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:5000">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="facial-age-estimator-service">
+    <p>You can set URL to access Facial Age Estimator container on cloud or localhost.</p>
+    <h3>cloud</h3>
+        <p><b>Host</b>: https://max-facial-age-estimator.max.us-south.containers.appdomain.cloud</p>
+        <p><b>Name</b>: cloud</p>
+    <h3>localhost</h3>
+        <p><b>Host</b>: http://localhost:5000</p>
+        <p><b>Name</b>: localhost</p>
+        <p>Note: Deploy Facial Age Estimator container before using this node.</p>
+        <pre>docker run -it -p 5000:5000 codait/max-facial-age-estimator</pre>
+</script>

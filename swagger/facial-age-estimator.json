@@ -1,0 +1,129 @@
+{
+  "swagger": "2.0",
+  "_host": "max-facial-age-estimator.max.us-south.containers.appdomain.cloud",
+  "_schemes": [
+    "https"
+  ],
+  "_basePath": "/",
+  "paths": {
+    "/model/predict": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ModelPredictResponse"
+            }
+          }
+        },
+        "summary": "Make a prediction given input data",
+        "operationId": "predict",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "formData",
+            "type": "file",
+            "required": true
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "model"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Model Asset Exchange Server",
+    "version": "0.1",
+    "description": "This repository contains code to instantiate and deploy a facial age estimation model. The model detects faces in an image, extracts facial features for each face detected and finally predicts the age of each face. The model uses a coarse-to-fine strategy to perform multi-class classification and regression for age estimation. The input to the model is an image and the output is a list of estimated ages and bounding box coordinates of each face detected in the image. The format of the bounding box coordinates is [xmin, ymin, width, height]. The model is based on the SSR-Net model. The model files are hosted on IBM Cloud Object Storage. The code in this repository deploys the model as a web service in a Docker container. This repository was developed as part of the IBM Code Model Asset Exchange."
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "model",
+      "description": "Model information and inference operations"
+    }
+  ],
+  "definitions": {
+    "ModelMetadata": {
+      "required": [
+        "description",
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Model identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Model name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Model description"
+        },
+        "license": {
+          "type": "string",
+          "description": "Model license"
+        }
+      },
+      "type": "object"
+    },
+    "ModelPredictResponse": {
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Response status message"
+        },
+        "predictions": {
+          "type": "array",
+          "description": "Predicted age and bounding box for each detected face",
+          "items": {
+            "$ref": "#/definitions/LabelPrediction"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "LabelPrediction": {
+      "required": [
+        "age_estimation"
+      ],
+      "properties": {
+        "age_estimation": {
+          "type": "integer",
+          "description": "Estimated age for the face"
+        },
+        "face_box": {
+          "type": "array",
+          "description": "Bounding box coordinates for the face",
+          "items": {
+            "type": "integer"
+          }
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}

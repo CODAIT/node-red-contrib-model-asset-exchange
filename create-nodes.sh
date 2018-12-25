@@ -1,0 +1,5 @@
+node-red-nodegen swagger/image-caption-generator.json --category "Model Asset eXchange" --color BBE9BA --name "image-caption-generator" --module "image-caption-generator"
+node-red-nodegen swagger/facial-age-estimator.json --category "Model Asset eXchange" --color BBE9BA --name "facial-age-estimator" --module "facial-age-estimator"
+node-red-nodegen swagger/facial-recognizer.json --category "Model Asset eXchange" --color BBE9BA --name "facial-recognizer" --module "facial-recognizer"
+node-red-nodegen swagger/object-detector.json --category "Model Asset eXchange" --color BBE9BA --name "object-detector" --module "object-detector"
+node-red-nodegen swagger/human-pose-estimator.json --category "Model Asset eXchange" --color BBE9BA --name "human-pose-estimator" --module "human-pose-estimator"

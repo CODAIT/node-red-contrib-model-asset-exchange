@@ -1,0 +1,182 @@
+{
+    "swagger": "2.0",
+    "_basePath": "/",
+    "_host": "max-object-detector.max.us-south.containers.appdomain.cloud",
+    "_schemes": [
+      "https"
+    ],
+    "paths": {
+        "/model/predict": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ModelPredictResponse"
+                        }
+                    }
+                },
+                "summary": "Make a prediction given input data",
+                "operationId": "predict",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "formData",
+                        "type": "file",
+                        "required": true,
+                        "description": "An image file (encoded as PNG or JPG/JPEG)"
+                    },
+                    {
+                        "name": "threshold",
+                        "in": "query",
+                        "type": "number",
+                        "description": "Probability threshold for including a detected object in the response in the range [0, 1] (default: 0.7). Lowering the threshold includes objects the model is less certain about.",
+                        "default": 0.7
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "model"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Model Asset Exchange Server",
+        "version": "0.1",
+        "description": "This model recognizes the objects present in an image from the 80 different high-level classes of objects in the COCO Dataset. The model consists of a deep convolutional net base model for image feature extraction, together with additional convolutional layers specialized for the task of object detection, that was trained on the COCO data set. The input to the model is an image, and the output is a list of estimated class probabilities for the objects detected in the image. The model is based on the SSD Mobilenet V1 object detection model for TensorFlow."
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "model",
+            "description": "Model information and inference operations"
+        }
+    ],
+    "definitions": {
+        "ModelMetadata": {
+            "required": [
+                "description",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Model identifier"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Model name"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Model description"
+                },
+                "license": {
+                    "type": "string",
+                    "description": "Model license"
+                }
+            },
+            "type": "object"
+        },
+        "LabelsResponse": {
+            "required": [
+                "count"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "description": "Number of class labels returned"
+                },
+                "labels": {
+                    "type": "array",
+                    "description": "Class labels that can be predicted by the model",
+                    "items": {
+                        "$ref": "#/definitions/ModelLabel"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "ModelLabel": {
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Class label identifier"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Class label"
+                }
+            },
+            "type": "object"
+        },
+        "ModelPredictResponse": {
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "description": "Response status message"
+                },
+                "predictions": {
+                    "type": "array",
+                    "description": "Predicted class labels, probabilities and bounding box for each detected object",
+                    "items": {
+                        "$ref": "#/definitions/LabelPrediction"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "LabelPrediction": {
+            "required": [
+                "label",
+                "probability"
+            ],
+            "properties": {
+                "label_id": {
+                    "type": "string",
+                    "description": "Class label identifier"
+                },
+                "label": {
+                    "type": "string",
+                    "description": "Class label"
+                },
+                "probability": {
+                    "type": "number",
+                    "description": "Predicted probability for the class label"
+                },
+                "detection_box": {
+                    "type": "array",
+                    "description": "Coordinates of the bounding box for detected object. Format is an array of normalized coordinates (ranging from 0 to 1) in the form [ymin, xmin, ymax, xmax].",
+                    "items": {
+                        "type": "number"
+                    }
+                }
+            },
+            "type": "object"
+        }
+    },
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    }
+}
