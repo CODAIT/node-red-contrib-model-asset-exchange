@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('object-detector', {
         category: 'Model Asset eXchange',
-        color: '#BBE9BA',
+        color: '#0bc6c0',
         defaults: {
             service: { value: "", type: "object-detector-service", required: true },
             method: { value: "predict", required: true },
@@ -13,7 +13,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: 'icon.svg',
+        icon: 'max-logo.svg',
         label: function () {
             return this.name || "object-detector";
         },
