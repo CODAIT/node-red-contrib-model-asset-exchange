@@ -1,0 +1,21 @@
+{
+    "ModelAssetExchangeServer": {
+        "label": {
+            "service": "Service",
+            "method": "Methode",
+            "host": "Host",
+            "header": "Header",
+            "value": "Wert",
+            "isQuery": "Suchanfrage"
+        },
+        "status": {
+            "requesting": "Anfrage..."
+        },
+        "parameters": {
+            "get_metadata": "get_metadata",
+            "predict": "predict",
+            "audio": "audio",
+            "optionalParameters": "Optionen"
+        }
+    }
+}

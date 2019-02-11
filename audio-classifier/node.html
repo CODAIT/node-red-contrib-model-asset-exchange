@@ -1,0 +1,161 @@
+<script type="text/javascript">
+    RED.nodes.registerType('audio-classifier', {
+        category: 'Model Asset eXchange',
+        color: '#0bc6c0',
+        defaults: {
+            service: { value: "", type: "audio-classifier-service", required: true },
+            method: { value: "predict", required: true },
+
+            predict_audio: { value: "" },
+            predict_audioType: { value: "str" },
+
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "max-logo.svg",
+        label: function () {
+            return this.name || "audio-classifier";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-predict_audio").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-predict_audioType"),
+                    types: ['str', 'msg']
+                });
+                $("#method-select").hide();
+                $("#predict_audio").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'get_metadata') {
+
+                }
+                if ($("#node-input-method").val() === 'predict') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'get_metadata') {
+
+                    }
+                    if ($("#node-input-method").val() === 'predict') {
+
+                        
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'get_metadata') {
+
+                    }
+                    if ($("#node-input-method").val() === 'predict') {
+
+                        
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="audio-classifier">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="ModelAssetExchangeServer.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row" id="method-select">   <!-- the id 'method-select' was added to hide this div on line 35 -->
+        <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="ModelAssetExchangeServer.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="get_metadata" data-i18n="ModelAssetExchangeServer.parameters.get_metadata"></option>
+            <option value="predict" data-i18n="ModelAssetExchangeServer.parameters.predict"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="ModelAssetExchangeServer.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="predict_audio">
+        <label for="node-input-predict_audio"><i class="fa fa-list"></i> <span data-i18n="ModelAssetExchangeServer.parameters.audio"></span></label>
+
+        <input type="text" id="node-input-predict_audio" placeholder="signed 16-bit PCM WAV audio file" style="width:70%">
+        <input type="hidden" id="node-input-predict_audioType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="audio-classifier">
+
+    <p>This model recognizes a signed 16-bit PCM wav file as an input, generates embeddings, applies PCA transformation/quantization, uses the embeddings as an input to a multi-attention classifier and outputs top 5 class predictions and probabilities as output. The model currently supports 527 classes which are part of the Audioset Ontology.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload<span class="property-type">Buffer</span></dt>
+        <dd>Buffer data of 16-bit PCM wav file.</dd>
+     </dl>
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt>payload<span class="property-type">object</span></dt>
+         <dd>Predicted data.</dd>
+     </dl>
+
+
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('audio-classifier-service', {
+        category: 'config',
+        defaults: {
+            host: { value: "https://max-audio-classifier.max.us-south.containers.appdomain.cloud", required: true },
+
+
+            name: { value: "cloud" },
+        },
+        credentials: {
+            temp: { type:"text" }
+        },
+        label: function () {
+            return this.name;
+        },
+        oneditprepare: function () {
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="audio-classifier-service">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="ModelAssetExchangeServer.label.host"></span></label>
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:1880">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="audio-classifier-service">
+    <p><b>Host</b>: URL to connect</p>
+
+</script>
