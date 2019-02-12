@@ -8,7 +8,8 @@
       "facial-age-estimator": "facial-age-estimator/node.js",
       "facial-recognizer": "facial-recognizer/node.js",
       "object-detector": "object-detector/node.js",
-      "human-pose-estimator": "human-pose-estimator/node.js"
+      "human-pose-estimator": "human-pose-estimator/node.js",
+      "audio-classifier": "audio-classifier/node.js"
     }
   },
   "keywords": [
@@ -19,6 +20,7 @@
     "facial recognizer",
     "object detector",
     "human pose estimator",
+    "audio classifier",
     "ibm",
     "ibm max",
     "max",
