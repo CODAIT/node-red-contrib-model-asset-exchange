@@ -12,6 +12,7 @@
             "requesting": "Anfrage..."
         },
         "parameters": {
+            "get_metadata": "metadata",
             "predict": "predict",
             "body": "body",
             "optionalParameters": "Optionen"

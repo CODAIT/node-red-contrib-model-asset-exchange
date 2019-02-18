@@ -22,7 +22,6 @@
                 var firstMethod = methods.first();
                 $('#node-input-method').val(firstMethod.val());
             }
-            $('#node-input-row-method').hide();
 
             var showParameters = function () {
 
@@ -36,15 +35,24 @@
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'get_metadata') {
+
+                }
                 if ($("#node-input-method").val() === 'predict') {
 
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'get_metadata') {
+
+                    }
                     if ($("#node-input-method").val() === 'predict') {
 
                     }
                 } else {
+                    if ($("#node-input-method").val() === 'get_metadata') {
+
+                    }
                     if ($("#node-input-method").val() === 'predict') {
 
                     }
@@ -69,9 +77,10 @@
         <input type="text" id="node-input-service">
     </div>
 
-    <div class="form-row" id="node-input-row-method">
+    <div class="form-row">
         <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="ModelAssetExchangeServer.label.method"></span></label>
         <select id="node-input-method">
+            <option value="get_metadata" data-i18n="ModelAssetExchangeServer.parameters.get_metadata"></option>
             <option value="predict" data-i18n="ModelAssetExchangeServer.parameters.predict"></option>
         </select>
         &nbsp;
