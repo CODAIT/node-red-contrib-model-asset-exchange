@@ -12,9 +12,9 @@
             "requesting": "请求中"
         },
         "parameters": {
-            "get_metadata": "metadata",
+            "get_metadata": "get_metadata",
             "predict": "predict",
-            "body": "body",
+            "audio": "audio",
             "optionalParameters": "可选项"
         }
     }

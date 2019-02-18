@@ -35,6 +35,10 @@ This Node-RED node modules supports the following models.
 
     Detect humans in an image and estimate the pose for each person.
 
+- [Audio Classifier](https://developer.ibm.com/exchanges/models/all/max-audio-classifier/)
+
+    Identify sounds in short audio clips.
+
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
 Video

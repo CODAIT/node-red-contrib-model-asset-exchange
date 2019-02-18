@@ -1,6 +1,6 @@
 /*jshint -W069 */
 /**
- * This model generates captions from a fixed vocabulary that describe the contents of images in the COCO Dataset. The model consists of an encoder model – a deep convolutional net using the Inception-v3 architecture trained on ImageNet-2012 data – and a decoder model – an LSTM network that is trained conditioned on the encoding from the image encoder model. The input to the model is an image, and the output is a sentence describing the image content. The model is based on the Show and Tell Image Caption Generator Model.
+ * An API for serving models
  * @class ModelAssetExchangeServer
  * @param {(string|object)} [domainOrOptions] - The project domain or options object. If object, see the object's optional properties.
  * @param {string} [domainOrOptions.domain] - The project domain
@@ -52,7 +52,12 @@ var ModelAssetExchangeServer = (function(){
             headers: headers
         };
         if(Object.keys(form).length > 0) {
-            req.formData = { image: { value: form.body, options: { filename: 'image.jpg' }}};
+            req.formData = { 
+                audio: { 
+                    value: form.audio, 
+                    options: { filename: 'audio.wav' }
+                }
+            };  
         }
         if(typeof(body) === 'object' && !(body instanceof Buffer)) {
             req.json = true;
@@ -77,36 +82,12 @@ var ModelAssetExchangeServer = (function(){
         });
     };
 
-
 /**
- * Return the metadata associated with the model
- * @method
- * @name ModelAssetExchangeServer#get_metadata
- * @param {object} parameters - method options and parameters
- */
- ModelAssetExchangeServer.prototype.get_metadata = function(parameters){
-    if(parameters === undefined) {
-        parameters = {};
-    }
-    var deferred = Q.defer();
-    var domain = this.domain,  path = '/model/metadata';
-    var body = {}, queryParameters = {}, headers = {}, form = {};
-
-        headers['Accept'] = ['application/json'];
-        headers['Content-Type'] = ['application/json'];
-
-    queryParameters = mergeQueryParams(parameters, queryParameters);
-
-    this.request('GET', domain + path, parameters, body, headers, queryParameters, form, deferred);
-
-    return deferred.promise;
- };
-/**
- * Make a prediction given input data
+ * Predict audio classes from input data
  * @method
  * @name ModelAssetExchangeServer#predict
  * @param {object} parameters - method options and parameters
-     * @param {file} parameters.body - This model generates captions from a fixed vocabulary that describe the contents of images in the COCO Dataset. The model consists of an encoder model – a deep convolutional net using the Inception-v3 architecture trained on ImageNet-2012 data – and a decoder model – an LSTM network that is trained conditioned on the encoding from the image encoder model. The input to the model is an image, and the output is a sentence describing the image content. The model is based on the Show and Tell Image Caption Generator Model.
+     * @param {file} parameters.audio - signed 16-bit PCM WAV audio file
  */
  ModelAssetExchangeServer.prototype.predict = function(parameters){
     if(parameters === undefined) {
@@ -123,12 +104,12 @@ var ModelAssetExchangeServer = (function(){
         
         
 
-                if(parameters['body'] !== undefined){
-                    form['body'] = parameters['body'];
+                if(parameters['audio'] !== undefined){
+                    form['audio'] = parameters['audio'];
                 }
 
-        if(parameters['body'] === undefined){
-            deferred.reject(new Error('Missing required  parameter: body'));
+        if(parameters['audio'] === undefined){
+            deferred.reject(new Error('Missing required  parameter: audio'));
             return deferred.promise;
         }
  

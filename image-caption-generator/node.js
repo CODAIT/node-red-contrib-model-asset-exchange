@@ -24,6 +24,12 @@ module.exports = function (RED) {
             }
 
             var result;
+            if (!errorFlag && node.method === 'get_metadata') {
+                var get_metadata_parameters = [];
+                var get_metadata_nodeParam;
+                var get_metadata_nodeParamType;
+                result = client.get_metadata(get_metadata_parameters);
+            }
             if (!errorFlag && node.method === 'predict') {
                 var predict_parameters = [];
                 var predict_nodeParam;
@@ -55,10 +61,15 @@ module.exports = function (RED) {
                         }
                     }
                     if (data.body) {
-                        if (data.body.predictions && data.body.predictions.length > 0) {
-                            msg.payload = data.body.predictions[0].caption;
-                        } else {
-                            msg.payload = null;
+                        if (node.method === 'get_metadata') {
+                            msg.payload = data.body;
+                        }
+                        if (node.method === 'predict') {
+                            if (data.body.predictions && data.body.predictions.length > 0) {
+                                msg.payload = data.body.predictions[0].caption;
+                            } else {
+                                msg.payload = null;
+                            }
                         }
                         msg.details = data.body;
                     }

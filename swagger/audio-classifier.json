@@ -1,0 +1,121 @@
+{
+  "swagger": "2.0",
+  "basePath": "/",
+  "paths": {
+    "/model/metadata": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ModelMetadata"
+            }
+          }
+        },
+        "summary": "Return the metadata associated with the model",
+        "operationId": "get_metadata",
+        "tags": ["model"]
+      }
+    },
+    "/model/predict": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/ModelPredictResponse"
+            }
+          }
+        },
+        "summary": "Predict audio classes from input data",
+        "operationId": "predict",
+        "parameters": [{
+          "name": "audio",
+          "in": "formData",
+          "type": "file",
+          "required": true,
+          "description": "signed 16-bit PCM WAV audio file"
+        }],
+        "consumes": ["multipart/form-data"],
+        "tags": ["model"]
+      }
+    }
+  },
+  "info": {
+    "title": "Model Asset Exchange Server",
+    "version": "0.1",
+    "description": "An API for serving models"
+  },
+  "produces": ["application/json"],
+  "consumes": ["application/json"],
+  "tags": [{
+    "name": "model",
+    "description": "Model information and inference operations"
+  }],
+  "definitions": {
+    "ModelMetadata": {
+      "required": ["description", "id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Model identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Model name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Model description"
+        },
+        "license": {
+          "type": "string",
+          "description": "Model license"
+        }
+      },
+      "type": "object"
+    },
+    "ModelPredictResponse": {
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Response status message"
+        },
+        "predictions": {
+          "type": "array",
+          "description": "Predicted audio classes and probabilities",
+          "items": {
+            "$ref": "#/definitions/LabelPrediction"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "LabelPrediction": {
+      "required": ["label", "probability"],
+      "properties": {
+        "label_id": {
+          "type": "string",
+          "description": "Label identifier"
+        },
+        "label": {
+          "type": "string",
+          "description": "Audio class label"
+        },
+        "probability": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}
