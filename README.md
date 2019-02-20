@@ -4,18 +4,33 @@
 Node-RED nodes for deep learning microservices from the [Model Asset eXchange](https://developer.ibm.com/exchanges/models/), providing support for common audio, image, video, and text processing tasks.
 
 
+## Getting started
 
 
-Install
--------
+### Setup
 
-Run the following command in your Node-RED user directory - typically `~/.node-red`
+1. [Install Node-RED](https://nodered.org/docs/getting-started/installation).
+
+2. Run the following command in your Node-RED user directory - typically `~/.node-red` to install the [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange) package:
 
         $ npm install node-red-contrib-model-asset-exchange
 
-About Model Asset eXchange
------
-The Model Asset eXchange is a place for developers to find and use free and open source deep learning models.
+### Use the node(s)
+
+1. Launch Node-RED and create a new flow.
+
+        $ node-red
+
+2. From the _Model-Asset-eXchange_ category, drag the desired node onto the canvas.
+
+3. [Optional] Customize the node configuration. By default Model-Asset-eXchange nodes utilize microservice instances that are hosted for evaluation purposes. 
+
+   > These instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud (e.g. IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine).
+   
+4. Connect the node as desired and run the flow. 
+
+## Supported models
+
 This Node-RED node modules supports the following models:
 
 - [Image Caption Generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/)
@@ -44,12 +59,6 @@ This Node-RED node modules supports the following models:
 
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
-Video
------
-
- - MAX Object Detector Web App Demo
-
-    [![](https://img.youtube.com/vi/Hs6sVWmfVFw/0.jpg)](https://www.youtube.com/watch?v=Hs6sVWmfVFw)
     
 License
 -------
