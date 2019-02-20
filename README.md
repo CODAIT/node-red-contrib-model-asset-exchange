@@ -3,6 +3,8 @@
 
 Node-RED nodes for deep learning microservices from the [Model Asset eXchange](https://developer.ibm.com/exchanges/models/), providing support for common audio, image, video, and text processing tasks.
 
+![Node-RED canvas with MAX node](/docs/images/canvas.png)
+
 
 ## Getting started
 
@@ -29,9 +31,9 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
    
 4. Connect the node as desired and run the flow. 
 
-## Supported models
+## Supported application domains
 
-This Node-RED node modules supports the following models:
+This Node-RED node module supports the following application domains:
 
 - [Image Caption Generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/)
 
