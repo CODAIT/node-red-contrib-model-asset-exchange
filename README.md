@@ -1,19 +1,22 @@
-node-red-contrib-model-asset-exchange
-=====================
 
-Node-RED node for Model Asset eXchange
+[![Build Status](https://travis-ci.org/CODAIT/node-red-contrib-model-asset-exchange.svg?branch=master)](https://travis-ci.org/CODAIT/node-red-contrib-model-asset-exchange) [![npm version](https://badge.fury.io/js/node-red-contrib-model-asset-exchange.svg)](https://badge.fury.io/js/node-red-contrib-model-asset-exchange)
+
+Node-RED nodes for deep learning microservices from the [Model Asset eXchange](https://developer.ibm.com/exchanges/models/), providing support for common audio, image, video, and text processing tasks.
+
+
+
 
 Install
 -------
 
 Run the following command in your Node-RED user directory - typically `~/.node-red`
 
-        npm install node-red-contrib-model-asset-exchange
+        $ npm install node-red-contrib-model-asset-exchange
 
 About Model Asset eXchange
 -----
-[Model Asset eXchange](https://developer.ibm.com/exchanges/models/) is a place for developers to find and use free and open source deep learning models.
-This Node-RED node modules supports the following models.
+The Model Asset eXchange is a place for developers to find and use free and open source deep learning models.
+This Node-RED node modules supports the following models:
 
 - [Image Caption Generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/)
 
@@ -47,3 +50,8 @@ Video
  - MAX Object Detector Web App Demo
 
     [![](https://img.youtube.com/vi/Hs6sVWmfVFw/0.jpg)](https://www.youtube.com/watch?v=Hs6sVWmfVFw)
+    
+License
+-------
+
+[Apache-2.0](LICENSE)
