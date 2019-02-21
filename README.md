@@ -26,9 +26,9 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 
 2. From the _Model-Asset-eXchange_ category, drag the desired node onto the canvas.
 
-3. [Optional] Customize the node configuration. By default Model-Asset-eXchange nodes utilize microservice instances that are hosted for evaluation purposes. 
+3. Customize the node configuration by configuring connectivity for a locally running or cloud-hosted instance of the selected microservice. The default "cloud" entry points to a hosted microservice instance that you can use for evaluation purposes. 
 
-   > These instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud (e.g. IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine).
+   > Evaluation instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud using IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine.
    
 4. Connect the node as desired and run the flow. 
 
