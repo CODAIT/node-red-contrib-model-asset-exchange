@@ -15,6 +15,7 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 
 2. Run the following command in your Node-RED user directory - typically `~/.node-red` to install the [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange) package:
 
+        $ cd ~/.node-red
         $ npm install node-red-contrib-model-asset-exchange
 
 ### Use the node(s)
