@@ -1,19 +1,40 @@
-node-red-contrib-model-asset-exchange
-=====================
 
-Node-RED node for Model Asset eXchange
+[![Build Status](https://travis-ci.org/CODAIT/node-red-contrib-model-asset-exchange.svg?branch=master)](https://travis-ci.org/CODAIT/node-red-contrib-model-asset-exchange) [![npm version](https://badge.fury.io/js/node-red-contrib-model-asset-exchange.svg)](https://badge.fury.io/js/node-red-contrib-model-asset-exchange)
 
-Install
--------
+Node-RED nodes for deep learning microservices from the [Model Asset eXchange](https://developer.ibm.com/exchanges/models/), providing support for common audio, image, video, and text processing tasks.
 
-Run the following command in your Node-RED user directory - typically `~/.node-red`
+![Node-RED canvas with MAX node](/docs/images/canvas.png)
 
-        npm install node-red-contrib-model-asset-exchange
 
-About Model Asset eXchange
------
-[Model Asset eXchange](https://developer.ibm.com/exchanges/models/) is a place for developers to find and use free and open source deep learning models.
-This Node-RED node modules supports the following models.
+## Getting started
+
+
+### Setup
+
+1. [Install Node-RED](https://nodered.org/docs/getting-started/installation).
+
+2. Run the following command in your Node-RED user directory - typically `~/.node-red` to install the [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange) package:
+
+        $ cd ~/.node-red
+        $ npm install node-red-contrib-model-asset-exchange
+
+### Use the node(s)
+
+1. Launch Node-RED and create a new flow.
+
+        $ node-red
+
+2. From the _Model-Asset-eXchange_ category, drag the desired node onto the canvas.
+
+3. Customize the node configuration by configuring connectivity for a locally running or cloud-hosted instance of the selected microservice. The default "cloud" entry points to a hosted microservice instance that you can use for evaluation purposes. 
+
+   > Evaluation instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud using IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine.
+   
+4. Connect the node as desired and run the flow. 
+
+## Supported application domains
+
+This Node-RED node module supports the following application domains:
 
 - [Image Caption Generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/)
 
@@ -41,9 +62,8 @@ This Node-RED node modules supports the following models.
 
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
-Video
------
+    
+License
+-------
 
- - MAX Object Detector Web App Demo
-
-    [![](https://img.youtube.com/vi/Hs6sVWmfVFw/0.jpg)](https://www.youtube.com/watch?v=Hs6sVWmfVFw)
+[Apache-2.0](LICENSE)
