@@ -51,26 +51,55 @@ module.exports = function (RED) {
                 node.error('Method is not specified.', msg);
                 errorFlag = true;
             }
+
+            var setData = function (msg, data) {
+                if (data) {
+                    if (data.response) {
+                        if (data.response.statusCode) {
+                            msg.statusCode = data.response.statusCode;
+                        }
+                        if (data.response.headers) {
+                            msg.headers = data.response.headers;
+                        }
+                        if (data.response.request && data.response.request.uri && data.response.request.uri.href) {
+                            msg.responseUrl = data.response.request.uri.href;
+                        }
+                    }
+                    if (data.body) {
+                        if (node.method === 'get_metadata') {
+                            msg.payload = data.body;
+                        }
+                        if (node.method === 'predict') {
+                            if (data.body !== null && data.body !== undefined) {
+                                msg.payload = data.body.predictions[0].label || "Detection Error";
+                            } else {
+                                msg.payload = null;
+                            }
+                            msg.details = data.body;
+                        }
+                    }
+                }
+                return msg;
+            };
+
+
+
             if (!errorFlag) {
                 node.status({ fill: "blue", shape: "dot", text: "ModelAssetExchangeServer.status.requesting" });
-                result.then(function (response) {
-                    if (node.method === 'get_metadata') {
-                        msg.payload = response.body;
-                    }
-                    if (node.method === 'predict') {
-                        if (response.body !== null && response.body !== undefined) {
-                            msg.payload = response.body.predictions[0].label || "Detection Error";
-                        } else {
-                            msg.payload = null;
-                        }
-                        msg.details = response.body;
-                    }
-                    
-                    node.send(msg);
+                result.then(function (data) {
+                    node.send(setData(msg, data));
                     node.status({});
                 }).catch(function (error) {
-                    node.error(error, msg);
-                    node.status({ fill: "red", shape: "ring", text: "node-red:common.status.error" });
+                    var message = null;
+                    if (error && error.body) {
+                        if (error.body.message) {
+                            message = error.body.message;
+                        } else {
+                            message = error.body;
+                        }
+                    }
+                    node.error(message, setData(msg, error));
+                    node.status({ fill: 'red', shape: 'ring', text: 'node-red:common.status.error' });
                 });
             }
         });
