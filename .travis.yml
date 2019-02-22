@@ -3,5 +3,6 @@ node_js:
   - "10"
   - "8"
   - "6"
-before_script:
-  - npm install -g mocha
+env:
+  global:
+    - NODE_ENV=development
