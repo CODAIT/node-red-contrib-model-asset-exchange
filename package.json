@@ -24,17 +24,14 @@
     "object detector",
     "human pose estimator",
     "audio classifier",
-    "ibm",
-    "ibm max",
-    "max",
-    "ibm watson",
-    "watson"
+    "deep learning"
   ],
   "dependencies": {
     "q": "1.5.1",
     "request": "2.83.0"
   },
-  "devDependencies": {
+  "devDependencies": {    
+    "mocha": "^6.0.0",
     "node-red": "0.18.7",
     "node-red-node-test-helper": "0.1.8"
   },
