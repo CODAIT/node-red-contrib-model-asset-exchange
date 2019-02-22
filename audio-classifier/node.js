@@ -63,7 +63,7 @@ module.exports = function (RED) {
                         } else {
                             msg.payload = null;
                         }
-                        msg.details = data.body;
+                        msg.details = response.body;
                     }
                     
                     node.send(msg);
