@@ -110,18 +110,6 @@
 
     <p>This model recognizes a signed 16-bit PCM wav file as an input, generates embeddings, applies PCA transformation/quantization, uses the embeddings as an input to a multi-attention classifier and outputs top 5 class predictions and probabilities as output. The model currently supports 527 classes which are part of the Audioset Ontology.</p>
     <hr>
-    <h1>get_metadata</h1>
-    <h3>Inputs:</h3>
-    <dl class="message-properties">
-        <dt>none <span class="property-type">none</span></dt>
-    </dl>
-    <h3>Outputs:</h3>
-    <dl class="message-properties">
-        <dt>payload <span class="property-type">object</span></dt>
-        <dd>Returns the metadata associated with the model.</dd>
-    </dl>
-    <br>
-
     <h1>predict</h1>
     <h3>Inputs:</h3>
     <dl class="message-properties">
@@ -132,6 +120,17 @@
     <dl class="message-properties">
         <dt>payload <span class="property-type">object</span></dt>
         <dd>Prediction.</dd>
+    </dl>
+    <br>
+    <h1>get_metadata</h1>
+    <h3>Inputs:</h3>
+    <dl class="message-properties">
+        <dt>none <span class="property-type">none</span></dt>
+    </dl>
+    <h3>Outputs:</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>Returns the metadata associated with the model.</dd>
     </dl>
 
 </script>
