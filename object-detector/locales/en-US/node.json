@@ -12,6 +12,8 @@
             "requesting": "requesting"
         },
         "parameters": {
+            "get_labels": "labels",
+            "get_metadata": "metadata",
             "predict": "predict",
             "body": "body",
             "threshold": "threshold",

@@ -12,7 +12,7 @@
             "requesting": "要求中"
         },
         "parameters": {
-            "get_metadata": "get_metadata",
+            "get_metadata": "metadata",
             "predict": "predict",
             "audio": "audio",
             "optionalParameters": "任意項目"

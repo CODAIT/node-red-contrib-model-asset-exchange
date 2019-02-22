@@ -24,6 +24,12 @@ module.exports = function (RED) {
             }
 
             var result;
+            if (!errorFlag && node.method === 'get_metadata') {
+                var get_metadata_parameters = [];
+                var get_metadata_nodeParam;
+                var get_metadata_nodeParamType;
+                result = client.get_metadata(get_metadata_parameters);
+            }
             if (!errorFlag && node.method === 'predict') {
                 var predict_parameters = [];
                 var predict_nodeParam;
@@ -55,10 +61,15 @@ module.exports = function (RED) {
                         }
                     }
                     if (data.body) {
-                        if (data.body.predictions && data.body.predictions.length > 0) {
-                            msg.payload = data.body.predictions[0].age_estimation;
-                        } else {
-                            msg.payload = null;
+                        if (node.method === 'get_metadata') {
+                            msg.payload = data.body;
+                        }
+                        if (node.method === 'predict') {
+                            if (data.body.predictions && data.body.predictions.length > 0) {
+                                msg.payload = data.body.predictions[0].age_estimation;
+                            } else {
+                                msg.payload = null;
+                            }
                         }
                         msg.details = data.body;
                     }
@@ -72,8 +83,12 @@ module.exports = function (RED) {
                     node.status({});
                 }).catch(function (error) {
                     var message = null;
-                    if (error && error.body && error.body.message) {
-                        message = error.body.message;
+                    if (error && error.body) {
+                        if (error.body.message) {
+                            message = error.body.message;
+                        } else {
+                            message = error.body;
+                        }
                     }
                     node.error(message, setData(msg, error));
                     node.status({ fill: 'red', shape: 'ring', text: 'node-red:common.status.error' });

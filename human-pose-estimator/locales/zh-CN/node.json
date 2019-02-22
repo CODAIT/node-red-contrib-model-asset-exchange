@@ -12,6 +12,7 @@
             "requesting": "请求中"
         },
         "parameters": {
+            "get_metadata": "metadata",
             "predict": "predict",
             "body": "body",
             "optionalParameters": "可选项"
