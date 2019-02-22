@@ -57,7 +57,6 @@
             $("#optional-parameters").change(function () {
                 showParameters();
             });
-            $('#node-input-row-method').hide();
 
         }
     });
@@ -72,6 +71,7 @@
     <div class="form-row" id="node-input-row-method">
         <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="ModelAssetExchangeServer.label.method"></span></label>
         <select id="node-input-method">
+                <option value="get_metadata" data-i18n="ModelAssetExchangeServer.parameters.get_metadata"></option>
             <option value="predict" data-i18n="ModelAssetExchangeServer.parameters.predict"></option>
         </select>
         &nbsp;
