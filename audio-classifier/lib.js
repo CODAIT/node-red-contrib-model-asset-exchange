@@ -82,6 +82,30 @@ var ModelAssetExchangeServer = (function(){
         });
     };
 
+
+/**
+ * Return the metadata associated with the model
+ * @method
+ * @name ModelAssetExchangeServer#get_metadata
+ * @param {object} parameters - method options and parameters
+ */
+ModelAssetExchangeServer.prototype.get_metadata = function(parameters){
+    if(parameters === undefined) {
+        parameters = {};
+    }
+    var deferred = Q.defer();
+    var domain = this.domain,  path = '/model/metadata';
+    var body = {}, queryParameters = {}, headers = {}, form = {};
+
+        headers['Accept'] = ['application/json'];
+        headers['Content-Type'] = ['application/json'];
+
+    queryParameters = mergeQueryParams(parameters, queryParameters);
+
+    this.request('GET', domain + path, parameters, body, headers, queryParameters, form, deferred);
+
+    return deferred.promise;
+ };
 /**
  * Predict audio classes from input data
  * @method
