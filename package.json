@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "description": "Node-RED node for Model Asset eXchange",
   "scripts": {
-    "test": "mocha \"**/node_spec.js\" --timeout 10000"
+    "test": "mocha \"**/node_spec.js\" --timeout 30000"
   },
   "node-red": {
     "nodes": {
