@@ -62,7 +62,7 @@ describe('human-pose-estimator node', function () {
                 method: 'predict',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'human-pose-estimator-service', host: 'https://max-human-pose-estimator.max.us-south.containers.appdomain.cloud' }, // (4) define host name
+            { id: 'n2', type: 'human-pose-estimator-service', host: 'https://max-human-pose-estimator.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
