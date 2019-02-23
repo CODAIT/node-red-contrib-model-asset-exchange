@@ -71,19 +71,27 @@ describe('human-pose-estimator node', function () {
             n3.on('input', function (msg) {
                 try {
                     msg.should.have.property('payload', [
-                        { part_id: 0, part_name: 'Nose', score: '0.70019', x: 311, y: 314 },
-                        { part_id: 1, part_name: 'Neck', score: '0.15868', x: 242, y: 412 },
-                        { part_id: 5, part_name: 'LShoulder', score: '0.16317', x: 327, y: 437 },
-                        { part_id: 14, part_name: 'REye', score: '0.74264', x: 268, y: 264 },
-                        { part_id: 15, part_name: 'LEye', score: '0.64253', x: 332, y: 264 },
-                        { part_id: 16, part_name: 'REar', score: '0.24679', x: 206, y: 287 }
+                        { "part_id": 0, "part_name": "Nose", "score": "0.83899", "x": 428, "y": 205 },
+                        { "part_id": 1, "part_name": "Neck", "score": "0.71769", "x": 444, "y": 269 },
+                        { "part_id": 2, "part_name": "RShoulder", "score": "0.75556", "x": 392, "y": 269 },
+                        { "part_id": 3, "part_name": "RElbow", "score": "0.56429", "x": 367, "y": 330 },
+                        { "part_id": 4, "part_name": "RWrist", "score": "0.51554", "x": 364, "y": 392 },
+                        { "part_id": 5, "part_name": "LShoulder", "score": "0.56893", "x": 503, "y": 274 },
+                        { "part_id": 6, "part_name": "LElbow", "score": "0.66824", "x": 511, "y": 348 },
+                        { "part_id": 7, "part_name": "LWrist", "score": "0.48784", "x": 469, "y": 399 },
+                        { "part_id": 8, "part_name": "RHip", "score": "0.25196", "x": 397, "y": 410 },
+                        { "part_id": 11, "part_name": "LHip", "score": "0.24573", "x": 464, "y": 410 },
+                        { "part_id": 14, "part_name": "REye", "score": "0.85231", "x": 417, "y": 197 },
+                        { "part_id": 15, "part_name": "LEye", "score": "0.88991", "x": 439, "y": 195 },
+                        { "part_id": 16, "part_name": "REar", "score": "0.21390", "x": 411, "y": 202 },
+                        { "part_id": 17, "part_name": "LEar", "score": "0.81776", "x": 464, "y": 197 }
                     ]);
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            request('https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png', { encoding: null }, function (error, response, body) {
+            request('https://raw.githubusercontent.com/IBM/MAX-Human-Pose-Estimator/master/assets/Pilots.jpg', { encoding: null }, function (error, response, body) {
                 n1.receive({ payload: Buffer.from(body) });
             });
         });
