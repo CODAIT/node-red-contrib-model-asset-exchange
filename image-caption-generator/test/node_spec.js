@@ -70,13 +70,13 @@ describe('image-caption-generator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', 'a woman wearing a hat and a tie .');
+                    msg.should.have.property('payload', 'a man riding a wave on top of a surfboard .');
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            request('https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png', { encoding: null }, function (error, response, body) {
+            request('https://raw.githubusercontent.com/IBM/MAX-Image-Caption-Generator/master/assets/surfing.jpg', { encoding: null }, function (error, response, body) {
                 n1.receive({ payload: Buffer.from(body) });
             });
         });
