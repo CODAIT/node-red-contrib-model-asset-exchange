@@ -3,7 +3,7 @@
 
 Node-RED nodes for deep learning microservices from the [Model Asset eXchange](https://developer.ibm.com/exchanges/models/), providing support for common audio, image, video, and text processing tasks.
 
-![Node-RED canvas with MAX node](/docs/images/canvas.png)
+![Node-RED canvas with MAX node](docs/images/canvas.png)
 
 
 ## Getting started
