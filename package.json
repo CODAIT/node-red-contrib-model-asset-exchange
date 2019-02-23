@@ -15,6 +15,10 @@
       "audio-classifier": "audio-classifier/node.js"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CODAIT/node-red-contrib-model-asset-exchange.git"
+  },
   "keywords": [
     "node-red",
     "model asset exchange",
