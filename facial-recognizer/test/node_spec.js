@@ -5,7 +5,7 @@ var node = require('../node.js');
 
 helper.init(require.resolve('node-red'));
 
-describe('image-caption-generator node', function () {
+describe('facial-recognizer node', function () {
 
     before(function (done) {
         helper.startServer(done);
@@ -20,21 +20,21 @@ describe('image-caption-generator node', function () {
     });
 
     it('should be loaded', function (done) {
-        var flow = [{ id: 'n1', type: 'image-caption-generator', name: 'image-caption-generator' }];
+        var flow = [{ id: 'n1', type: 'facial-recognizer', name: 'facial-recognizer' }];
         helper.load(node, flow, function () {
             var n1 = helper.getNode('n1');
-            n1.should.have.property('name', 'image-caption-generator');
+            n1.should.have.property('name', 'facial-recognizer');
             done();
         });
     });
 
     it('should handle get_metadata()', function (done) {
         var flow = [
-            { id: 'n1', type: 'image-caption-generator', name: 'image-caption-generator',
+            { id: 'n1', type: 'facial-recognizer', name: 'facial-recognizer',
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-caption-generator-service', host: 'https://max-image-caption-generator.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'facial-recognizer-service', host: 'https://max-facial-recognizer.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -43,10 +43,10 @@ describe('image-caption-generator node', function () {
             n3.on('input', function (msg) {
                 try {
                     msg.should.have.property('payload', {
-                        "id": "im2txt-tensorflow",
-                        "name": "im2txt TensorFlow Model",
-                        "description": "im2txt TensorFlow model trained on MSCOCO",
-                        "license": "APACHE V2"
+                        "id": "facenet-tensorflow",
+                        "name": "facenet TensorFlow Model",
+                        "description": "facenet TensorFlow model trained on LFW data to detect faces and generate embeddings",
+                        "license": "MIT"
                     });
                     done();
                 } catch (e) {
@@ -58,11 +58,11 @@ describe('image-caption-generator node', function () {
     });
     it('should handle predict()', function (done) {
         var flow = [
-            { id: 'n1', type: 'image-caption-generator', name: 'image-caption-generator',
+            { id: 'n1', type: 'facial-recognizer', name: 'facial-recognizer',
                 method: 'predict',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-caption-generator-service', host: 'https://max-image-caption-generator.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'facial-recognizer-service', host: 'https://max-facial-recognizer.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -70,13 +70,18 @@ describe('image-caption-generator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', 'a man riding a wave on top of a surfboard .');
+                    msg.should.have.property('payload', [
+                        86.44876337051392,
+                        79.44259703159332,
+                        150.3629094362259,
+                        168.81912851333618
+                    ]);
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            request('https://raw.githubusercontent.com/IBM/MAX-Image-Caption-Generator/master/assets/surfing.jpg', { encoding: null }, function (error, response, body) {
+            request('https://raw.githubusercontent.com/IBM/MAX-Facial-Recognizer/master/assets/Lenna.jpg', { encoding: null }, function (error, response, body) {
                 n1.receive({ payload: Buffer.from(body) });
             });
         });

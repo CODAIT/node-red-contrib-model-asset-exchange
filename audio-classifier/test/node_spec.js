@@ -5,7 +5,7 @@ var node = require('../node.js');
 
 helper.init(require.resolve('node-red'));
 
-describe('image-caption-generator node', function () {
+describe('audio-classifier node', function () {
 
     before(function (done) {
         helper.startServer(done);
@@ -20,21 +20,21 @@ describe('image-caption-generator node', function () {
     });
 
     it('should be loaded', function (done) {
-        var flow = [{ id: 'n1', type: 'image-caption-generator', name: 'image-caption-generator' }];
+        var flow = [{ id: 'n1', type: 'audio-classifier', name: 'audio-classifier' }];
         helper.load(node, flow, function () {
             var n1 = helper.getNode('n1');
-            n1.should.have.property('name', 'image-caption-generator');
+            n1.should.have.property('name', 'audio-classifier');
             done();
         });
     });
 
     it('should handle get_metadata()', function (done) {
         var flow = [
-            { id: 'n1', type: 'image-caption-generator', name: 'image-caption-generator',
+            { id: 'n1', type: 'audio-classifier', name: 'audio-classifier',
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-caption-generator-service', host: 'https://max-image-caption-generator.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'audio-classifier-service', host: 'https://max-audio-classifier.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -43,10 +43,10 @@ describe('image-caption-generator node', function () {
             n3.on('input', function (msg) {
                 try {
                     msg.should.have.property('payload', {
-                        "id": "im2txt-tensorflow",
-                        "name": "im2txt TensorFlow Model",
-                        "description": "im2txt TensorFlow model trained on MSCOCO",
-                        "license": "APACHE V2"
+                        "id": "audio_embeddings-tf-imagenet",
+                        "name": "audio_embeddings TensorFlow Model",
+                        "description": "audio_embeddings TensorFlow model trained on Audio Set",
+                        "license": "Apache 2.0"
                     });
                     done();
                 } catch (e) {
@@ -58,11 +58,11 @@ describe('image-caption-generator node', function () {
     });
     it('should handle predict()', function (done) {
         var flow = [
-            { id: 'n1', type: 'image-caption-generator', name: 'image-caption-generator',
+            { id: 'n1', type: 'audio-classifier', name: 'audio-classifier',
                 method: 'predict',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-caption-generator-service', host: 'https://max-image-caption-generator.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'audio-classifier-service', host: 'https://max-audio-classifier.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -70,13 +70,13 @@ describe('image-caption-generator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', 'a man riding a wave on top of a surfboard .');
+                    msg.should.have.property('payload', 'Rain');
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            request('https://raw.githubusercontent.com/IBM/MAX-Image-Caption-Generator/master/assets/surfing.jpg', { encoding: null }, function (error, response, body) {
+            request('https://raw.githubusercontent.com/IBM/MAX-Audio-Classifier/master/assets/thunder.wav', { encoding: null }, function (error, response, body) {
                 n1.receive({ payload: Buffer.from(body) });
             });
         });
