@@ -44,7 +44,6 @@ module.exports = function (RED) {
                     errorFlag = true;
                 }
 
-                node.log('Submitting prediction request ' + JSON.stringify(predict_parameters));
                 result = client.predict(predict_parameters);
 
             }
