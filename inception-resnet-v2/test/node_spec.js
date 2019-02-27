@@ -1,6 +1,7 @@
 var should = require('should');
 var helper = require('node-red-node-test-helper');
 var node = require('../node.js');
+var request = require('request');
 
 helper.init(require.resolve('node-red'));
 
@@ -74,7 +75,9 @@ describe('inception-resnet-v2 node', function () {
                     done(e);
                 }
             });
-            n1.receive({ payload: 'https://raw.githubusercontent.com/IBM/MAX-Inception-ResNet-v2/master/assets/cat.jpg' }); // input payload from pre-packaged assets
+            request('https://raw.githubusercontent.com/IBM/MAX-Inception-ResNet-v2/master/assets/cat.jpg', { encoding: null }, function (error, response, body) {
+                n1.receive({ payload: Buffer.from(body) });
+            });    
         });
     });
 });
