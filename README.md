@@ -60,6 +60,10 @@ This Node-RED node module supports the following application domains:
 
     Identify sounds in short audio clips.
 
+- [Inception ResNet v2](https://developer.ibm.com/exchanges/models/all/max-inception-resnet-v2/)
+
+    Identify objects in images using a third-generation deep residual network.   
+
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
     
