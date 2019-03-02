@@ -1,82 +1,72 @@
 [
     {
-        "id": "bbda2632.6ff218",
+        "id": "4183a8a8.f710b8",
         "type": "tab",
         "label": "Object detection example flow",
         "disabled": false,
-        "info": ""
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The object-detector node has been pre-configured to use a hosted evaluation instance. We recommend using your own local or cloud instance for non-development use."
     },
     {
-        "id": "3df606d5.a29cba",
+        "id": "d3600809.6162e8",
         "type": "debug",
-        "z": "bbda2632.6ff218",
+        "z": "4183a8a8.f710b8",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 690,
-        "y": 160,
+        "x": 630,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "22a1b3e6.f49d6c",
+        "id": "109e4eab.fefde1",
         "type": "object-detector",
-        "z": "bbda2632.6ff218",
-        "service": "c4136bad.655868",
+        "z": "4183a8a8.f710b8",
+        "service": "9679aa03.6a8c28",
         "method": "predict",
         "predict_body": "",
         "predict_bodyType": "str",
         "predict_threshold": "0.7",
         "predict_thresholdType": "str",
         "name": "",
-        "x": 480,
-        "y": 160,
-        "wires": [
-            [
-                "3df606d5.a29cba"
-            ]
-        ]
-    },
-    {
-        "id": "22957e7c.62f452",
-        "type": "fileinject",
-        "z": "bbda2632.6ff218",
-        "name": "",
-        "x": 220,
-        "y": 160,
-        "wires": [
-            [
-                "22a1b3e6.f49d6c"
-            ]
-        ]
-    },
-    {
-        "id": "75af9aeb.c0ff24",
-        "type": "camera",
-        "z": "bbda2632.6ff218",
-        "name": "",
-        "x": 230,
-        "y": 220,
-        "wires": [
-            [
-                "22a1b3e6.f49d6c"
-            ]
-        ]
-    },
-    {
-        "id": "f3e65a4e.999c08",
-        "type": "comment",
-        "z": "bbda2632.6ff218",
-        "name": "Localize and identify multiple objects in a single image.",
-        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n Note: The object-detector node has been pre-configured to use a hosted evaluation instance. We recommend using your own local or cloud instance for non-development use.",
-        "x": 320,
+        "x": 420,
         "y": 80,
-        "wires": []
+        "wires": [
+            [
+                "d3600809.6162e8"
+            ]
+        ]
     },
     {
-        "id": "c4136bad.655868",
+        "id": "15e797ad.1d7a48",
+        "type": "fileinject",
+        "z": "4183a8a8.f710b8",
+        "name": "",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "109e4eab.fefde1"
+            ]
+        ]
+    },
+    {
+        "id": "3f9780d.fd4de8",
+        "type": "camera",
+        "z": "4183a8a8.f710b8",
+        "name": "",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "109e4eab.fefde1"
+            ]
+        ]
+    },
+    {
+        "id": "9679aa03.6a8c28",
         "type": "object-detector-service",
         "z": "",
         "host": "https://max-object-detector.max.us-south.containers.appdomain.cloud",
