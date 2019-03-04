@@ -13,24 +13,37 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 
 1. [Install Node-RED](https://nodered.org/docs/getting-started/installation).
 
-2. Run the following command in your Node-RED user directory - typically `~/.node-red` to install the [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange) package:
+2. Run the following command in your Node-RED user directory - typically `~/.node-red` to install the [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange) module:
 
         $ cd ~/.node-red
         $ npm install node-red-contrib-model-asset-exchange
 
-### Use the node(s)
+  > You can also install the module in the Node-RED editor. Choose  menu > **Manage palette** > **Install** and enter **model-asset** as the search term.
 
-1. Launch Node-RED and create a new flow.
+3. Launch Node-RED
 
         $ node-red
+        
+4. The nodes are displayed in the palette under the  _Model-Asset-eXchange_ category.    
 
-2. From the _Model-Asset-eXchange_ category, drag the desired node onto the canvas.
+### Explore the sample flows
 
-3. Customize the node configuration by configuring connectivity for a locally running or cloud-hosted instance of the selected microservice. The default "cloud" entry points to a hosted microservice instance that you can use for evaluation purposes. 
+The `node-red-contrib-model-asset-exchange` module includes a couple of example flows to get you started. To import the flows into the workspace:
 
-   > Evaluation instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud using IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine.
-   
-4. Connect the node as desired and run the flow. 
+1. In the Node-RED editor open  menu > **Import** > **Examples** > **model asset-exchange**.
+2. Choose a flow.
+
+You can deploy and run these flows as is. The deep learning nodes have been pre-configured (service: _cloud_) to connect to hosted evaluation instances of the deep learning microservices. 
+
+### Use the nodes in your own flows
+
+Evaluation instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud using IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine:
+
+1. Deploy the deep learning microservice in the desired environment.
+2. Take not of its URL (e.g. `http://localhost:5000`)
+3. Add a service entry for this URL and assign it a unique name.
+
+
 
 ## Supported application domains
 
