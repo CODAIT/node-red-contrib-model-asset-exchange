@@ -45,7 +45,7 @@ You can deploy and run these flows as is. The deep learning nodes in these flows
 Microservice evaluation instances are not suitable for production use. We recommend running microservice instance(s) on your local machine or in the cloud using IBM Cloud Kubernetes, Azure Kubernetes Service, or Google Kubernetes Engine:
 
 1. Deploy the deep learning microservice in the desired environment.
-2. Take not of its URL (e.g. `http://localhost:5000`)
+2. Take note of its URL (e.g. `http://localhost:5000`)
 3. Add the corresponding deep learning node to your canvas.
 4. Open the node properties.
 5. Add a service entry for the URL and assign it a unique name.
