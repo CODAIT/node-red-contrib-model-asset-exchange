@@ -20,7 +20,7 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 
   > You can also install the module in the Node-RED editor. Choose  **&#9776;** > **Manage palette** > **Install** and enter **model-asset** as the search term.
 
-3. Launch Node-RED editor and open the displayed URL in a web browser. 
+3. Launch Node-RED and open the displayed URL in a web browser to access the flow editor. 
 
         $ node-red
           ...
