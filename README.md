@@ -20,9 +20,11 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 
   > You can also install the module in the Node-RED editor. Choose  **&#9776;** > **Manage palette** > **Install** and enter **model-asset** as the search term.
 
-3. Launch Node-RED
+3. Launch Node-RED editor and open the displayed URL in a web browser. 
 
         $ node-red
+          ...
+          ... - [info] Server now running at http://127.0.0.1:1880/
         
 4. The nodes are displayed in the palette under the  _Model-Asset-eXchange_ category.    
 
