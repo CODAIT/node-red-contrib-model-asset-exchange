@@ -1,67 +1,77 @@
 [
     {
-        "id": "af5ea07a.aa608",
+        "id": "2bc957c7.536298",
         "type": "tab",
         "label": "Image caption generator example flow",
         "disabled": false,
         "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/ deep learning model from the Model Asset Exchange to generate captions that describe the content of the input image. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The image-caption-generator node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
     },
     {
-        "id": "a3ce565.5539aa8",
+        "id": "28b44380.e1cc6c",
         "type": "debug",
-        "z": "af5ea07a.aa608",
+        "z": "2bc957c7.536298",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 650,
-        "y": 80,
+        "x": 610,
+        "y": 120,
         "wires": []
     },
     {
-        "id": "6cb454e4.1d866c",
+        "id": "6691ff1b.554",
         "type": "fileinject",
-        "z": "af5ea07a.aa608",
+        "z": "2bc957c7.536298",
         "name": "",
-        "x": 160,
-        "y": 80,
+        "x": 140,
+        "y": 120,
         "wires": [
             [
-                "bc16eb41.98d8c8"
+                "ae188a51.a4a658"
             ]
         ]
     },
     {
-        "id": "44081845.bd2d18",
+        "id": "e020695c.2bc528",
         "type": "camera",
-        "z": "af5ea07a.aa608",
+        "z": "2bc957c7.536298",
         "name": "",
-        "x": 170,
-        "y": 140,
+        "x": 150,
+        "y": 180,
         "wires": [
             [
-                "bc16eb41.98d8c8"
+                "ae188a51.a4a658"
             ]
         ]
     },
     {
-        "id": "bc16eb41.98d8c8",
+        "id": "ae188a51.a4a658",
         "type": "image-caption-generator",
-        "z": "af5ea07a.aa608",
+        "z": "2bc957c7.536298",
         "service": "ddc1d5ce.a0f198",
         "method": "predict",
         "predict_body": "",
         "predict_bodyType": "str",
         "name": "",
-        "x": 410,
-        "y": 80,
+        "x": 390,
+        "y": 120,
         "wires": [
             [
-                "a3ce565.5539aa8"
+                "28b44380.e1cc6c"
             ]
         ]
+    },
+    {
+        "id": "a2347aac.17a248",
+        "type": "comment",
+        "z": "2bc957c7.536298",
+        "name": "Generate captions that describe the content of the input image",
+        "info": "",
+        "x": 270,
+        "y": 40,
+        "wires": []
     },
     {
         "id": "ddc1d5ce.a0f198",

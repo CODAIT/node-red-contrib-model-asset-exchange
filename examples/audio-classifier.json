@@ -1,66 +1,76 @@
 [
     {
-        "id": "213ed14a.35d33e",
+        "id": "a6df245.929bbd8",
         "type": "tab",
         "label": "Audio classification example flow",
         "disabled": false,
         "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-audio-classifier/ deep learning model from the Model Asset Exchange to identify sounds in short audio clips. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The audio-classifier node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
     },
     {
-        "id": "bb238055.e4d88",
+        "id": "7979970f.614bc8",
         "type": "audio-classifier",
-        "z": "213ed14a.35d33e",
+        "z": "a6df245.929bbd8",
         "service": "e62c2961.f98f58",
         "method": "predict",
         "predict_audio": "",
         "predict_audioType": "str",
         "name": "",
-        "x": 400,
-        "y": 80,
+        "x": 360,
+        "y": 120,
         "wires": [
             [
-                "b04b3b03.4328d8"
+                "8100d81b.ef8138"
             ]
         ]
     },
     {
-        "id": "cebcb96b.6b5158",
+        "id": "d78f08b5.47b4c8",
         "type": "fileinject",
-        "z": "213ed14a.35d33e",
+        "z": "a6df245.929bbd8",
         "name": "",
-        "x": 160,
-        "y": 80,
+        "x": 140,
+        "y": 120,
         "wires": [
             [
-                "bb238055.e4d88"
+                "7979970f.614bc8"
             ]
         ]
     },
     {
-        "id": "afdb200.11b6de",
+        "id": "5b37d7ec.270658",
         "type": "microphone",
-        "z": "213ed14a.35d33e",
+        "z": "a6df245.929bbd8",
         "name": "",
-        "x": 150,
-        "y": 140,
+        "x": 130,
+        "y": 180,
         "wires": [
             [
-                "bb238055.e4d88"
+                "7979970f.614bc8"
             ]
         ]
     },
     {
-        "id": "b04b3b03.4328d8",
+        "id": "8100d81b.ef8138",
         "type": "debug",
-        "z": "213ed14a.35d33e",
+        "z": "a6df245.929bbd8",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 630,
-        "y": 80,
+        "x": 610,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a8762ea9.8dabd",
+        "type": "comment",
+        "z": "a6df245.929bbd8",
+        "name": "Identify sounds in short audio clips",
+        "info": "",
+        "x": 180,
+        "y": 40,
         "wires": []
     },
     {
