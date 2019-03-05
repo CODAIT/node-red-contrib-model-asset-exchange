@@ -7,3 +7,4 @@ Getting started flows:
  - [Recognize faces in an image and extract embedding vectors for each face](https://flows.nodered.org/flow/b2c1dcb5a211cf95215a3592484a31c2)
  - [Classify an image](https://flows.nodered.org/flow/8e6fbc1ad88a156c040aa0f96031f04a)
  - [Detect humans in an image and estimate the pose for each person](https://flows.nodered.org/flow/1ef026c41e36a6f2fcca1ec2de342678)
+ - [Recognize faces in an image and estimate the age of each face](https://flows.nodered.org/flow/88ef2571da15e7e127afab685d131ca3)
