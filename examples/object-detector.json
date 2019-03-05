@@ -1,15 +1,15 @@
 [
     {
-        "id": "6634680e.33af78",
+        "id": "66cf1185.01c25",
         "type": "tab",
         "label": "Object detection example flow",
         "disabled": false,
-        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The object-detector node has been pre-configured to use a hosted evaluation instance. We recommend using your own local or cloud instance for non-development use."
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The object-detector node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
     },
     {
-        "id": "50f7ddb6.e799f4",
+        "id": "1f8e5a3e.c3c26e",
         "type": "debug",
-        "z": "6634680e.33af78",
+        "z": "66cf1185.01c25",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -21,10 +21,10 @@
         "wires": []
     },
     {
-        "id": "65de7bb2.86a1b4",
+        "id": "6f23fb6e.c086cc",
         "type": "object-detector",
-        "z": "6634680e.33af78",
-        "service": "9679aa03.6a8c28",
+        "z": "66cf1185.01c25",
+        "service": "c7980156.00b2e",
         "method": "predict",
         "predict_body": "",
         "predict_bodyType": "str",
@@ -35,40 +35,40 @@
         "y": 120,
         "wires": [
             [
-                "50f7ddb6.e799f4"
+                "1f8e5a3e.c3c26e"
             ]
         ]
     },
     {
-        "id": "fdc4d991.dd0558",
+        "id": "66cb0bb3.52a1ac",
         "type": "fileinject",
-        "z": "6634680e.33af78",
+        "z": "66cf1185.01c25",
         "name": "",
         "x": 140,
         "y": 120,
         "wires": [
             [
-                "65de7bb2.86a1b4"
+                "6f23fb6e.c086cc"
             ]
         ]
     },
     {
-        "id": "cc7f94a8.fe75d8",
+        "id": "9759da04.583718",
         "type": "camera",
-        "z": "6634680e.33af78",
+        "z": "66cf1185.01c25",
         "name": "",
         "x": 150,
         "y": 180,
         "wires": [
             [
-                "65de7bb2.86a1b4"
+                "6f23fb6e.c086cc"
             ]
         ]
     },
     {
-        "id": "45b26a06.a680b4",
+        "id": "49a465c8.ea84c4",
         "type": "comment",
-        "z": "6634680e.33af78",
+        "z": "66cf1185.01c25",
         "name": "Localize and identify multiple objects in a single image",
         "info": "",
         "x": 240,
@@ -76,7 +76,7 @@
         "wires": []
     },
     {
-        "id": "9679aa03.6a8c28",
+        "id": "c7980156.00b2e",
         "type": "object-detector-service",
         "z": "",
         "host": "https://max-object-detector.max.us-south.containers.appdomain.cloud",
