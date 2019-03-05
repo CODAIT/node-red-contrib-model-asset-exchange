@@ -6,3 +6,4 @@ Getting started flows:
  - [Identify sounds in short audio clips](https://flows.nodered.org/flow/eaef0871ea62242d32f370d9352ee4ca)
  - [Recognize faces in an image and extract embedding vectors for each face](https://flows.nodered.org/flow/b2c1dcb5a211cf95215a3592484a31c2)
  - [Classify an image](https://flows.nodered.org/flow/8e6fbc1ad88a156c040aa0f96031f04a)
+ - [Detect humans in an image and estimate the pose for each person](https://flows.nodered.org/flow/1ef026c41e36a6f2fcca1ec2de342678)

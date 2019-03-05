@@ -1,0 +1,83 @@
+[
+    {
+        "id": "8fc1847b.c64a3",
+        "type": "tab",
+        "label": "Human pose estimation example flow",
+        "disabled": false,
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-human-pose-estimator/ deep learning model from the Model Asset Exchange to detect humans in an image and estimate the pose for each person. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The human-pose-estimator node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
+    },
+    {
+        "id": "7f7a927a.c969ec",
+        "type": "debug",
+        "z": "8fc1847b.c64a3",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 610,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "aee0b66c.910ae8",
+        "type": "fileinject",
+        "z": "8fc1847b.c64a3",
+        "name": "",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "71cbd3a2.b813f4"
+            ]
+        ]
+    },
+    {
+        "id": "effbb3b0.e2b13",
+        "type": "camera",
+        "z": "8fc1847b.c64a3",
+        "name": "",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "71cbd3a2.b813f4"
+            ]
+        ]
+    },
+    {
+        "id": "8f93bb54.01c878",
+        "type": "comment",
+        "z": "8fc1847b.c64a3",
+        "name": "Detect humans in an image and estimate the pose for each person",
+        "info": "",
+        "x": 280,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "71cbd3a2.b813f4",
+        "type": "human-pose-estimator",
+        "z": "8fc1847b.c64a3",
+        "service": "cc7e4617.13595",
+        "method": "predict",
+        "predict_body": "",
+        "predict_bodyType": "str",
+        "name": "",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "7f7a927a.c969ec"
+            ]
+        ]
+    },
+    {
+        "id": "cc7e4617.13595",
+        "type": "human-pose-estimator-service",
+        "z": "",
+        "host": "https://max-human-pose-estimator.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    }
+]
