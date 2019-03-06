@@ -1,0 +1,83 @@
+[
+    {
+        "id": "7fbd0b65.a9fb64",
+        "type": "tab",
+        "label": "Image Segmentation example flow",
+        "disabled": false,
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-image-segmenter/ deep learning model from the Model Asset Exchange to identify objects in an image, additionally assigning each pixel of the image to a particular object. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The image-segmenter node has been pre-configured to use a hosted evaluation instance. We recommend using your own local or cloud instance for non-development use."
+    },
+    {
+        "id": "e3e7d43a.641db8",
+        "type": "debug",
+        "z": "7fbd0b65.a9fb64",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 610,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "884f9fce.be57d",
+        "type": "fileinject",
+        "z": "7fbd0b65.a9fb64",
+        "name": "",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "df973780.0f66a8"
+            ]
+        ]
+    },
+    {
+        "id": "6988eedb.2f302",
+        "type": "camera",
+        "z": "7fbd0b65.a9fb64",
+        "name": "",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "df973780.0f66a8"
+            ]
+        ]
+    },
+    {
+        "id": "c785e84c.be4d58",
+        "type": "comment",
+        "z": "7fbd0b65.a9fb64",
+        "name": "Identify objects in an image, additionally assigning each pixel of the image to a particular object.",
+        "info": "",
+        "x": 370,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "df973780.0f66a8",
+        "type": "image-segmenter",
+        "z": "7fbd0b65.a9fb64",
+        "service": "c1a3f61b.3f9d28",
+        "method": "predict",
+        "predict_image": "",
+        "predict_imageType": "str",
+        "name": "",
+        "x": 358,
+        "y": 120,
+        "wires": [
+            [
+                "e3e7d43a.641db8"
+            ]
+        ]
+    },
+    {
+        "id": "c1a3f61b.3f9d28",
+        "type": "image-segmenter-service",
+        "z": "",
+        "host": "https://max-image-segmenter.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    }
+]
