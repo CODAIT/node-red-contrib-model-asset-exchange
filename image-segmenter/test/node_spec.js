@@ -1,5 +1,6 @@
 var should = require('should');
 var helper = require('node-red-node-test-helper');
+var request = require('request')
 var node = require('../node.js');
 
 helper.init(require.resolve('node-red'));
@@ -33,7 +34,7 @@ describe('image-segmenter node', function () {
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-segmenter-service', host: 'http://<host name>' }, // (4) define host name
+            { id: 'n2', type: 'image-segmenter-service', host: 'https://max-image-segmenter.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -41,23 +42,27 @@ describe('image-segmenter node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', '<output message>'); // (3) define output message
+                    msg.should.have.property('payload', {
+                        "id": "deeplab-tf",
+                        "name": "deeplab TensorFlow Model",
+                        "description": "deeplab TensorFlow model trained on VOCO 2012",
+                        "license": "Apache v2"
+                      });
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            n1.receive({ payload: '<input message>' }); // (2) define input message
+            n1.receive({ payload: '' });
         });
     });
     it('should handle predict()', function (done) {
         var flow = [
             { id: 'n1', type: 'image-segmenter', name: 'image-segmenter',
                 method: 'predict',
-                predict_image: '<node property>', // (1) define node properties
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-segmenter-service', host: 'http://<host name>' }, // (4) define host name
+            { id: 'n2', type: 'image-segmenter-service', host: 'https://max-image-segmenter.max.us-south.containers.appdomain.cloud' }, 
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -65,13 +70,16 @@ describe('image-segmenter node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', '<output message>'); // (3) define output message
+                    msg.should.have.property('statusCode', 200);
+                    msg.details.should.have.keys(['status', 'image_size', 'seg_map']);
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            n1.receive({ payload: '<input message>' }); // (2) define input message
+            request('https://raw.githubusercontent.com/IBM/MAX-Image-Segmenter/master/assets/stc.jpg', { encoding: null }, function (error, response, body) {
+                n1.receive({ payload: Buffer.from(body) });
+            });
         });
     });
 });
