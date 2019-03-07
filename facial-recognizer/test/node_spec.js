@@ -42,12 +42,7 @@ describe('facial-recognizer node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "facenet-tensorflow",
-                        "name": "facenet TensorFlow Model",
-                        "description": "facenet TensorFlow model trained on LFW data to detect faces and generate embeddings",
-                        "license": "MIT"
-                    });
+                    msg.payload.should.have.property('id', 'facenet-tensorflow');
                     done();
                 } catch (e) {
                     done(e);

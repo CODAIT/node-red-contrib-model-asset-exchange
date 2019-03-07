@@ -42,12 +42,7 @@ describe('human-pose-estimator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "human-pose-estimator-tensorflow",
-                        "name": "Openpose TensorFlow Model",
-                        "description": "Openpose TensorFlow model trained on COCO data to detect human poses",
-                        "license": "Apache License 2.0"
-                    });
+                    msg.payload.should.have.property('id', 'max human pose estimator');
                     done();
                 } catch (e) {
                     done(e);

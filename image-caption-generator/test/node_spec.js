@@ -42,12 +42,7 @@ describe('image-caption-generator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "im2txt-tensorflow",
-                        "name": "im2txt TensorFlow Model",
-                        "description": "im2txt TensorFlow model trained on MSCOCO",
-                        "license": "APACHE V2"
-                    });
+                    msg.payload.should.have.property('id', 'im2txt-tensorflow');
                     done();
                 } catch (e) {
                     done(e);
