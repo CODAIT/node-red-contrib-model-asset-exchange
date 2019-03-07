@@ -42,11 +42,7 @@ describe('inception-resnet-v2 node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                                             "id":"inception_resnet_v2-keras-imagenet",
-                                             "name":"inception_resnet_v2 Keras Model",
-                                             "description":"inception_resnet_v2 Keras model trained on ImageNet",
-                                             "license":"Apache2"}); // metadata endpoint response
+                    msg.payload.should.have.property('id', 'inception_resnet_v2-keras-imagenet'); // metadata endpoint response
                     done();
                 } catch (e) {
                     done(e);
