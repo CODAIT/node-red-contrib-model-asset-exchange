@@ -42,12 +42,7 @@ describe('facial-age-estimator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "ssrnet",
-                        "name": "SSR-Net Facial Age Estimator Model",
-                        "description": "SSR-Net Facial Recognition and Age Prediction model; trained using Keras on the IMDB-WIKI dataset",
-                        "license": "MIT"
-                    });
+                    msg.payload.should.have.property('id', 'ssrnet');
                     done();
                 } catch (e) {
                     done(e);
