@@ -1,0 +1,134 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "paths": {
+        "/model/metadata": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ModelMetadata"
+                        }
+                    }
+                },
+                "summary": "Return the metadata associated with the model",
+                "operationId": "get_metadata",
+                "tags": [
+                    "model"
+                ]
+            }
+        },
+        "/model/predict": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ModelPredictResponse"
+                        }
+                    }
+                },
+                "summary": "Make a prediction given input data",
+                "operationId": "predict",
+                "parameters": [
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "type": "file",
+                        "required": true,
+                        "description": "An image file (encoded as PNG or JPG/JPEG)"
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "model"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Model Asset Exchange Server",
+        "version": "0.1",
+        "description": "An API for serving models"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "model",
+            "description": "Model information and inference operations"
+        }
+    ],
+    "definitions": {
+        "ModelMetadata": {
+            "required": [
+                "description",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "deeplab"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "mobilenetv2_coco_voc_trainval / xception_coco_voc_trainval"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Models trained on VOCO 2012. See https://github.com/tensorflow/models/blob/master/research/deeplab/g3doc/model_zoo.md"
+                },
+                "license": {
+                    "type": "string",
+                    "description": "Apache v2"
+                }
+            },
+            "type": "object"
+        },
+        "ModelPredictResponse": {
+            "required": [
+                "status"
+            ],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "description": "Response status message"
+                },
+                "image_size": {
+                    "type": "array",
+                    "description": "The size of the output image segmentation map (may differ from input image)",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "seg_map": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "description": "Segmentation map containing a predicted class for each pixel",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
+            "type": "object"
+        }
+    },
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    }
+}

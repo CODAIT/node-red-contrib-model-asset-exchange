@@ -13,6 +13,7 @@
       "object-detector": "object-detector/node.js",
       "human-pose-estimator": "human-pose-estimator/node.js",
       "audio-classifier": "audio-classifier/node.js",
+      "image-segmenter": "image-segmenter/node.js",
       "inception-resnet-v2": "inception-resnet-v2/node.js"
     }
   },
@@ -29,6 +30,7 @@
     "object detector",
     "human pose estimator",
     "audio classifier",
+    "image segmenter",
     "deep learning"
   ],
   "dependencies": {

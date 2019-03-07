@@ -86,6 +86,10 @@ This Node-RED node module supports the following application domains:
 
     Identify objects in images using a third-generation deep residual network.   
 
+- [Image Segmenter](https://developer.ibm.com/exchanges/models/all/max-image-segmenter/)
+
+    Identify objects in an image, additionally assigning each pixel of the image to a particular object.
+
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
     
