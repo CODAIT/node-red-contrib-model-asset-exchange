@@ -149,12 +149,7 @@ describe('object-detector node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "ssd_mobilenet_v1_coco_2017_11_17-tf-mobilenet",
-                        "name": "ssd_mobilenet_v1_coco_2017_11_17 TensorFlow Model",
-                        "description": "ssd_mobilenet_v1_coco_2017_11_17 TensorFlow model trained on MobileNet",
-                        "license": "ApacheV2"
-                    });
+                    msg.payload.should.have.property('id', 'ssd_mobilenet_v1_coco_2017_11_17-tf-mobilenet');
                     done();
                 } catch (e) {
                     done(e);
