@@ -34,7 +34,7 @@ describe('scene-classifier node', function () {
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'scene-classifier-service', host: 'https://max-scene-classifier.max.us-south.containers.appdomain.cloud/' }, // (4) define host name
+            { id: 'n2', type: 'scene-classifier-service', host: 'https://max-scene-classifier.max.us-south.containers.appdomain.cloud' }, // (4) define host name
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -57,7 +57,7 @@ describe('scene-classifier node', function () {
                 method: 'predict',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'scene-classifier-service', host: 'https://max-scene-classifier.max.us-south.containers.appdomain.cloud/' }, // (4) define host name
+            { id: 'n2', type: 'scene-classifier-service', host: 'https://max-scene-classifier.max.us-south.containers.appdomain.cloud' }, // (4) define host name
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -65,7 +65,7 @@ describe('scene-classifier node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', 'acquarium');
+                    msg.should.have.property('payload', 'aquarium');
                     done();
                 } catch (e) {
                     done(e);
