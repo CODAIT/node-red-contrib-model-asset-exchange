@@ -159,7 +159,7 @@
 <script type="text/x-red" data-template-name="image-segmenter-service">
     <div class="form-row">
         <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="ModelAssetExchangeServer.label.host"></span></label>
-        <input type="text" id="node-config-input-host" placeholder="http://localhost:1880">
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:5000">
     </div>
 
 
@@ -170,6 +170,13 @@
 </script>
 
 <script type="text/x-red" data-help-name="image-segmenter-service">
-    <p><b>Host</b>: URL to connect</p>
-
+    <p>You can set URL to access Image Segmenter container on cloud or localhost.</p>
+    <h3>cloud</h3>
+        <p><b>Host</b>: https://max-image-segmenter.max.us-south.containers.appdomain.cloud</p>
+        <p><b>Name</b>: cloud</p>
+    <h3>localhost</h3>
+        <p><b>Host</b>: http://localhost:5000</p>
+        <p><b>Name</b>: localhost</p>
+        <p>Note: Deploy Image Segmenter container before using this node.</p>
+        <pre>docker run -it -p 5000:5000 codait/max-image-segmenter</pre>
 </script>
