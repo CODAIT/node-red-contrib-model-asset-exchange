@@ -71,7 +71,7 @@ module.exports = function (RED) {
                             msg.payload = data.body;
                         }
                         if (node.method === 'predict') {
-                            if (data.body !== null && data.body !== undefined) {
+                            if (data.body.predictions && data.body.predictions.length > 0) {
                                 msg.payload = data.body.predictions[0].label || "Detection Error";
                             } else {
                                 msg.payload = null;
