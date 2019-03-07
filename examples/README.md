@@ -8,3 +8,4 @@ Getting started flows:
  - [Classify an image](https://flows.nodered.org/flow/8e6fbc1ad88a156c040aa0f96031f04a)
  - [Detect humans in an image and estimate the pose for each person](https://flows.nodered.org/flow/1ef026c41e36a6f2fcca1ec2de342678)
  - [Recognize faces in an image and estimate the age of each face](https://flows.nodered.org/flow/88ef2571da15e7e127afab685d131ca3)
+ - [Identify objects in an image, additionally assigning each pixel of the image to a particular object](https://flows.nodered.org/flow/d905e599add7f49cb71890df78b458d7)
