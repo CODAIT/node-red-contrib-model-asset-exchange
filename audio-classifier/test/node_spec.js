@@ -42,12 +42,7 @@ describe('audio-classifier node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "audio_embeddings-tf-imagenet",
-                        "name": "audio_embeddings TensorFlow Model",
-                        "description": "audio_embeddings TensorFlow model trained on Audio Set",
-                        "license": "Apache 2.0"
-                    });
+                    msg.payload.should.have.property('id', 'audio_embeddings-tf-imagenet');
                     done();
                 } catch (e) {
                     done(e);
