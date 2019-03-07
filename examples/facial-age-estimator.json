@@ -1,0 +1,83 @@
+[
+    {
+        "id": "9136f2f4.1fb79",
+        "type": "tab",
+        "label": "Facial age estimation example flow",
+        "disabled": false,
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-facial-age-estimator/ deep learning model from the Model Asset Exchange to recognize faces in an image and estimate the age of each face. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The facial-age-estimator node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
+    },
+    {
+        "id": "6f56316a.0628d8",
+        "type": "fileinject",
+        "z": "9136f2f4.1fb79",
+        "name": "",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "c43779bb.6f665"
+            ]
+        ]
+    },
+    {
+        "id": "ec018acf.cdb578",
+        "type": "debug",
+        "z": "9136f2f4.1fb79",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 610,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "8f232847.a8f14",
+        "type": "camera",
+        "z": "9136f2f4.1fb79",
+        "name": "",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "c43779bb.6f665"
+            ]
+        ]
+    },
+    {
+        "id": "399889a8.5f14ee",
+        "type": "comment",
+        "z": "9136f2f4.1fb79",
+        "name": "Recognize faces in an image and estimate the age of each face",
+        "info": "",
+        "x": 270,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "c43779bb.6f665",
+        "type": "facial-age-estimator",
+        "z": "9136f2f4.1fb79",
+        "service": "4ebd226a.9a3d6c",
+        "method": "predict",
+        "predict_body": "",
+        "predict_bodyType": "str",
+        "name": "",
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "ec018acf.cdb578"
+            ]
+        ]
+    },
+    {
+        "id": "4ebd226a.9a3d6c",
+        "type": "facial-age-estimator-service",
+        "z": "",
+        "host": "https://max-facial-age-estimator.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    }
+]

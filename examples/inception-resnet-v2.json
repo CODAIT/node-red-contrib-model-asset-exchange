@@ -1,0 +1,83 @@
+[
+    {
+        "id": "689e4f8c.4f1a7",
+        "type": "tab",
+        "label": "Image classification example flow",
+        "disabled": false,
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-inception-resnet-v2/ deep learning model from the Model Asset Exchange to identify objects in images using a third-generation deep residual network. Refer to the documentation for information about the returned message.\n\nInstall the following two modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n \n> Note: The inception-resnet-v2 node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
+    },
+    {
+        "id": "3d3b73cf.5c74ec",
+        "type": "debug",
+        "z": "689e4f8c.4f1a7",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 610,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "528534f4.f6cf8c",
+        "type": "fileinject",
+        "z": "689e4f8c.4f1a7",
+        "name": "",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "4b7e262c.e5b7e8"
+            ]
+        ]
+    },
+    {
+        "id": "b2f7c59f.c2a7a8",
+        "type": "camera",
+        "z": "689e4f8c.4f1a7",
+        "name": "",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "4b7e262c.e5b7e8"
+            ]
+        ]
+    },
+    {
+        "id": "8beb18b5.880c28",
+        "type": "comment",
+        "z": "689e4f8c.4f1a7",
+        "name": "Classify an image ",
+        "info": "",
+        "x": 120,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4b7e262c.e5b7e8",
+        "type": "inception-resnet-v2",
+        "z": "689e4f8c.4f1a7",
+        "service": "de324847.ff5a58",
+        "method": "predict",
+        "predict_image": "",
+        "predict_imageType": "str",
+        "name": "",
+        "x": 370,
+        "y": 120,
+        "wires": [
+            [
+                "3d3b73cf.5c74ec"
+            ]
+        ]
+    },
+    {
+        "id": "de324847.ff5a58",
+        "type": "inception-resnet-v2-service",
+        "z": "",
+        "host": "https://max-inception-resnet-v2.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    }
+]
