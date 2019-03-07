@@ -42,12 +42,7 @@ describe('image-segmenter node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', {
-                        "id": "deeplab-tf",
-                        "name": "deeplab TensorFlow Model",
-                        "description": "deeplab TensorFlow model trained on VOCO 2012",
-                        "license": "Apache v2"
-                      });
+                    msg.payload.should.have.property('id', 'deeplab-tf');
                     done();
                 } catch (e) {
                     done(e);
