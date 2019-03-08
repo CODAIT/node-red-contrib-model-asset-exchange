@@ -90,6 +90,10 @@ This Node-RED node module supports the following application domains:
 
     Identify objects in an image, additionally assigning each pixel of the image to a particular object.
 
+- [Scene Classifier](https://developer.ibm.com/exchanges/models/all/max-scene-classifier/)
+
+    Classify images according to the place/location labels in the Places365 data set.
+
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
     

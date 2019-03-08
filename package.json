@@ -14,6 +14,7 @@
       "human-pose-estimator": "human-pose-estimator/node.js",
       "audio-classifier": "audio-classifier/node.js",
       "image-segmenter": "image-segmenter/node.js",
+      "scene-classifier": "scene-classifier/node.js",
       "inception-resnet-v2": "inception-resnet-v2/node.js"
     }
   },
@@ -31,6 +32,7 @@
     "human pose estimator",
     "audio classifier",
     "image segmenter",
+    "scene classifier",
     "deep learning"
   ],
   "dependencies": {
