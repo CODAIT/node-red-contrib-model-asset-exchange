@@ -14,7 +14,7 @@ module.exports = function (RED) {
             var errorFlag = false;
             var client;
             if (this.service && this.service.host) {
-                this.service.host = this.service.host.replace(/\/$/, '');
+                this.service.host = this.service.host.replace(/\/+$/, '');
                 client = new lib.ModelAssetExchangeServer({ domain: this.service.host });
             } else {
                 node.error('Host in configuration node is not specified.', msg);
