@@ -6,7 +6,6 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
-
         this.predict_audio = config.predict_audio;
         this.predict_audioType = config.predict_audioType || 'str';
 
@@ -16,6 +15,7 @@ module.exports = function (RED) {
             var errorFlag = false;
             var client;
             if (this.service && this.service.host) {
+                this.service.host = this.service.host.replace(/\/+$/, '');
                 client = new lib.ModelAssetExchangeServer({ domain: this.service.host });
             } else {
                 node.error('Host in configuration node is not specified.', msg);
