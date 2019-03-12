@@ -71,7 +71,7 @@ describe('scene-classifier node', function () {
                     done(e);
                 }
             });
-            request('https://raw.githubusercontent.com/IBM/MAX-Scene-Classifier/master/assets/acquarium.jpg', { encoding: null }, function (error, response, body) {
+            request('https://raw.githubusercontent.com/IBM/MAX-Scene-Classifier/master/assets/aquarium.jpg', { encoding: null }, function (error, response, body) {
                 n1.receive({ payload: Buffer.from(body) });
             });
         });
