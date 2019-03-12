@@ -1,0 +1,237 @@
+[
+  {
+      "id": "7a8140fa.cdcf2",
+      "type": "tab",
+      "label": "Image Caption Generator",
+      "disabled": false,
+      "info": ""
+  },
+  {
+      "id": "f11addad.e9fc7",
+      "type": "image-caption-generator",
+      "z": "7a8140fa.cdcf2",
+      "service": "9a0f907a.3c905",
+      "method": "predict",
+      "predict_body": "",
+      "predict_bodyType": "str",
+      "name": "",
+      "x": 750,
+      "y": 200,
+      "wires": [
+          [
+              "af6d25e5.5d5df8",
+              "9578e8b6.d1e988"
+          ]
+      ]
+  },
+  {
+      "id": "af6d25e5.5d5df8",
+      "type": "debug",
+      "z": "7a8140fa.cdcf2",
+      "name": "Debug MAX Output",
+      "active": true,
+      "tosidebar": true,
+      "console": false,
+      "tostatus": false,
+      "complete": "true",
+      "x": 770,
+      "y": 140,
+      "wires": []
+  },
+  {
+      "id": "e1097c70.5ff28",
+      "type": "ui_button",
+      "z": "7a8140fa.cdcf2",
+      "name": "Capture Image Button (Dashboard)",
+      "group": "eb6012b9.16de9",
+      "order": 7,
+      "width": 0,
+      "height": 0,
+      "passthru": false,
+      "label": "Capture Image",
+      "tooltip": "",
+      "color": "",
+      "bgcolor": "",
+      "icon": "",
+      "payload": "true",
+      "payloadType": "bool",
+      "topic": "",
+      "x": 200,
+      "y": 160,
+      "wires": [
+          [
+              "d628bf13.a2998"
+          ]
+      ]
+  },
+  {
+      "id": "9578e8b6.d1e988",
+      "type": "ui_text",
+      "z": "7a8140fa.cdcf2",
+      "group": "eb6012b9.16de9",
+      "order": 5,
+      "width": "14",
+      "height": "2",
+      "name": "",
+      "label": "Caption:",
+      "format": "{{msg.payload}}",
+      "layout": "col-center",
+      "x": 1080,
+      "y": 260,
+      "wires": []
+  },
+  {
+      "id": "ae158b90.4cc968",
+      "type": "ui_template",
+      "z": "7a8140fa.cdcf2",
+      "group": "eb6012b9.16de9",
+      "name": "Image Display (Dashboard)",
+      "order": 4,
+      "width": "14",
+      "height": "9",
+      "format": "<div ng-bind-html='msg.payload'> </div>",
+      "storeOutMessages": false,
+      "fwdInMessages": true,
+      "templateScope": "local",
+      "x": 1020,
+      "y": 300,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "c0164813.7cee08",
+      "type": "function",
+      "z": "7a8140fa.cdcf2",
+      "name": "base64 -> image element",
+      "func": "const b64 = msg.payload\nconst imgSrc = \"data:image/png;base64,\" + b64.toString('base64')\n\nconst element = \"<img src='\"+ imgSrc + \"' />\"\nmsg.payload = element\n\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "x": 750,
+      "y": 260,
+      "wires": [
+          [
+              "ae158b90.4cc968"
+          ]
+      ]
+  },
+  {
+      "id": "b318cea2.c937c",
+      "type": "ui_template",
+      "z": "7a8140fa.cdcf2",
+      "group": "eb6012b9.16de9",
+      "name": "CSS Styles (Dashboard)",
+      "order": 1,
+      "width": 0,
+      "height": 0,
+      "format": "<style>\nimg {\n  max-width: 85%;\n  padding: 0;\n  margin: auto;\n  display: block;\n}\n</style>",
+      "storeOutMessages": true,
+      "fwdInMessages": true,
+      "templateScope": "global",
+      "x": 1030,
+      "y": 400,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "465e9a39.43aae4",
+      "type": "comment",
+      "z": "7a8140fa.cdcf2",
+      "name": "This flow captures an image using the Raspberry Pi Camera and sends it to a MAX Model, then displays the output on the NodeRED Dashboard.",
+      "info": "",
+      "x": 580,
+      "y": 60,
+      "wires": []
+  },
+  {
+      "id": "d628bf13.a2998",
+      "type": "camerapi-takephoto",
+      "z": "7a8140fa.cdcf2",
+      "filemode": "0",
+      "filename": "",
+      "filedefpath": "1",
+      "filepath": "",
+      "fileformat": "jpeg",
+      "resolution": "2",
+      "rotation": "0",
+      "fliph": "0",
+      "flipv": "0",
+      "brightness": "50",
+      "contrast": "0",
+      "sharpness": "0",
+      "quality": "80",
+      "imageeffect": "none",
+      "exposuremode": "auto",
+      "iso": "0",
+      "agcwait": "1.0",
+      "led": "1",
+      "awb": "auto",
+      "name": "Camera Node",
+      "x": 460,
+      "y": 220,
+      "wires": [
+          [
+              "c0164813.7cee08",
+              "979bd81a.a184d8",
+              "f11addad.e9fc7"
+          ]
+      ]
+  },
+  {
+      "id": "979bd81a.a184d8",
+      "type": "image",
+      "z": "7a8140fa.cdcf2",
+      "name": "Image Capture Output",
+      "width": 200,
+      "x": 580,
+      "y": 380,
+      "wires": []
+  },
+  {
+      "id": "ec1bf96f.695128",
+      "type": "inject",
+      "z": "7a8140fa.cdcf2",
+      "name": "Click to Capture Image",
+      "topic": "",
+      "payload": "true",
+      "payloadType": "bool",
+      "repeat": "",
+      "crontab": "",
+      "once": false,
+      "onceDelay": 0.1,
+      "x": 200,
+      "y": 280,
+      "wires": [
+          [
+              "d628bf13.a2998"
+          ]
+      ]
+  },
+  {
+      "id": "9a0f907a.3c905",
+      "type": "image-caption-generator-service",
+      "z": "",
+      "host": "https://max-image-caption-generator.max.us-south.containers.appdomain.cloud",
+      "name": "cloud"
+  },
+  {
+      "id": "eb6012b9.16de9",
+      "type": "ui_group",
+      "z": "",
+      "name": "Image Caption Generator",
+      "tab": "4bffafb9.74baf",
+      "disp": true,
+      "width": "14",
+      "collapse": false
+  },
+  {
+      "id": "4bffafb9.74baf",
+      "type": "ui_tab",
+      "z": "",
+      "name": "MAX Image Caption Generator",
+      "icon": "dashboard",
+      "disabled": false,
+      "hidden": false
+  }
+]

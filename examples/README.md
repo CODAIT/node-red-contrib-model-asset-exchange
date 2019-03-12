@@ -10,3 +10,7 @@ Getting started flows:
  - [Recognize faces in an image and estimate the age of each face](https://flows.nodered.org/flow/88ef2571da15e7e127afab685d131ca3)
  - [Identify objects in an image, additionally assigning each pixel of the image to a particular object](https://flows.nodered.org/flow/d905e599add7f49cb71890df78b458d7)
  - [Classify images according to the place/location labels in the Places365 data set](https://flows.nodered.org/flow/196917d2af313396a0bf3c737c9d2d5b)
+
+Raspberry Pi flows:
+ - [Capture an image with the raspi-camera and display it with a generated caption on the Node-RED Dashboard](https://flows.nodered.org/flow/abe41021d95ebabd28b4aaa8e68f4185)
+ - [Detect faces in an image captured with the raspi-camera and display it with a facial bounding box on the Node-RED Dashboard](https://flows.nodered.org/flow/d6e8d65122875fd46aece59fb84ac351)
