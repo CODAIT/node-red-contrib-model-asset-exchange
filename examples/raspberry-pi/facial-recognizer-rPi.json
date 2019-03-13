@@ -1,0 +1,241 @@
+[
+    {
+        "id": "9f8d3060.76416",
+        "type": "tab",
+        "label": "Facial Recognizer",
+        "disabled": false,
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-facial-recognizer/ deep learning model from the Model Asset Exchange to recognize faces in an image and then display the predicted facial bounding box in the Node-RED Dashboard. Refer to the documentation for information about the returned message from the model.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-camerapi](https://www.npmjs.com/package/node-red-contrib-camerapi)\n - [node-red-dashboard](https://www.npmjs.com/package/node-red-dashboard)\n \nThe Dashboard GUI is available at http://localhost:1880/ui\n\n> Note: The facial-recognizer node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
+    },
+    {
+        "id": "eb46245a.2f3458",
+        "type": "debug",
+        "z": "9f8d3060.76416",
+        "name": "Debug MAX Output",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "afd269b6.82bd38",
+        "type": "ui_button",
+        "z": "9f8d3060.76416",
+        "name": "Facial Recognizer Button (Dashboard)",
+        "group": "1caa49c9.ad39a6",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Capture Image",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "topic": "",
+        "x": 210,
+        "y": 140,
+        "wires": [
+            [
+                "ed83df0f.81e4c"
+            ]
+        ]
+    },
+    {
+        "id": "ed233b53.818678",
+        "type": "facial-recognizer",
+        "z": "9f8d3060.76416",
+        "service": "2db88ede.72a402",
+        "method": "predict",
+        "predict_body": "",
+        "predict_bodyType": "str",
+        "name": "",
+        "x": 520,
+        "y": 220,
+        "wires": [
+            [
+                "e58f20fe.e5623",
+                "eb46245a.2f3458"
+            ]
+        ]
+    },
+    {
+        "id": "77c92e6a.f8f26",
+        "type": "function",
+        "z": "9f8d3060.76416",
+        "name": "base64 -> image element",
+        "func": "const b64 = msg.payload\nconst imgSrc = \"data:image/png;base64,\" + b64.toString('base64')\n\nconst element = \"<img class='facial-output' src='\"+ imgSrc + \"' />\";\nmsg.payload = imgSrc;\nmsg.topic = 'image';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "fcc9569e.180d48"
+            ]
+        ]
+    },
+    {
+        "id": "e58f20fe.e5623",
+        "type": "function",
+        "z": "9f8d3060.76416",
+        "name": "Parse MAX Response",
+        "func": "\n\nif (msg.payload !== null) {\n    msg.payload = msg.details.predictions[0].detection_box;\n    msg.topic = 'coords';\n} else {\n    msg.payload = \"No Face Detected.\";\n    msg.topic = 'noFace';\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 220,
+        "wires": [
+            [
+                "fcc9569e.180d48"
+            ]
+        ]
+    },
+    {
+        "id": "3474e54d.30d09a",
+        "type": "comment",
+        "z": "9f8d3060.76416",
+        "name": "This flow captures an image using the Raspberry Pi Camera and sends it to a MAX Model, then displays the image with the output coordinates  on the NodeRED Dashboard.",
+        "info": "This flow captures an image using the Raspberry Pi Camera \nand sends it to a MAX Model, \nthen displays the image with the \noutput coordinates plotted using the HTML5\ncanvas API on the NodeRED Dashboard.",
+        "x": 690,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "5e40bb20.17ebf4",
+        "type": "ui_template",
+        "z": "9f8d3060.76416",
+        "group": "eb6012b9.16de9",
+        "name": "CSS Styles (Dashboard)",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n#face-display {\n  max-width: 85%;\n  padding: 0;\n  margin: auto;\n  display: block;\n}\n\n#heading {\n    font-size: 1.05em;\n    font-weight: bold;\n    padding: 0;\n    margin: auto;\n}\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "global",
+        "x": 990,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed83df0f.81e4c",
+        "type": "camerapi-takephoto",
+        "z": "9f8d3060.76416",
+        "filemode": "0",
+        "filename": "",
+        "filedefpath": "1",
+        "filepath": "",
+        "fileformat": "jpeg",
+        "resolution": "2",
+        "rotation": "0",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "1",
+        "awb": "auto",
+        "name": "Camera Node",
+        "x": 300,
+        "y": 220,
+        "wires": [
+            [
+                "ed233b53.818678",
+                "77c92e6a.f8f26"
+            ]
+        ]
+    },
+    {
+        "id": "fcc9569e.180d48",
+        "type": "function",
+        "z": "9f8d3060.76416",
+        "name": "Data Aggregator for Canvas Element",
+        "func": "context.imageData = context.imageData || false;\ncontext.coordsData = context.coordsData || false;\n\nif (msg.topic == 'image') {\n    context.imageData = msg.payload;\n} else if (msg.topic == 'coords') {\n    context.coordsData = msg.payload;\n} else if (msg.topic == 'noFace' && context.imageData) {\n    msg.payload = []\n    msg.topic = 'dataBundle'\n    context.coordsData = [0,0,0,0];\n    msg.payload.push(context.imageData);\n    msg.payload.push(context.coordsData);\n}\n\nif (context.imageData && context.coordsData) {\n    msg.payload = []\n    msg.topic = 'dataBundle'\n    msg.payload.push(context.imageData);\n    msg.payload.push(context.coordsData);\n    \n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 770,
+        "y": 320,
+        "wires": [
+            [
+                "1e97b620.9bd66a"
+            ]
+        ]
+    },
+    {
+        "id": "1e97b620.9bd66a",
+        "type": "ui_template",
+        "z": "9f8d3060.76416",
+        "group": "1caa49c9.ad39a6",
+        "name": "Canvas Display",
+        "order": 1,
+        "width": "14",
+        "height": "9",
+        "format": "<div id='img-div'> \n</div>\n<canvas height=\"480px\" width=\"640px\" id='face-display'></canvas>\n<script>\n    (function(scope) {\n        scope.$watch('msg', function(msg) {\n            if (msg.payload && msg.topic == 'dataBundle'){\n                let img = new Image();\n                let canvas = document.getElementById('face-display');\n                let canvasWidth = canvas.width;\n                let canvasHeight = canvas.height;\n                let ctx = canvas.getContext('2d');\n                let coords = msg.payload[1];\n                \n                img.onload = function() {\n                    ctx.drawImage(img, 0, 0);\n                    ctx.font = '48px serif';\n                    ctx.fillStyle = '#0bc6c0';\n                    ctx.strokeStyle = '#0bc6c0';\n                    ctx.lineWidth = \"3\";\n                    \n                    if (coords[0] == coords[1] &&\n                        coords[0] == coords [2]){\n                            ctx.fillText('No Face Detected.', 125, 440);\n                        } else {\n                            const topLeftX = coords[0]\n                            const topLeftY = coords[1]\n                            const height = coords[3] - coords[1]\n                            const width = coords[2]-coords[0]\n                            \n\n                            ctx.beginPath();\n                            ctx.rect(topLeftX, topLeftY, width, height);\n                            ctx.stroke();\n                        }\n                    \n                    \n                    \n            }\n                img.src = msg.payload[0];\n            }\n        });\n    })(scope);\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 1060,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f54917a.b4ad1",
+        "type": "ui_template",
+        "z": "9f8d3060.76416",
+        "group": "1caa49c9.ad39a6",
+        "name": "Heading",
+        "order": 2,
+        "width": "14",
+        "height": "2",
+        "format": "<span id='heading'>\n    Capture an image with a face to see it outlined in a bounding box.\n    </span>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 1080,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1caa49c9.ad39a6",
+        "type": "ui_group",
+        "z": "",
+        "name": "Facial Recognizer",
+        "tab": "229cf427.f9ba6c",
+        "disp": true,
+        "width": "14",
+        "collapse": false
+    },
+    {
+        "id": "2db88ede.72a402",
+        "type": "facial-recognizer-service",
+        "z": "",
+        "host": "https://max-facial-recognizer.max.us-south.containers.appdomain.cloud",
+        "name": "cloud"
+    },
+    {
+        "id": "229cf427.f9ba6c",
+        "type": "ui_tab",
+        "z": "",
+        "name": "MAX Facial Recognizer",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
