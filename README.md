@@ -33,7 +33,8 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 The `node-red-contrib-model-asset-exchange` module includes a couple of example flows to get you started. To import the flows into the workspace:
 
 1. In the Node-RED editor open **&#9776;** > **Import** > **Examples** > **model asset-exchange**.
-2. Choose a flow.
+2. Select one of the sub-directories, to see either the basic flows in **getting started**, or some more complex examples that are designed to run on the **raspberry pi**.
+3. Choose a flow.
 
    ![import sample flows](/docs/images/import_sample_flows.png) 
 
