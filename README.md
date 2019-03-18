@@ -8,6 +8,7 @@ Node-RED nodes for deep learning microservices from the [Model Asset eXchange](h
 
 ## Getting started
 
+To get started follow the [comprehensive tutorial](https://developer.ibm.com/tutorials/learn-how-to-leverage-deep-learning-in-your-node-red-flows/) or complete the quick start steps listed below.
 
 ### Setup
 
