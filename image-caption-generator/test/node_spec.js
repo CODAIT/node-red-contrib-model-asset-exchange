@@ -42,7 +42,7 @@ describe('image-caption-generator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.payload.should.have.property('id', 'im2txt-tensorflow');
+                    msg.payload.should.have.property('id', 'max-image-caption-generator');
                     done();
                 } catch (e) {
                     done(e);
