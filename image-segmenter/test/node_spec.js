@@ -42,7 +42,7 @@ describe('image-segmenter node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.payload.should.have.property('id', 'deeplab-tf');
+                    msg.payload.should.have.property('id', 'max-image-segmenter');
                     done();
                 } catch (e) {
                     done(e);

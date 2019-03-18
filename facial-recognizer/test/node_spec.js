@@ -42,7 +42,7 @@ describe('facial-recognizer node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.payload.should.have.property('id', 'facenet-tensorflow');
+                    msg.payload.should.have.property('id', 'max-facial-recognizer');
                     done();
                 } catch (e) {
                     done(e);

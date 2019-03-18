@@ -65,7 +65,7 @@ describe('facial-age-estimator node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', 48);
+                    msg.should.have.property('payload', 39);
                     done();
                 } catch (e) {
                     done(e);
