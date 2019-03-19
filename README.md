@@ -96,6 +96,10 @@ This Node-RED node module supports the following application domains:
 
     Classify images according to the place/location labels in the Places365 data set.
 
+- [Facial Emotion Classifier](https://developer.ibm.com/exchanges/models/all/max-facial-emotion-classifier/)
+
+    Detect faces in an image and predict the emotional state of each person
+
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
     
