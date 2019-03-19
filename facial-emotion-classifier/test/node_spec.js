@@ -1,5 +1,6 @@
 var should = require('should');
 var helper = require('node-red-node-test-helper');
+var request = require('request');
 var node = require('../node.js');
 
 helper.init(require.resolve('node-red'));
@@ -33,7 +34,7 @@ describe('facial-emotion-classifier node', function () {
                 method: 'get_labels',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'facial-emotion-classifier-service', host: 'http://<host name>' }, // (4) define host name
+            { id: 'n2', type: 'facial-emotion-classifier-service', host: 'https://max-facial-emotion-classifier.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -41,13 +42,25 @@ describe('facial-emotion-classifier node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', '<output message>'); // (3) define output message
+                    msg.should.have.property('payload', {
+                        "count": 8,
+                        "labels": [
+                          { "id": "0", "name": "neutral" },
+                          { "id": "1", "name": "happiness" },
+                          { "id": "2", "name": "surprise" },
+                          { "id": "3", "name": "sadness" },
+                          { "id": "4", "name": "anger" },
+                          { "id": "5", "name": "disgust" },
+                          { "id": "6", "name": "fear" },
+                          { "id": "7", "name": "contempt" }
+                        ]
+                      }); 
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            n1.receive({ payload: '<input message>' }); // (2) define input message
+            n1.receive({ payload: '' });
         });
     });
     it('should handle get_model_metadata_api()', function (done) {
@@ -56,7 +69,7 @@ describe('facial-emotion-classifier node', function () {
                 method: 'get_model_metadata_api',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'facial-emotion-classifier-service', host: 'http://<host name>' }, // (4) define host name
+            { id: 'n2', type: 'facial-emotion-classifier-service', host: 'https://max-facial-emotion-classifier.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -64,23 +77,22 @@ describe('facial-emotion-classifier node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', '<output message>'); // (3) define output message
+                    msg.payload.should.have.property('id', 'max-facial-emotion-classifier');
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            n1.receive({ payload: '<input message>' }); // (2) define input message
+            n1.receive({ payload: '' });
         });
     });
     it('should handle predict()', function (done) {
         var flow = [
             { id: 'n1', type: 'facial-emotion-classifier', name: 'facial-emotion-classifier',
                 method: 'predict',
-                predict_image: '<node property>', // (1) define node properties
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'facial-emotion-classifier-service', host: 'http://<host name>' }, // (4) define host name
+            { id: 'n2', type: 'facial-emotion-classifier-service', host: 'https://max-facial-emotion-classifier.max.us-south.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -88,13 +100,15 @@ describe('facial-emotion-classifier node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', '<output message>'); // (3) define output message
+                    msg.should.have.property('payload', 'anger');
                     done();
                 } catch (e) {
                     done(e);
                 }
             });
-            n1.receive({ payload: '<input message>' }); // (2) define input message
+            request('https://raw.githubusercontent.com/IBM/MAX-Facial-Emotion-Classifier/master/assets/angry.jpg', { encoding: null }, function (error, response, body) {
+                n1.receive({ payload: Buffer.from(body) });
+            });
         });
     });
 });
