@@ -15,7 +15,8 @@
       "audio-classifier": "audio-classifier/node.js",
       "image-segmenter": "image-segmenter/node.js",
       "scene-classifier": "scene-classifier/node.js",
-      "inception-resnet-v2": "inception-resnet-v2/node.js"
+      "inception-resnet-v2": "inception-resnet-v2/node.js",
+      "facial-emotion-classifier": "facial-emotion-classifier/node.js"
     }
   },
   "repository": {
@@ -33,6 +34,7 @@
     "audio classifier",
     "image segmenter",
     "scene classifier",
+    "facial emotion classifier",
     "deep learning"
   ],
   "dependencies": {
