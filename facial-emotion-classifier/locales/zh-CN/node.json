@@ -12,8 +12,8 @@
             "requesting": "请求中"
         },
         "parameters": {
-            "get_labels": "get_labels",
-            "get_model_metadata_api": "get_model_metadata_api",
+            "get_labels": "labels",
+            "get_model_metadata_api": "metadata",
             "predict": "predict",
             "image": "image",
             "optionalParameters": "可选项"

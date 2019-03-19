@@ -49,11 +49,15 @@ var MaxFacialEmotionClassifier = (function(){
             method: method,
             uri: url,
             qs: queryParameters,
-            headers: headers,
-            body: body
+            headers: headers
         };
         if(Object.keys(form).length > 0) {
-            req.form = form;
+            req.formData = { 
+                image: { 
+                    value: form.image, 
+                    options: { filename: 'image.png' }
+                }
+            };  
         }
         if(typeof(body) === 'object' && !(body instanceof Buffer)) {
             req.json = true;

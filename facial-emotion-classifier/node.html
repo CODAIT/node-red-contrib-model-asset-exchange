@@ -1,10 +1,10 @@
 <script type="text/javascript">
     RED.nodes.registerType('facial-emotion-classifier', {
         category: 'Model Asset eXchange',
-        color: '#89bf04',
+        color: '#0bc6c0',
         defaults: {
             service: { value: "", type: "facial-emotion-classifier-service", required: true },
-            method: { value: "" },
+            method: { value: "predict", required: true },
 
             predict_image: { value: "" },
             predict_imageType: { value: "str" },
@@ -56,7 +56,6 @@
                     }
                     if ($("#node-input-method").val() === 'predict') {
 
-                        $("#predict_image").show();
                         
                     }
                 } else {
@@ -68,7 +67,6 @@
                     }
                     if ($("#node-input-method").val() === 'predict') {
 
-                        $("#predict_image").show();
                         
                     }
                 }
@@ -119,24 +117,52 @@
 </script>
 
 <script type="text/x-red" data-help-name="facial-emotion-classifier">
-
-    <p>Detect faces in an image and predict the emotional state of each person</p>
-    <h2>Methods</h2>
-        <h3>get_labels</h3>
-        <h4>Return the list of labels that can be predicted by the model</h4>
-        <h3>get_model_metadata_api</h3>
-        <h4>Return the metadata associated with the model</h4>
-        <h3>predict</h3>
-        <h4>Make a prediction given input data</h4>
+    <p>
+    This model first detects faces in an input image. Then, each face is passed to the emotion classification model which predicts the emotional state of the human, from a set of 8 emotion classes: neutral, happiness, surprise, sadness, anger, disgust, fear, contempt. The output of the model is a set of bounding box coordinates and predicted probabilities for each of the emotion classes, for each face detected in the image. The format of the bounding box coordinates is [ymin, xmin, ymax, xmax], where each coordinate is normalized by the appropriate image dimension (height for y or width for x). Each coordinate is therefore in the range [0, 1].
+    </p>
+    <hr>
+    <h1>predict</h1>
+    <h3>Inputs:</h3>
+    <dl class="message-properties">
+      <dt>payload <span class="property-type">Buffer</span></dt>
+      <dd>Buffer data of PNG or JPEG image.</dd>
+    </dl>
+    <h3>Outputs:</h3>
+    <dl class="message-properties">
+      <dt>payload <span class="property-type">object</span></dt>
+      <dd>Predicted data.</dd>
+    </dl>
+    <br>
+    <h1>labels</h1>
+    <h3>Inputs:</h3>
+    <dl class="message-properties">
+      <dt>none <span class="property-type">none</span></dt>
+    </dl>
+    <h3>Outputs:</h3>
+    <dl class="message-properties">
+      <dt>payload <span class="property-type">object</span></dt>
+      <dd>Returns the list of labels that can be predicted by the model.</dd>
+    </dl>
+    <br>
+    <h1>metadata</h1>
+    <h3>Inputs:</h3>
+    <dl class="message-properties">
+      <dt>none <span class="property-type">none</span></dt>
+    </dl>
+    <h3>Outputs:</h3>
+    <dl class="message-properties">
+      <dt>payload <span class="property-type">object</span></dt>
+      <dd>Returns the metadata associated with the model.</dd>
+    </dl>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType('facial-emotion-classifier-service', {
         category: 'config',
         defaults: {
-            host: { value: "", required: true },
+            host: { value: "https://max-facial-emotion-classifier.max.us-south.containers.appdomain.cloud", required: true },
 
 
-            name: { value: "" },
+            name: { value: "cloud" },
         },
         credentials: {
             temp: { type:"text" }
@@ -152,7 +178,7 @@
 <script type="text/x-red" data-template-name="facial-emotion-classifier-service">
     <div class="form-row">
         <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="MaxFacialEmotionClassifier.label.host"></span></label>
-        <input type="text" id="node-config-input-host" placeholder="http://localhost:1880">
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:5000">
     </div>
 
 
@@ -163,6 +189,13 @@
 </script>
 
 <script type="text/x-red" data-help-name="facial-emotion-classifier-service">
-    <p><b>Host</b>: URL to connect</p>
-
+    <p>You can set URL to access the Facial Emotion Classifier container on cloud or localhost.</p>
+    <h3>cloud</h3>
+        <p><b>Host</b>: https://max-facial-emotion-classifier.max.us-south.containers.appdomain.cloud</p>
+        <p><b>Name</b>: cloud</p>
+    <h3>localhost</h3>
+        <p><b>Host</b>: http://localhost:5000</p>
+        <p><b>Name</b>: localhost</p>
+        <p>Note: Deploy the Facial Emotion Classifier container before using this node.</p>
+        <pre>docker run -it -p 5000:5000 codait/max-facial-emotion-classifier</pre>
 </script>
