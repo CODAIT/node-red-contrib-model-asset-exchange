@@ -1,0 +1,22 @@
+{
+    "MaxFacialEmotionClassifier": {
+        "label": {
+            "service": "サービス",
+            "method": "メソッド",
+            "host": "ホスト",
+            "header": "ヘッダ",
+            "value": "値",
+            "isQuery": "クエリ"
+        },
+        "status": {
+            "requesting": "要求中"
+        },
+        "parameters": {
+            "get_labels": "get_labels",
+            "get_model_metadata_api": "get_model_metadata_api",
+            "predict": "predict",
+            "image": "image",
+            "optionalParameters": "任意項目"
+        }
+    }
+}

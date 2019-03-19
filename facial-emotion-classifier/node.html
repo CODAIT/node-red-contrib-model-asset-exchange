@@ -1,0 +1,168 @@
+<script type="text/javascript">
+    RED.nodes.registerType('facial-emotion-classifier', {
+        category: 'Model Asset eXchange',
+        color: '#89bf04',
+        defaults: {
+            service: { value: "", type: "facial-emotion-classifier-service", required: true },
+            method: { value: "" },
+
+            predict_image: { value: "" },
+            predict_imageType: { value: "str" },
+
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "icon.png",
+        label: function () {
+            return this.name || "facial-emotion-classifier";
+        },
+        oneditprepare: function () {
+            var selectedMethod = $('#node-input-method option:selected');
+            if (!selectedMethod.val()) {
+                var methods = $('#node-input-method').children();
+                var firstMethod = methods.first();
+                $('#node-input-method').val(firstMethod.val());
+            }
+
+            var showParameters = function () {
+
+                $("#node-input-predict_image").typedInput({
+                    default: 'str',
+                    typeField: $("#node-input-predict_imageType"),
+                    types: ['str', 'msg']
+                });
+
+                $("#predict_image").hide();
+
+                $("#optional-parameters").hide();
+                $("#optional-parameters-label").hide();
+                if ($("#node-input-method").val() === 'get_labels') {
+
+                }
+                if ($("#node-input-method").val() === 'get_model_metadata_api') {
+
+                }
+                if ($("#node-input-method").val() === 'predict') {
+
+                }
+
+                if ($("#optional-parameters").prop('checked')) {
+                    if ($("#node-input-method").val() === 'get_labels') {
+
+                    }
+                    if ($("#node-input-method").val() === 'get_model_metadata_api') {
+
+                    }
+                    if ($("#node-input-method").val() === 'predict') {
+
+                        $("#predict_image").show();
+                        
+                    }
+                } else {
+                    if ($("#node-input-method").val() === 'get_labels') {
+
+                    }
+                    if ($("#node-input-method").val() === 'get_model_metadata_api') {
+
+                    }
+                    if ($("#node-input-method").val() === 'predict') {
+
+                        $("#predict_image").show();
+                        
+                    }
+                }
+            };
+
+            $("#node-input-method").change(function () {
+                showParameters();
+            });
+
+            $("#optional-parameters").change(function () {
+                showParameters();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="facial-emotion-classifier">
+    <div class="form-row">
+        <label for="node-input-service"><i class="fa fa-cloud"></i> <span data-i18n="MaxFacialEmotionClassifier.label.service"></span></label>
+        <input type="text" id="node-input-service">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-method"><i class="icon-tasks"></i> <span data-i18n="MaxFacialEmotionClassifier.label.method"></span></label>
+        <select id="node-input-method">
+            <option value="get_labels" data-i18n="MaxFacialEmotionClassifier.parameters.get_labels"></option>
+            <option value="get_model_metadata_api" data-i18n="MaxFacialEmotionClassifier.parameters.get_model_metadata_api"></option>
+            <option value="predict" data-i18n="MaxFacialEmotionClassifier.parameters.predict"></option>
+        </select>
+        &nbsp;
+        <input type="checkbox" id="optional-parameters" style="margin-left: 10px; vertical-align: text-bottom; width: auto;">
+        <label for="optional-parameters" id="optional-parameters-label" style="width: auto;"> <span data-i18n="MaxFacialEmotionClassifier.parameters.optionalParameters"></span></label>
+    </div>
+
+    <div class="form-row" id="predict_image">
+        <label for="node-input-predict_image"><i class="fa fa-list"></i> <span data-i18n="MaxFacialEmotionClassifier.parameters.image"></span></label>
+
+        <input type="text" id="node-input-predict_image" placeholder="An image file (encoded as JPEG, PNG or TIFF)" style="width:70%">
+        <input type="hidden" id="node-input-predict_imageType">
+    </div>
+
+    <hr/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="facial-emotion-classifier">
+
+    <p>Detect faces in an image and predict the emotional state of each person</p>
+    <h2>Methods</h2>
+        <h3>get_labels</h3>
+        <h4>Return the list of labels that can be predicted by the model</h4>
+        <h3>get_model_metadata_api</h3>
+        <h4>Return the metadata associated with the model</h4>
+        <h3>predict</h3>
+        <h4>Make a prediction given input data</h4>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('facial-emotion-classifier-service', {
+        category: 'config',
+        defaults: {
+            host: { value: "", required: true },
+
+
+            name: { value: "" },
+        },
+        credentials: {
+            temp: { type:"text" }
+        },
+        label: function () {
+            return this.name;
+        },
+        oneditprepare: function () {
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="facial-emotion-classifier-service">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> <span data-i18n="MaxFacialEmotionClassifier.label.host"></span></label>
+        <input type="text" id="node-config-input-host" placeholder="http://localhost:1880">
+    </div>
+
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
+        <input type="text" id="node-config-input-name" data-i18n="[placeholder]node-red:common.label.name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="facial-emotion-classifier-service">
+    <p><b>Host</b>: URL to connect</p>
+
+</script>
