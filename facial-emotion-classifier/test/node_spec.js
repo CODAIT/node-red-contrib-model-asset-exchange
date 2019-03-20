@@ -100,7 +100,9 @@ describe('facial-emotion-classifier node', function () {
             var n1 = helper.getNode('n1');
             n3.on('input', function (msg) {
                 try {
-                    msg.should.have.property('payload', 'anger');
+                    msg.payload.should.have.keys(['entitiesDetected','prediction']);
+                    msg.payload.should.have.property('entitiesDetected', 1);
+                    msg.payload.prediction.should.matchAny('anger');
                     done();
                 } catch (e) {
                     done(e);

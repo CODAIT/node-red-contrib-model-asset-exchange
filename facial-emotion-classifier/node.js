@@ -76,12 +76,15 @@ module.exports = function (RED) {
                         if (node.method === 'predict') {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 const predictions = data.body.predictions.map(person => person.emotion_predictions[0].label);
-                                msg.payload = predictions[0];
-            
+                                msg.payload = {
+                                    entitiesDetected: 1,
+                                    prediction: [predictions[0]]
+                                }
                                 if (data.body.predictions.length > 1) {
-                                    const predictMap = {};
-                                    predictions.forEach((prediction, i) => predictMap[`face_${i}`]=prediction);
-                                    msg.payload = predictMap;
+                                    msg.payload = {
+                                        entitiesDetected: data.body.predictions.length,
+                                        prediction: predictions
+                                    }
                                 } 
                             } else {
                                 msg.payload = null;
