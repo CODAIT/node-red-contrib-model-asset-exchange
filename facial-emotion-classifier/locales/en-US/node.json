@@ -1,0 +1,22 @@
+{
+    "MaxFacialEmotionClassifier": {
+        "label": {
+            "service": "Service",
+            "method": "Method",
+            "host": "Host",
+            "header": "Header",
+            "value": "Value",
+            "isQuery": "isQuery"
+        },
+        "status": {
+            "requesting": "requesting"
+        },
+        "parameters": {
+            "get_labels": "labels",
+            "get_model_metadata_api": "metadata",
+            "predict": "predict",
+            "image": "image",
+            "optionalParameters": "Options"
+        }
+    }
+}
