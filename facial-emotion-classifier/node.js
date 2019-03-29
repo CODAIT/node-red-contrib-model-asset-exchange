@@ -76,16 +76,7 @@ module.exports = function (RED) {
                         if (node.method === 'predict') {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 const predictions = data.body.predictions.map(person => person.emotion_predictions[0].label);
-                                msg.payload = {
-                                    entitiesDetected: 1,
-                                    prediction: [predictions[0]]
-                                }
-                                if (data.body.predictions.length > 1) {
-                                    msg.payload = {
-                                        entitiesDetected: data.body.predictions.length,
-                                        prediction: predictions
-                                    }
-                                } 
+                                msg.payload = predictions[0]
                             } else {
                                 msg.payload = null;
                             }
