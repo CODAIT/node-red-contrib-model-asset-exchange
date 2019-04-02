@@ -14,6 +14,8 @@ To get started follow the [comprehensive tutorial](https://developer.ibm.com/tut
 
 1. [Install Node-RED](https://nodered.org/docs/getting-started/installation).
 
+    > Before you can install Node-RED, you'll need a working install of Node.js. We recommend the use of Node.js LTS 8.x or 10.x, as Node-RED no longer supports Node.js 6.x or earlier.
+
 2. Run the following command in your Node-RED user directory - typically `~/.node-red` to install the [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange) module:
 
         $ cd ~/.node-red
