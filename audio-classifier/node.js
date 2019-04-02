@@ -79,7 +79,7 @@ module.exports = function (RED) {
                         }
                     }
                 }
-                return msg;
+                return { ...msg, topic: "max-audio-classifier" };
             };
 
 

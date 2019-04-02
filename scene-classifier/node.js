@@ -81,7 +81,7 @@ module.exports = function (RED) {
                         }
                     }
                 }
-                return msg;
+                return { ...msg, topic: "max-scene-classifier" };
             };
 
             if (!errorFlag) {

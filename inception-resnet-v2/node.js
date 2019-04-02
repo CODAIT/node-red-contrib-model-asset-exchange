@@ -81,7 +81,7 @@ module.exports = function (RED) {
                         msg.details = data.body;
                     }
                 }
-                return msg;
+                return { ...msg, topic: "max-inception-resnet-v2" };
             };
 
             if (!errorFlag) {
