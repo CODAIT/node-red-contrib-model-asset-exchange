@@ -75,7 +75,7 @@ module.exports = function (RED) {
                         msg.details = data.body;
                     }
                 }
-                return msg;
+                return { ...msg, topic: "max-facial-age-estimator" };
             };
             if (!errorFlag) {
                 node.status({ fill: 'blue', shape: 'dot', text: 'ModelAssetExchangeServer.status.requesting' });
