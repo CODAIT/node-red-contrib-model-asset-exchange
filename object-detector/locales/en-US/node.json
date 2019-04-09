@@ -18,7 +18,7 @@
             "body": "body",
             "threshold": "threshold",
             "passthrough": "Input Passthrough",
-            "boundingBox": "Display Bounding Boxes",
+            "bounding_box": "Display Bounding Boxes",
             "optionalParameters": "Options"
         }
     }

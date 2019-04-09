@@ -10,6 +10,8 @@ module.exports = function (RED) {
         this.predict_bodyType = config.predict_bodyType || 'str';
         this.predict_threshold = config.predict_threshold;
         this.predict_thresholdType = config.predict_thresholdType || 'str';
+        this.passthrough = config.passthrough || false;
+        this.bounding_box = config.bounding_box || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -24,6 +26,9 @@ module.exports = function (RED) {
             }
             if (!errorFlag) {
                 client.body = msg.payload;
+            }
+            if (typeof msg.payload === 'object' && (node.passthrough || node.bounding_box)) {
+                node.inputData = msg.payload;
             }
 
             var result;
@@ -87,6 +92,11 @@ module.exports = function (RED) {
                         if (node.method === 'predict') {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 msg.payload = data.body.predictions[0].label;
+
+                                if (node.bounding_box) {
+                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.predictions)
+                                }
+
                             } else {
                                 msg.payload = null;
                             }
@@ -94,7 +104,11 @@ module.exports = function (RED) {
                         msg.details = data.body;
                     }
                 }
-                return { ...msg, topic: "max-object-detector" };
+                let outputMsg = { ...msg, topic: "max-object-detector" };
+                if (node.passthrough) {
+                    outputMsg.inputData = node.inputData
+                }
+                return outputMsg;
             };
             if (!errorFlag) {
                 node.status({ fill: 'blue', shape: 'dot', text: 'ModelAssetExchangeServer.status.requesting' });

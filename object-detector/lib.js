@@ -178,3 +178,9 @@ var ModelAssetExchangeServer = (function(){
 })();
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
+
+exports.createBoundingBox = (imageData, modelData) => {
+    console.log('creating bounding box image')
+    console.log(JSON.stringify(modelData))
+    return imageData
+}
