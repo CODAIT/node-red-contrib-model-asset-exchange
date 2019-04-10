@@ -1,4 +1,7 @@
 /*jshint -W069 */
+
+const { createCanvas, Image } = require('canvas');
+
 /**
  * This model recognizes the objects present in an image from the 80 different high-level classes of objects in the COCO Dataset. The model consists of a deep convolutional net base model for image feature extraction, together with additional convolutional layers specialized for the task of object detection, that was trained on the COCO data set. The input to the model is an image, and the output is a list of estimated class probabilities for the objects detected in the image. The model is based on the SSD Mobilenet V1 object detection model for TensorFlow.
  * @class ModelAssetExchangeServer
@@ -30,7 +33,6 @@ var ModelAssetExchangeServer = (function(){
         }
         return queryParameters;
     }
-
 
     /**
      * Return the list of labels that can be predicted by the model
@@ -180,28 +182,50 @@ var ModelAssetExchangeServer = (function(){
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
 exports.createBoundingBox = (imageData, modelData) => {
-    return new Promise ((resolve, reject) => {
-        const boxes = modelData.map(result => result.detection_box)
-        //console.log('creating bounding box image')
-        //console.log(JSON.stringify(boxes))
-        //let img = document.createElement('img');
-        //let canvas = document.createElement('canvas');
-        // let ctx = canvas.getContext('2d');
-        // img.onload = async () => {
-        //     try {
-        //         //await ctx.drawImage(img, 0, 0);
-        //         resolve('good')
-        //     } catch (e) {
-        //         reject (`Bounding Box ${e}`);
-        //     } 
-        // }
-        // img.onerror = err => { throw err }
-        // img.src = imageData;
-        try {
-            //await ctx.drawImage(img, 0, 0);
-            resolve('good')
-        } catch (e) {
-            reject (`Bounding Box ${e}`);
+    try {
+        let canvas
+        const img = new Image()
+        img.onload = async () => {
+            canvas = createCanvas(img.width, img.height)
+            const ctx = canvas.getContext('2d')
+            const solidColor = '#1bc6c0';
+            const textColor = '#000';
+            ctx.drawImage(img, 0, 0)                    
+            const boxesArray = modelData.map((obj, i) => obj.detection_box)
+            boxesArray.forEach((box, i) => {
+                ctx.font = '36px sans-serif';
+                ctx.textBaseline = 'top';
+                ctx.fillStyle = solidColor;
+                ctx.strokeStyle = solidColor;
+                ctx.lineWidth = "3";
+                // BOX GENERATION
+                const yMin = box[0] * img.height;
+                const xMin = box[1] * img.width;
+                const boxHeight = (box[2] - box[0]) * img.height;
+                const boxWidth = (box[3] - box[1]) * img.width;
+                ctx.strokeRect(xMin, yMin, boxWidth, boxHeight);
+
+                // LABEL GENERATION
+                const confidence = (modelData[i].probability * 100).toFixed(1) + '%';
+                const label = modelData[i].label;
+                const text = label + ' : ' + confidence;
+                const tagWidth = ctx.measureText(text).width;
+                if (tagWidth > boxWidth) {
+                    tagWidth = ctx.measureText(label).width;
+                    text = label;
+                }
+                const tHeight = parseInt(ctx.font, 10) * 1.4;
+                ctx.fillRect(xMin, yMin, tagWidth + 3, tHeight);
+                ctx.fillStyle = textColor;
+                ctx.fillText(text, xMin + 5, yMin + 5);
+
+            })
         }
-    })
+        img.onerror = err => { throw err }
+        img.src = imageData
+        return canvas.toBuffer();
+    } catch (e) {
+        console.log(`error processing image - ${ e }`)
+        return null
+    }
 }

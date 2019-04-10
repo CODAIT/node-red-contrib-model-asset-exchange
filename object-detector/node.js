@@ -1,8 +1,6 @@
 'use strict';
 var lib = require('./lib.js');
 
-const { createCanvas, Image } = require('canvas');
-
 module.exports = function (RED) {
     function ModelAssetExchangeServerNode(config) {
         RED.nodes.createNode(this, config);
@@ -96,44 +94,7 @@ module.exports = function (RED) {
                                 msg.payload = data.body.predictions[0].label;
 
                                 if (node.bounding_box) {
-                                    //msg.boundingBoxImage = await lib.createBoundingBox(node.inputData, data.body.predictions)
-                                    //await lib.createBoundingBox(node.inputData, data.body.predictions)
-                                    
-
-
-                                    try {
-                                        let canvas = createCanvas(200,200)
-                                        const img = new Image()
-                                        img.onload = async () => {
-                                            canvas = createCanvas(img.width, img.height)
-                                            let ctx = canvas.getContext('2d')
-                                            ctx.drawImage(img, 0, 0)
-                                            ctx.font = '48px serif';
-                                            ctx.fillStyle = '#1bc6c0';
-                                            ctx.strokeStyle = '#1bc6c0';
-                                            ctx.lineWidth = "3";
-                                            // Write "Awesome!"
-                                            ctx.rotate(0.1)
-                                            ctx.fillText('Awesome!', 50, 100)
-                                            
-                                            // Draw line under text
-                                            var text = ctx.measureText('Awesome!')
-                                            ctx.strokeStyle = 'rgba(0,0,0,0.5)'
-                                            ctx.beginPath()
-                                            ctx.lineTo(50, 102)
-                                            ctx.lineTo(50 + text.width, 102)
-                                            ctx.stroke()
-                                            
-                                        }
-                                        //img.onerror = err => { throw err }
-                                        img.src = node.inputData
-                                        msg.boundingBoxImage = canvas.toBuffer();
-                                    } catch (e) {
-                                        console.log(`error processing image - ${ e }`)
-                                    }
-
-
-                                    
+                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.predictions)
                                 }
 
                             } else {
