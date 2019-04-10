@@ -204,7 +204,6 @@ exports.createBoundingBox = (imageData, modelData) => {
                 const boxHeight = (box[2] - box[0]) * img.height;
                 const boxWidth = (box[3] - box[1]) * img.width;
                 ctx.strokeRect(xMin, yMin, boxWidth, boxHeight);
-
                 // LABEL GENERATION
                 const confidence = (modelData[i].probability * 100).toFixed(1) + '%';
                 const label = modelData[i].label;
@@ -214,11 +213,10 @@ exports.createBoundingBox = (imageData, modelData) => {
                     tagWidth = ctx.measureText(label).width;
                     text = label;
                 }
-                const tHeight = parseInt(ctx.font, 10) * 1.4;
+                const tHeight = parseInt(ctx.font, 10) * 1.3;
                 ctx.fillRect(xMin, yMin, tagWidth + 3, tHeight);
                 ctx.fillStyle = textColor;
-                ctx.fillText(text, xMin + 5, yMin + 5);
-
+                ctx.fillText(text, xMin + 2, yMin + 6);
             })
         }
         img.onerror = err => { throw err }
