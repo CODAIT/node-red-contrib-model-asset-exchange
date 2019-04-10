@@ -180,7 +180,28 @@ var ModelAssetExchangeServer = (function(){
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
 exports.createBoundingBox = (imageData, modelData) => {
-    console.log('creating bounding box image')
-    console.log(JSON.stringify(modelData))
-    return imageData
+    return new Promise ((resolve, reject) => {
+        const boxes = modelData.map(result => result.detection_box)
+        //console.log('creating bounding box image')
+        //console.log(JSON.stringify(boxes))
+        //let img = document.createElement('img');
+        //let canvas = document.createElement('canvas');
+        // let ctx = canvas.getContext('2d');
+        // img.onload = async () => {
+        //     try {
+        //         //await ctx.drawImage(img, 0, 0);
+        //         resolve('good')
+        //     } catch (e) {
+        //         reject (`Bounding Box ${e}`);
+        //     } 
+        // }
+        // img.onerror = err => { throw err }
+        // img.src = imageData;
+        try {
+            //await ctx.drawImage(img, 0, 0);
+            resolve('good')
+        } catch (e) {
+            reject (`Bounding Box ${e}`);
+        }
+    })
 }
