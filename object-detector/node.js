@@ -69,7 +69,7 @@ module.exports = function (RED) {
                 node.error('Method is not specified.', msg);
                 errorFlag = true;
             }
-            var setData = async function (msg, data) {
+            var setData = function (msg, data) {
                 if (data) {
                     if (data.response) {
                         if (data.response.statusCode) {
@@ -112,8 +112,8 @@ module.exports = function (RED) {
             };
             if (!errorFlag) {
                 node.status({ fill: 'blue', shape: 'dot', text: 'ModelAssetExchangeServer.status.requesting' });
-                result.then(async function (data) {
-                    node.send(await setData(msg, data));
+                result.then(function (data) {
+                    node.send(setData(msg, data));
                     node.status({});
                 }).catch(function (error) {
                     var message = null;
