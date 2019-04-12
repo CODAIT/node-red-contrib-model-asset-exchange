@@ -1,0 +1,155 @@
+[
+  {
+      "id": "fb9f2f1a.6de7f",
+      "type": "tab",
+      "label": "Using Multiple Models",
+      "disabled": false,
+      "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation."
+  },
+  {
+      "id": "6c39a79e.485748",
+      "type": "debug",
+      "z": "fb9f2f1a.6de7f",
+      "name": "",
+      "active": true,
+      "tosidebar": true,
+      "console": false,
+      "tostatus": false,
+      "complete": "payload",
+      "targetType": "msg",
+      "x": 1176,
+      "y": 120,
+      "wires": []
+  },
+  {
+      "id": "8bafdf80.fa7da",
+      "type": "object-detector",
+      "z": "fb9f2f1a.6de7f",
+      "service": "96195b68.679e18",
+      "method": "predict",
+      "passthrough": true,
+      "bounding_box": true,
+      "predict_body": "",
+      "predict_bodyType": "str",
+      "predict_threshold": "0.7",
+      "predict_thresholdType": "str",
+      "name": "",
+      "x": 360,
+      "y": 120,
+      "wires": [
+          [
+              "dd67bf05.d8256",
+              "e3f9db88.50b798"
+          ]
+      ]
+  },
+  {
+      "id": "2384d389.022c1c",
+      "type": "fileinject",
+      "z": "fb9f2f1a.6de7f",
+      "name": "",
+      "x": 140,
+      "y": 120,
+      "wires": [
+          [
+              "8bafdf80.fa7da"
+          ]
+      ]
+  },
+  {
+      "id": "7a3149a4.b9f218",
+      "type": "camera",
+      "z": "fb9f2f1a.6de7f",
+      "name": "",
+      "x": 130,
+      "y": 214,
+      "wires": [
+          [
+              "8bafdf80.fa7da"
+          ]
+      ]
+  },
+  {
+      "id": "5992ec00.f522e4",
+      "type": "comment",
+      "z": "fb9f2f1a.6de7f",
+      "name": "Display bounding boxes on an input image using the object-detector node, then pass the input to the image-caption-generator to display a generated caption.",
+      "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation.",
+      "x": 560,
+      "y": 40,
+      "wires": []
+  },
+  {
+      "id": "62fba4c.11ec95c",
+      "type": "image",
+      "z": "fb9f2f1a.6de7f",
+      "name": "Display Augmented Output",
+      "width": "300",
+      "x": 744.5,
+      "y": 220,
+      "wires": []
+  },
+  {
+      "id": "dd67bf05.d8256",
+      "type": "function",
+      "z": "fb9f2f1a.6de7f",
+      "name": "Parse Model Response",
+      "func": "msg.payload = msg.boundingBoxImage\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "x": 449.5,
+      "y": 220,
+      "wires": [
+          [
+              "62fba4c.11ec95c"
+          ]
+      ]
+  },
+  {
+      "id": "49c3158c.658edc",
+      "type": "image-caption-generator",
+      "z": "fb9f2f1a.6de7f",
+      "service": "82a87cae.a2fec",
+      "method": "predict",
+      "predict_body": "",
+      "predict_bodyType": "str",
+      "name": "",
+      "x": 921.5,
+      "y": 120,
+      "wires": [
+          [
+              "6c39a79e.485748"
+          ]
+      ]
+  },
+  {
+      "id": "e3f9db88.50b798",
+      "type": "function",
+      "z": "fb9f2f1a.6de7f",
+      "name": "Parse Model Response",
+      "func": "msg.payload = msg.inputData\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "x": 609,
+      "y": 120,
+      "wires": [
+          [
+              "49c3158c.658edc"
+          ]
+      ]
+  },
+  {
+      "id": "96195b68.679e18",
+      "type": "object-detector-service",
+      "z": "",
+      "host": "https://max-object-detector.max.us-south.containers.appdomain.cloud",
+      "name": "cloud"
+  },
+  {
+      "id": "82a87cae.a2fec",
+      "type": "image-caption-generator-service",
+      "z": "",
+      "host": "https://max-image-caption-generator.max.us-south.containers.appdomain.cloud",
+      "name": "cloud"
+  }
+]
