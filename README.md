@@ -41,7 +41,7 @@ The `node-red-contrib-model-asset-exchange` module includes a couple of example 
 
    ![import sample flows](/docs/images/import_sample_flows.png) 
 
-> Note: The flows utilize nodes from the [node-red-contrib-browser-util](https://flows.nodered.org/node/node-red-contrib-browser-utils) module. Install the module if it is not installed yet. 
+> Note: The flows utilize nodes from the [node-red-contrib-browser-util](https://flows.nodered.org/node/node-red-contrib-browser-utils) and [node-red-contrib-image-output](https://flows.nodered.org/node/node-red-contrib-image-output) modules. See the flow description for more details on which nodes are used in a particular example.
 
 You can deploy and run these flows as is. The deep learning nodes in these flows have been pre-configured (service: _cloud_) to connect to hosted evaluation instances of the deep learning microservices. 
 
