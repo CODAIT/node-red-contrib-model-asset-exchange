@@ -139,6 +139,24 @@
     set. The input to the model is an image, and the output is a list of estimated class probabilities for the objects
     detected in the image. The model is based on the SSD Mobilenet V1 object detection model for TensorFlow.
     </p>
+
+    <h3>Options:</h3>
+    <p>This node features two options that can be enabled/disabled in the node's UI panel.</p>
+    <dl>
+        <dt>
+            Pass Through Input:
+        </dt>
+        <dd>
+            Include the input image in the output payload in the <code>msg.inputData</code> property.
+        </dd>
+        <dt>
+            Display Bounding Boxes:
+        </dt>
+        <dd>
+            Include an augmented image which includes object detection bounding boxes in the output payload, in the <code>msg.boundingBoxImage</code> property.
+        </dd>
+    </dl>
+
     <hr>
     <h1>predict</h1>
     <h3>Inputs:</h3>
