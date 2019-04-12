@@ -12,6 +12,9 @@ Getting started flows:
  - [Classify images according to the place/location labels in the Places365 data set](https://flows.nodered.org/flow/196917d2af313396a0bf3c737c9d2d5b)
  - [Detect faces in an image and predict the emotional state of each person](https://flows.nodered.org/flow/1927b6bd87cb18f17a52e9e23dcf451e)
 
+Beyond the Basics flows:
+ - [Process an image with multiple deep learning models](https://flows.nodered.org/flow/011d28371d71a6c4d45b42e1dd91e704)
+
 Raspberry Pi flows:
  - [Capture an image with the raspi-camera and display it with a generated caption on the Node-RED Dashboard](https://flows.nodered.org/flow/abe41021d95ebabd28b4aaa8e68f4185)
  - [Detect faces in an image captured with the raspi-camera and display it with a facial bounding box on the Node-RED Dashboard](https://flows.nodered.org/flow/d6e8d65122875fd46aece59fb84ac351)
