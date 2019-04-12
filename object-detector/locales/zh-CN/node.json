@@ -17,7 +17,7 @@
             "predict": "predict",
             "body": "body",
             "threshold": "threshold",
-            "passthrough": "Input Passthrough",
+            "passthrough": "Pass Through Input",
             "bounding_box": "Display Bounding Boxes",
             "optionalParameters": "可选项"
         }
