@@ -44,6 +44,8 @@
                 });
 
                 $("#predict_threshold").hide();
+                $("#passthrough").hide();
+                $("#bounding_box").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -51,7 +53,9 @@
 
                     $("#optional-parameters").show();
                     $("#optional-parameters-label").show();
-                    
+
+                    $("#passthrough").show();
+                    $("#bounding_box").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -106,6 +110,14 @@
         <input type="hidden" id="node-input-predict_bodyType">
     </div>
 
+    <div class="form-row" id="predict_threshold">
+        <label for="node-input-predict_threshold"><i class="fa fa-list"></i> <span data-i18n="ModelAssetExchangeServer.parameters.threshold"></span></label>
+
+        <input type="text" id="node-input-predict_threshold" placeholder="Probability threshold for including a detected object in the response in the range [0, 1] (default: 0.7). Lowering the threshold includes objects the model is less certain about." style="width:70%">
+        <input type="hidden" id="node-input-predict_thresholdType">
+    </div>
+
+    <h4 style="margin-top: 2%;">Output Options:</h4>
     <div class="form-row" id="passthrough">
         <label for="node-input-passthrough"><i class="fa fa-arrow-right"></i> <span data-i18n="ModelAssetExchangeServer.parameters.passthrough"></span></label>
         <input type="checkbox" id="node-input-passthrough">
@@ -114,13 +126,6 @@
     <div class="form-row" id="bounding_box">
         <label for="node-input-bounding_box"><i class="fa fa-image"></i> <span data-i18n="ModelAssetExchangeServer.parameters.bounding_box"></span></label>
         <input type="checkbox" id="node-input-bounding_box">
-    </div>
-
-    <div class="form-row" id="predict_threshold">
-        <label for="node-input-predict_threshold"><i class="fa fa-list"></i> <span data-i18n="ModelAssetExchangeServer.parameters.threshold"></span></label>
-
-        <input type="text" id="node-input-predict_threshold" placeholder="Probability threshold for including a detected object in the response in the range [0, 1] (default: 0.7). Lowering the threshold includes objects the model is less certain about." style="width:70%">
-        <input type="hidden" id="node-input-predict_thresholdType">
     </div>
 
     <hr/>
@@ -168,6 +173,14 @@
     <dl class="message-properties">
       <dt>payload <span class="property-type">object</span></dt>
       <dd>Predicted data.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>Predicted data.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>Predicted data.</dd>
     </dl>
     <br>
     <h1>labels</h1>
