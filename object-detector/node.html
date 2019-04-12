@@ -5,6 +5,8 @@
         defaults: {
             service: { value: "", type: "object-detector-service", required: true },
             method: { value: "predict", required: true },
+            passthrough: { value: "" },
+            bounding_box: { value: "" },
             predict_body: { value: "" },
             predict_bodyType: { value: "str" },
             predict_threshold: { value: "0.7" },
@@ -42,6 +44,8 @@
                 });
 
                 $("#predict_threshold").hide();
+                $("#passthrough").hide();
+                $("#bounding_box").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -49,7 +53,9 @@
 
                     $("#optional-parameters").show();
                     $("#optional-parameters-label").show();
-                    
+
+                    $("#passthrough").show();
+                    $("#bounding_box").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -73,7 +79,9 @@
                 showParameters();
             });
 
-        }
+        },
+        oneditsave: function() {
+        } 
     });
 </script>
 
@@ -109,6 +117,17 @@
         <input type="hidden" id="node-input-predict_thresholdType">
     </div>
 
+    <h4 style="margin-top: 2%;">Output Options:</h4>
+    <div class="form-row" id="passthrough">
+        <label for="node-input-passthrough"><i class="fa fa-arrow-right"></i> <span data-i18n="ModelAssetExchangeServer.parameters.passthrough"></span></label>
+        <input type="checkbox" id="node-input-passthrough">
+    </div>
+
+    <div class="form-row" id="bounding_box">
+        <label for="node-input-bounding_box"><i class="fa fa-image"></i> <span data-i18n="ModelAssetExchangeServer.parameters.bounding_box"></span></label>
+        <input type="checkbox" id="node-input-bounding_box">
+    </div>
+
     <hr/>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -125,6 +144,24 @@
     set. The input to the model is an image, and the output is a list of estimated class probabilities for the objects
     detected in the image. The model is based on the SSD Mobilenet V1 object detection model for TensorFlow.
     </p>
+
+    <h3>Options:</h3>
+    <p>This node features two options that can be enabled/disabled in the node's UI panel.</p>
+    <dl>
+        <dt>
+            Pass Through Input:
+        </dt>
+        <dd>
+            Include the input image in the output payload in the <code>msg.inputData</code> property.
+        </dd>
+        <dt>
+            Display Bounding Boxes:
+        </dt>
+        <dd>
+            Include an augmented image which includes object detection bounding boxes in the output payload, in the <code>msg.boundingBoxImage</code> property.
+        </dd>
+    </dl>
+
     <hr>
     <h1>predict</h1>
     <h3>Inputs:</h3>
@@ -134,8 +171,16 @@
     </dl>
     <h3>Outputs:</h3>
     <dl class="message-properties">
-      <dt>payload <span class="property-type">object</span></dt>
+      <dt>payload <span class="property-type">string</span></dt>
       <dd>Predicted data.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>inputData <span class="property-type">Buffer (optional)</span></dt>
+        <dd>Input image data.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>boundingBoxImage <span class="property-type">Buffer (optional)</span></dt>
+        <dd>Augmented input image with displayed bounding boxes.</dd>
     </dl>
     <br>
     <h1>labels</h1>
