@@ -1,26 +1,5 @@
 [
     {
-        "id": "257b0fcf.c1302",
-        "type": "tab",
-        "label": "Object detection example flow",
-        "disabled": false,
-        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
-    },
-    {
-        "id": "5680e5ee.1441cc",
-        "type": "debug",
-        "z": "257b0fcf.c1302",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "x": 610,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "d266c943.67ce48",
         "type": "object-detector",
         "z": "257b0fcf.c1302",
@@ -39,68 +18,6 @@
             [
                 "5680e5ee.1441cc",
                 "9f36df26.ff3c9"
-            ]
-        ]
-    },
-    {
-        "id": "b20eb66e.1fa248",
-        "type": "fileinject",
-        "z": "257b0fcf.c1302",
-        "name": "",
-        "x": 140,
-        "y": 120,
-        "wires": [
-            [
-                "d266c943.67ce48"
-            ]
-        ]
-    },
-    {
-        "id": "520cd665.7725c8",
-        "type": "camera",
-        "z": "257b0fcf.c1302",
-        "name": "",
-        "x": 130,
-        "y": 178,
-        "wires": [
-            [
-                "d266c943.67ce48"
-            ]
-        ]
-    },
-    {
-        "id": "f124cc22.5c93a",
-        "type": "comment",
-        "z": "257b0fcf.c1302",
-        "name": "Localize and identify multiple objects in a single image, then display the output",
-        "info": "",
-        "x": 320,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "fd5d2cbc.ed717",
-        "type": "image",
-        "z": "257b0fcf.c1302",
-        "name": "Display Augmented Output",
-        "width": "300",
-        "x": 680.5,
-        "y": 178,
-        "wires": []
-    },
-    {
-        "id": "9f36df26.ff3c9",
-        "type": "function",
-        "z": "257b0fcf.c1302",
-        "name": "Parse Model Response",
-        "func": "msg.payload = msg.boundingBoxImage\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 389.5,
-        "y": 178,
-        "wires": [
-            [
-                "fd5d2cbc.ed717"
             ]
         ]
     },
