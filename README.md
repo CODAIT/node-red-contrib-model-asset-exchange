@@ -35,7 +35,7 @@ To get started follow the [comprehensive tutorial](https://developer.ibm.com/tut
 
 The `node-red-contrib-model-asset-exchange` module includes a couple of example flows to get you started. To import the flows into the workspace:
 
-1. In the Node-RED editor open **&#9776;** > **Import** > **Examples** > **model asset-exchange**.
+1. In the Node-RED editor open **&#9776;** > **Import** > **Examples** > **model asset exchange**.
 2. Select one of the sub-directories to choose between the basic flows in **getting started**, some more complex examples in **beyond the basics**, or some flows designed to run on the **raspberry pi**.
 3. Choose a flow.
 
