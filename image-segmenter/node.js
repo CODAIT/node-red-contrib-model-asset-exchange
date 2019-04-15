@@ -6,10 +6,9 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
-
         this.predict_image = config.predict_image;
         this.predict_imageType = config.predict_imageType || 'str';
-
+        this.passthrough = config.passthrough || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -25,9 +24,11 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
+            if (typeof msg.payload === 'object' && node.passthrough) {
+                node.inputData = msg.payload;
+            }
 
             var result;
-            
             if (!errorFlag && node.method === 'get_metadata') {
                 var parameters = [], nodeParam, nodeParamType;
 
@@ -82,7 +83,11 @@ module.exports = function (RED) {
                         }
                     }
                 }
-                return { ...msg, topic: "max-image-segmenter" };
+                let outputMsg = { ...msg, topic: "max-image-segmenter" };
+                if (node.passthrough) {
+                    outputMsg.inputData = node.inputData
+                }
+                return outputMsg;
             };
 
             if (!errorFlag) {
