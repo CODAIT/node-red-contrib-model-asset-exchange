@@ -6,6 +6,7 @@
             service: { value: "", type: "audio-classifier-service", required: true },
             method: { value: "predict", required: true },  
 
+            passthrough: { value: "" },
             predict_audio: { value: "" },
             predict_audioType: { value: "str" },
 
@@ -34,6 +35,7 @@
                 });
                 
                 $("#predict_audio").hide();
+                $("#passthrough").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -41,7 +43,7 @@
 
                 }
                 if ($("#node-input-method").val() === 'predict') {
-
+                    $("#passthrough").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -99,6 +101,12 @@
         <input type="hidden" id="node-input-predict_audioType">
     </div>
 
+    <div class="form-row" id="passthrough">
+        <h4 style="margin-top: 2%;">Output Options:</h4>
+        <label for="node-input-passthrough"><i class="fa fa-arrow-right"></i> <span data-i18n="ModelAssetExchangeServer.parameters.passthrough"></span></label>
+        <input type="checkbox" id="node-input-passthrough">
+    </div>
+
     <hr/>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -109,6 +117,18 @@
 <script type="text/x-red" data-help-name="audio-classifier">
 
     <p>This model recognizes a signed 16-bit PCM wav file as an input, generates embeddings, applies PCA transformation/quantization, uses the embeddings as an input to a multi-attention classifier and outputs top 5 class predictions and probabilities as output. The model currently supports 527 classes which are part of the Audioset Ontology.</p>
+    
+    <h3>Options:</h3>
+    <p>This node features an option that can be enabled/disabled in the node's UI panel.</p>
+    <dl>
+        <dt>
+            Pass Through Input:
+        </dt>
+        <dd>
+            Include the input audio in the output payload in the <code>msg.inputData</code> property.
+        </dd>
+    </dl>
+
     <hr>
     <h1>predict</h1>
     <h3>Inputs:</h3>
@@ -120,6 +140,10 @@
     <dl class="message-properties">
         <dt>payload <span class="property-type">object</span></dt>
         <dd>Prediction.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>inputData <span class="property-type">Buffer (optional)</span></dt>
+        <dd>Input audio data.</dd>
     </dl>
     <br>
     <h1>metadata</h1>
