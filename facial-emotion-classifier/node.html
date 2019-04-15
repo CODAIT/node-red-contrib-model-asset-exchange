@@ -5,7 +5,7 @@
         defaults: {
             service: { value: "", type: "facial-emotion-classifier-service", required: true },
             method: { value: "predict", required: true },
-
+            passthrough: { value: "" },
             predict_image: { value: "" },
             predict_imageType: { value: "str" },
 
@@ -34,6 +34,7 @@
                 });
 
                 $("#predict_image").hide();
+                $("#passthrough").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -44,7 +45,7 @@
 
                 }
                 if ($("#node-input-method").val() === 'predict') {
-
+                    $("#passthrough").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -109,6 +110,12 @@
         <input type="hidden" id="node-input-predict_imageType">
     </div>
 
+    <div class="form-row" id="passthrough">
+        <h4 style="margin-top: 2%;">Output Options:</h4>
+        <label for="node-input-passthrough"><i class="fa fa-arrow-right"></i> <span data-i18n="MaxFacialEmotionClassifier.parameters.passthrough"></span></label>
+        <input type="checkbox" id="node-input-passthrough">
+    </div>
+
     <hr/>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -120,6 +127,18 @@
     <p>
     This model first detects faces in an input image. Then, each face is passed to the emotion classification model which predicts the emotional state of the human, from a set of 8 emotion classes: neutral, happiness, surprise, sadness, anger, disgust, fear, contempt. The output of the model is a set of bounding box coordinates and predicted probabilities for each of the emotion classes, for each face detected in the image. The format of the bounding box coordinates is [ymin, xmin, ymax, xmax], where each coordinate is normalized by the appropriate image dimension (height for y or width for x). Each coordinate is therefore in the range [0, 1].
     </p>
+
+    <h3>Options:</h3>
+    <p>This node features an option that can be enabled/disabled in the node's UI panel.</p>
+    <dl>
+        <dt>
+            Pass Through Input:
+        </dt>
+        <dd>
+            Include the input image in the output payload in the <code>msg.inputData</code> property.
+        </dd>
+    </dl>
+
     <hr>
     <h1>predict</h1>
     <h3>Inputs:</h3>
@@ -131,6 +150,10 @@
     <dl class="message-properties">
       <dt>payload <span class="property-type">object</span></dt>
       <dd>Predicted data.</dd>
+    </dl>
+    <dl class="message-properties">
+      <dt>inputData <span class="property-type">Buffer (optional)</span></dt>
+      <dd>Input image data.</dd>
     </dl>
     <br>
     <h1>labels</h1>

@@ -16,6 +16,7 @@
             "get_model_metadata_api": "metadata",
             "predict": "predict",
             "image": "image",
+            "passthrough": "Pass Through Input",
             "optionalParameters": "任意項目"
         }
     }
