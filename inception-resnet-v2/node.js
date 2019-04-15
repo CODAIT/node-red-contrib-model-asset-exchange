@@ -6,10 +6,9 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
-
+        this.passthrough = config.passthrough || false;
         this.predict_image = config.predict_image;
         this.predict_imageType = config.predict_imageType || 'str';
-
         var node = this;
 
         node.on('input', function (msg) {
@@ -25,10 +24,11 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
+            if (typeof msg.payload === 'object' && node.passthrough) {
+                node.inputData = msg.payload;
+            }
 
             var result;
-            var errorFlag = false;
-
             if (!errorFlag && node.method === 'get_metadata') {
                 var get_metadata_parameters = [];
                 result = client.get_metadata(get_metadata_parameters);
@@ -81,7 +81,11 @@ module.exports = function (RED) {
                         msg.details = data.body;
                     }
                 }
-                return { ...msg, topic: "max-inception-resnet-v2" };
+                let outputMsg = { ...msg, topic: "max-inception-resnet-v2" };
+                if (node.passthrough) {
+                    outputMsg.inputData = node.inputData
+                }
+                return outputMsg;
             };
 
             if (!errorFlag) {
