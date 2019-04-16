@@ -8,6 +8,7 @@ module.exports = function (RED) {
         this.method = config.method;
         this.predict_audio = config.predict_audio;
         this.predict_audioType = config.predict_audioType || 'str';
+        this.passthrough = config.passthrough || false;
 
         var node = this;
 
@@ -23,6 +24,9 @@ module.exports = function (RED) {
             }
             if (!errorFlag) {
                 client.body = msg.payload;
+            }
+            if (typeof msg.payload === 'object' && node.passthrough) {
+                node.inputData = msg.payload;
             }
 
             var result;
@@ -79,7 +83,11 @@ module.exports = function (RED) {
                         }
                     }
                 }
-                return { ...msg, topic: "max-audio-classifier" };
+                let outputMsg = { ...msg, topic: "max-audio-classifier" };
+                if (node.passthrough) {
+                    outputMsg.inputData = node.inputData
+                }
+                return outputMsg;
             };
 
 

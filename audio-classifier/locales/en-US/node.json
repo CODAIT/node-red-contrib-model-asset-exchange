@@ -15,6 +15,7 @@
             "get_metadata": "metadata",
             "predict": "predict",
             "audio": "audio",
+            "passthrough": "Pass Through Input",
             "optionalParameters": "Options"
         }
     }

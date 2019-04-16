@@ -8,6 +8,7 @@ module.exports = function (RED) {
         this.method = config.method;
         this.predict_body = config.predict_body;
         this.predict_bodyType = config.predict_bodyType || 'str';
+        this.passthrough = config.passthrough || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -22,6 +23,9 @@ module.exports = function (RED) {
             }
             if (!errorFlag) {
                 client.body = msg.payload;
+            }
+            if (typeof msg.payload === 'object' && node.passthrough) {
+                node.inputData = msg.payload;
             }
 
             var result;
@@ -75,7 +79,11 @@ module.exports = function (RED) {
                         msg.details = data.body;
                     }
                 }
-                return { ...msg, topic: "max-image-caption-generator" };
+                let outputMsg = { ...msg, topic: "max-image-caption-generator" };
+                if (node.passthrough) {
+                    outputMsg.inputData = node.inputData
+                }
+                return outputMsg;
             };
             if (!errorFlag) {
                 node.status({ fill: 'blue', shape: 'dot', text: 'ModelAssetExchangeServer.status.requesting' });

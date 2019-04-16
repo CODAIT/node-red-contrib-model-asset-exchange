@@ -5,7 +5,7 @@
         defaults: {
             service: { value: "", type: "scene-classifier-service", required: true },
             method: { value: "predict", required: true },  
-
+            passthrough: { value: "" },
             predict_image: { value: "" },
             predict_imageType: { value: "str" },
 
@@ -34,6 +34,7 @@
                 });
 
                 $("#predict_image").hide();
+                $("#passthrough").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -41,7 +42,7 @@
 
                 }
                 if ($("#node-input-method").val() === 'predict') {
-
+                    $("#passthrough").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -99,6 +100,12 @@
         <input type="hidden" id="node-input-predict_imageType">
     </div>
 
+    <div class="form-row" id="passthrough">
+        <h4 style="margin-top: 2%;">Output Options:</h4>
+        <label for="node-input-passthrough"><i class="fa fa-arrow-right"></i> <span data-i18n="ModelAssetExchangeServer.parameters.passthrough"></span></label>
+        <input type="checkbox" id="node-input-passthrough">
+    </div>
+
     <hr/>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -109,6 +116,18 @@
 <script type="text/x-red" data-help-name="scene-classifier">
     
     <p>This model recognizes the 365 different classes of scene/location in the Places365-Standard subset of the Places2 Dataset. The model is based on the Places365-CNN Model and consists of a pre-trained deep convolutional net using the ResNet architecture, trained on the ImageNet-2012 data set. The pre-trained model is then fine-tuned on the Places365-Standard dataset. The input to the model is a 224×224 image, and the output is a list of estimated class probabilities. The specific model variant used is the PyTorch Places365 ResNet18 Model.</p>
+    
+    <h3>Options:</h3>
+    <p>This node features an option that can be enabled/disabled in the node's UI panel.</p>
+    <dl>
+        <dt>
+            Pass Through Input:
+        </dt>
+        <dd>
+            Include the input image in the output payload in the <code>msg.inputData</code> property.
+        </dd>
+    </dl>
+    
     <hr>
     <h1>predict</h1>
     <h3>Inputs:</h3>
@@ -120,6 +139,10 @@
     <dl class="message-properties">
         <dt>payload <span class="property-type">object</span></dt>
         <dd>Predicted scene/location.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>inputData <span class="property-type">Buffer (optional)</span></dt>
+        <dd>Input image data.</dd>
     </dl>
     <br>
     <h1>metadata</h1>
