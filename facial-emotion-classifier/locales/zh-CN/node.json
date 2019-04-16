@@ -17,6 +17,7 @@
             "predict": "predict",
             "image": "image",
             "passthrough": "Pass Through Input",
+            "bounding_box": "Display Bounding Boxes",
             "optionalParameters": "可选项"
         }
     }

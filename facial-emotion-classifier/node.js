@@ -6,10 +6,10 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
-
         this.predict_image = config.predict_image;
         this.predict_imageType = config.predict_imageType || 'str';
         this.passthrough = config.passthrough || false;
+        this.bounding_box = config.bounding_box || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -25,7 +25,7 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
-            if (typeof msg.payload === 'object' && node.passthrough) {
+            if (typeof msg.payload === 'object' && (node.passthrough || node.bounding_box)) {
                 node.inputData = msg.payload;
             }
 
@@ -80,6 +80,9 @@ module.exports = function (RED) {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 const predictions = data.body.predictions.map(person => person.emotion_predictions[0].label);
                                 msg.payload = predictions[0]
+                                if (node.bounding_box) {
+                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.predictions);
+                                }
                             } else {
                                 msg.payload = null;
                             }
