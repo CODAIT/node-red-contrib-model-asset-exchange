@@ -16,6 +16,7 @@
             "predict": "predict",
             "body": "body",
             "passthrough": "Pass Through Input",
+            "bounding_box": "Display Bounding Boxes",
             "optionalParameters": "任意項目"
         }
     }
