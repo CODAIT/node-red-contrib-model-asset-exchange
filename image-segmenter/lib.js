@@ -1,4 +1,7 @@
 /*jshint -W069 */
+
+const { createCanvas, Image } = require('canvas');
+
 /**
  * An API for serving models
  * @class ModelAssetExchangeServer
@@ -148,3 +151,75 @@ var ModelAssetExchangeServer = (function(){
 })();
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
+
+exports.createBoundingBox = (imageData, modelData) => {
+    try {
+        let canvas;
+        const img = new Image();
+        img.onload = async () => {
+            const { scaledWidth, scaledHeight } = getScaledSize(img.width, img.height);
+            canvas = createCanvas(scaledWidth, scaledHeight);
+            const ctx = canvas.getContext('2d');
+            const flatSegMap = modelData.reduce((a, b) => a.concat(b), []);
+            ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
+            const imageData = ctx.getImageData(0, 0, scaledWidth, scaledHeight);
+            const data = imageData.data;
+            let objColor = [0, 0, 0];
+            flatSegMap.forEach((s, i) => {
+                if (s !== OBJ_LIST.indexOf('background')) {
+                    objColor = getColor(s);
+                    data[(i * 4)] = objColor[0]; // red channel
+                    data[(i * 4) + 1] = objColor[1]; // green channel
+                    data[(i * 4) + 2] = objColor[2]; // blue channel
+                    data[(i * 4) + 3] = 200; // alpha
+                }
+            })
+            ctx.putImageData(imageData, 0, 0);
+        }
+        img.onerror = err => { throw err }
+        img.src = imageData;
+        return canvas.toBuffer();
+    } catch (e) {
+        console.log(`error processing image - ${ e }`)
+        return null;
+    }
+}
+
+const MAX_SIZE = 513;
+
+const COLOR_MAP = {
+    green: [0, 128, 0],
+    red: [255, 0, 0],
+    blue: [0, 0, 255],
+    purple: [160, 32, 240],
+    pink: [255, 185, 80],
+    teal: [0, 128, 128],
+    yellow: [255, 255, 0],
+    gray: [192, 192, 192]
+};
+const COLOR_LIST = Object.values(COLOR_MAP);
+
+const OBJ_LIST = ['background', 'airplane', 'bicycle', 'bird', 'boat', 
+'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'dining table', 
+'dog', 'horse', 'motorbike', 'person', 'potted plant', 'sheep', 
+'sofa', 'train', 'tv'];
+
+const flatten = function (a) {
+    return Array.isArray(a) ? [].concat(...a.map(flatten)) : a;
+}
+
+const getColor = pixel => COLOR_LIST[pixel % COLOR_LIST.length];
+
+const getScaledSize = (width, height) => {
+    if (width > height) {
+        return {
+            scaledWidth: MAX_SIZE,
+            scaledHeight: Math.round((height / width) * MAX_SIZE)
+        };
+    } else {
+        return {
+            scaledWidth: Math.round((width / height) * MAX_SIZE),
+            scaledHeight: MAX_SIZE
+        };
+    }
+}
