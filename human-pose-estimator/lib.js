@@ -1,4 +1,7 @@
 /*jshint -W069 */
+
+const { createCanvas, Image } = require('canvas');
+
 /**
  * This model detects humans and their poses in a given image. The model first detects the humans in the input image and then identifies the body parts, including nose, neck, eyes, shoulders, elbows, wrists, hips, knees, and ankles. Next, each pair of associated body parts is connected by a pose line. The pose lines are assembled into full body poses for each of the humans detected in the image. The model is based on the TF implementation of OpenPose model.
  * @class ModelAssetExchangeServer
@@ -143,3 +146,41 @@ ModelAssetExchangeServer.prototype.get_metadata = function(parameters){
 })();
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
+
+exports.createBoundingBox = (imageData, modelData) => {
+    try {
+        let canvas;
+        const img = new Image();
+        img.onload = async () => {
+            canvas = createCanvas(img.width, img.height);
+            const ctx = canvas.getContext('2d');
+            const solidColor = '#1bc6c0';
+            const textColor = '#000';
+            ctx.drawImage(img, 0, 0);                    
+            const linesArray = modelData.map((obj, i) => obj.pose_lines);
+            linesArray.forEach((skeleton, i) => {
+                skeleton.forEach((lineObj, i) => {
+                    const { line } = lineObj;
+                    ctx.fillStyle = solidColor;
+                    ctx.strokeStyle = solidColor;
+                    ctx.lineWidth = "5";
+                    // LINE GENERATION
+                    const xMin = line[0];
+                    const yMin = line[1];
+                    const xMax = line[2];
+                    const yMax = line[3];
+                    ctx.beginPath();
+                    ctx.moveTo(xMin, yMin);
+                    ctx.lineTo(xMax, yMax);
+                    ctx.stroke();
+                })
+            })
+        }
+        img.onerror = err => { throw err }
+        img.src = imageData;
+        return canvas.toBuffer();
+    } catch (e) {
+        console.log(`error processing image - ${ e }`);
+        return null;
+    }
+}
