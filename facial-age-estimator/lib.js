@@ -148,15 +148,15 @@ exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
 exports.createBoundingBox = (imageData, modelData) => {
     try {
-        let canvas
-        const img = new Image()
+        let canvas;
+        const img = new Image();
         img.onload = async () => {
-            canvas = createCanvas(img.width, img.height)
+            canvas = createCanvas(img.width, img.height);
             const ctx = canvas.getContext('2d')
             const solidColor = '#1bc6c0';
             const textColor = '#000';
-            ctx.drawImage(img, 0, 0)                    
-            const boxesArray = modelData.map((obj, i) => obj.face_box)
+            ctx.drawImage(img, 0, 0);
+            const boxesArray = modelData.map((obj, i) => obj.face_box);
             boxesArray.forEach((box, i) => {
                 ctx.font = '36px sans-serif';
                 ctx.textBaseline = 'top';
@@ -177,10 +177,10 @@ exports.createBoundingBox = (imageData, modelData) => {
             })
         }
         img.onerror = err => { throw err }
-        img.src = imageData
+        img.src = imageData;
         return canvas.toBuffer();
     } catch (e) {
-        console.log(`error processing image - ${ e }`)
-        return null
+        console.log(`error processing image - ${ e }`);
+        return null;
     }
 }

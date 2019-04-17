@@ -94,7 +94,7 @@ module.exports = function (RED) {
                                 msg.payload = data.body.predictions[0].label;
 
                                 if (node.bounding_box) {
-                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.predictions)
+                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.predictions);
                                 }
 
                             } else {
@@ -106,7 +106,7 @@ module.exports = function (RED) {
                 }
                 let outputMsg = { ...msg, topic: "max-object-detector" };
                 if (node.passthrough) {
-                    outputMsg.inputData = node.inputData
+                    outputMsg.inputData = node.inputData;
                 }
                 return outputMsg;
             };

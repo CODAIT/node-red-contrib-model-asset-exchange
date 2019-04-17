@@ -92,7 +92,7 @@ module.exports = function (RED) {
                 }
                 let outputMsg = { ...msg, topic: "max-facial-emotion-classifier" };
                 if (node.passthrough) {
-                    outputMsg.inputData = node.inputData
+                    outputMsg.inputData = node.inputData;
                 }
                 return outputMsg;
             };
