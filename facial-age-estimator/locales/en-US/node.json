@@ -16,7 +16,7 @@
             "predict": "predict",
             "body": "body",
             "passthrough": "Pass Through Input",
-            "annotated_input": "Display Annotated Input",
+            "annotated_input": "Generate Annotated Input",
             "optionalParameters": "Options"
         }
     }
