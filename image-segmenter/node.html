@@ -6,9 +6,9 @@
             service: { value: "", type: "image-segmenter-service", required: true },
             method: { value: "predict", required: true },
             passthrough: { value: "" },
+            annotated_input: { value: "" },
             predict_image: { value: "" },
             predict_imageType: { value: "str" },
-
             name: { value: "" }
         },
         inputs: 1,
@@ -35,6 +35,7 @@
 
                 $("#predict_image").hide();
                 $("#passthrough").hide();
+                $("#annotated_input").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -43,6 +44,7 @@
                 }
                 if ($("#node-input-method").val() === 'predict') {
                     $("#passthrough").show();
+                    $("#annotated_input").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -106,6 +108,11 @@
         <input type="checkbox" id="node-input-passthrough">
     </div>
 
+    <div class="form-row" id="annotated_input">
+        <label for="node-input-annotated_input"><i class="fa fa-image"></i> <span data-i18n="ModelAssetExchangeServer.parameters.annotated_input"></span></label>
+        <input type="checkbox" id="node-input-annotated_input">
+    </div>
+
     <hr/>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="node-red:common.label.name"></span></label>
@@ -128,6 +135,12 @@
         <dd>
             Include the input image in the output payload in the <code>msg.inputData</code> property.
         </dd>
+        <dt>
+            Generate Annotated Input:
+        </dt>
+        <dd>
+            Include an annotated image that displays a segmentation colormap in the output payload, in the <code>msg.annotatedInput</code> property.
+        </dd>
     </dl>
     <hr>
     <h1>predict</h1>
@@ -144,6 +157,10 @@
     <dl class="message-properties">
         <dt>inputData <span class="property-type">Buffer (optional)</span></dt>
         <dd>Input image data.</dd>
+    </dl>
+    <dl class="message-properties">
+        <dt>annotatedInput <span class="property-type">Buffer (optional)</span></dt>
+        <dd>Annotated input image with segmentation colormap.</dd>
     </dl>
     <br>
     <h1>metadata</h1>

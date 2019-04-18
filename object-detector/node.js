@@ -11,7 +11,7 @@ module.exports = function (RED) {
         this.predict_threshold = config.predict_threshold;
         this.predict_thresholdType = config.predict_thresholdType || 'str';
         this.passthrough = config.passthrough || false;
-        this.bounding_box = config.bounding_box || false;
+        this.annotated_input = config.annotated_input || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -27,7 +27,7 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
-            if (typeof msg.payload === 'object' && (node.passthrough || node.bounding_box)) {
+            if (typeof msg.payload === 'object' && (node.passthrough || node.annotated_input)) {
                 node.inputData = msg.payload;
             }
 
@@ -93,8 +93,8 @@ module.exports = function (RED) {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 msg.payload = data.body.predictions[0].label;
 
-                                if (node.bounding_box) {
-                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.predictions)
+                                if (node.annotated_input) {
+                                    msg.annotatedInput = lib.createAnnotatedInput(node.inputData, data.body.predictions);
                                 }
 
                             } else {
@@ -106,7 +106,7 @@ module.exports = function (RED) {
                 }
                 let outputMsg = { ...msg, topic: "max-object-detector" };
                 if (node.passthrough) {
-                    outputMsg.inputData = node.inputData
+                    outputMsg.inputData = node.inputData;
                 }
                 return outputMsg;
             };

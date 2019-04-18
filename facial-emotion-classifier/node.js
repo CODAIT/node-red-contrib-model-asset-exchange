@@ -6,10 +6,10 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.service = RED.nodes.getNode(config.service);
         this.method = config.method;
-
         this.predict_image = config.predict_image;
         this.predict_imageType = config.predict_imageType || 'str';
         this.passthrough = config.passthrough || false;
+        this.annotated_input = config.annotated_input || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -25,7 +25,7 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
-            if (typeof msg.payload === 'object' && node.passthrough) {
+            if (typeof msg.payload === 'object' && (node.passthrough || node.annotated_input)) {
                 node.inputData = msg.payload;
             }
 
@@ -80,6 +80,9 @@ module.exports = function (RED) {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 const predictions = data.body.predictions.map(person => person.emotion_predictions[0].label);
                                 msg.payload = predictions[0]
+                                if (node.annotated_input) {
+                                    msg.annotatedInput = lib.createAnnotatedInput(node.inputData, data.body.predictions);
+                                }
                             } else {
                                 msg.payload = null;
                             }
@@ -89,7 +92,7 @@ module.exports = function (RED) {
                 }
                 let outputMsg = { ...msg, topic: "max-facial-emotion-classifier" };
                 if (node.passthrough) {
-                    outputMsg.inputData = node.inputData
+                    outputMsg.inputData = node.inputData;
                 }
                 return outputMsg;
             };

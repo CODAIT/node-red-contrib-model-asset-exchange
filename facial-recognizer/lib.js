@@ -1,4 +1,7 @@
 /*jshint -W069 */
+
+const { createCanvas, Image } = require('canvas');
+
 /**
  * The model detects faces in an input image and then generates an embedding vector for each face. The generated embeddings can be used for downstream tasks such as classification, clustering, verification etc. The model accepts an image as input and returns the bounding box coordinates, probability and embedding vector for each face detected in the image. The model is based on the the FaceNet model.
  * @class ModelAssetExchangeServer
@@ -142,3 +145,36 @@ ModelAssetExchangeServer.prototype.get_metadata = function(parameters){
 })();
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
+
+
+exports.createAnnotatedInput = (imageData, modelData) => {
+    try {
+        let canvas;
+        const img = new Image();
+        img.onload = async () => {
+            canvas = createCanvas(img.width, img.height);
+            const ctx = canvas.getContext('2d');
+            const solidColor = '#1bc6c0';
+            const textColor = '#000';
+            ctx.drawImage(img, 0, 0)        
+            ctx.fillStyle = solidColor;
+            ctx.strokeStyle = solidColor;
+            ctx.lineWidth = "3";            
+            const boxesArray = modelData.map((obj, i) => obj.detection_box);
+            boxesArray.forEach((box, i) => {
+                // BOX GENERATION
+                const xMin = box[0];
+                const yMin = box[1];
+                const xMax = box[2] - box[0];
+                const yMax = box[3] - box[1];
+                ctx.strokeRect(xMin, yMin, xMax, yMax);
+            })
+        }
+        img.onerror = err => { throw err }
+        img.src = imageData;
+        return canvas.toBuffer();
+    } catch (e) {
+        console.log(`error processing image - ${ e }`);
+        return null;
+    }
+}

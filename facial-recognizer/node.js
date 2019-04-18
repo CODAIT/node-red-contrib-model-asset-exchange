@@ -9,6 +9,7 @@ module.exports = function (RED) {
         this.predict_body = config.predict_body;
         this.predict_bodyType = config.predict_bodyType || 'str';
         this.passthrough = config.passthrough || false;
+        this.annotated_input = config.annotated_input || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -24,7 +25,7 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
-            if (typeof msg.payload === 'object' && node.passthrough) {
+            if (typeof msg.payload === 'object' && (node.passthrough || node.annotated_input)) {
                 node.inputData = msg.payload;
             }
 
@@ -72,6 +73,9 @@ module.exports = function (RED) {
                         if (node.method === 'predict') {
                             if (data.body.predictions && data.body.predictions.length > 0) {
                                 msg.payload = data.body.predictions[0].detection_box;
+                                if (node.annotated_input) {
+                                    msg.annotatedInput = lib.createAnnotatedInput(node.inputData, data.body.predictions);
+                                }
                             } else {
                                 msg.payload = null;
                             }
@@ -81,7 +85,7 @@ module.exports = function (RED) {
                 }
                 let outputMsg = { ...msg, topic: "max-facial-recognizer" };
                 if (node.passthrough) {
-                    outputMsg.inputData = node.inputData
+                    outputMsg.inputData = node.inputData;
                 }
                 return outputMsg;
             };

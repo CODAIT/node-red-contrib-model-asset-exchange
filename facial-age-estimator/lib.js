@@ -1,4 +1,7 @@
 /*jshint -W069 */
+
+const { createCanvas, Image } = require('canvas');
+
 /**
  * This repository contains code to instantiate and deploy a facial age estimation model. The model detects faces in an image, extracts facial features for each face detected and finally predicts the age of each face. The model uses a coarse-to-fine strategy to perform multi-class classification and regression for age estimation. The input to the model is an image and the output is a list of estimated ages and bounding box coordinates of each face detected in the image. The format of the bounding box coordinates is [xmin, ymin, width, height]. The model is based on the SSR-Net model. The model files are hosted on IBM Cloud Object Storage. The code in this repository deploys the model as a web service in a Docker container. This repository was developed as part of the IBM Code Model Asset Exchange.
  * @class ModelAssetExchangeServer
@@ -142,3 +145,42 @@ ModelAssetExchangeServer.prototype.get_metadata = function(parameters){
 })();
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
+
+exports.createAnnotatedInput = (imageData, modelData) => {
+    try {
+        let canvas;
+        const img = new Image();
+        img.onload = async () => {
+            canvas = createCanvas(img.width, img.height);
+            const ctx = canvas.getContext('2d')
+            const solidColor = '#1bc6c0';
+            const textColor = '#000';
+            ctx.drawImage(img, 0, 0);
+            const boxesArray = modelData.map((obj, i) => obj.face_box);
+            boxesArray.forEach((box, i) => {
+                ctx.font = '36px sans-serif';
+                ctx.textBaseline = 'top';
+                ctx.fillStyle = solidColor;
+                ctx.strokeStyle = solidColor;
+                ctx.lineWidth = "3";
+                // BOX GENERATION
+                const xMin = box[0];
+                const yMin = box[1];
+                ctx.strokeRect(...box);
+                // LABEL GENERATION
+                const label = modelData[i].age_estimation;
+                const tagWidth = ctx.measureText(label).width;
+                const tHeight = parseInt(ctx.font, 10) * 1.2;
+                ctx.fillRect(xMin, yMin, tagWidth + 3, tHeight);
+                ctx.fillStyle = textColor;
+                ctx.fillText(label, xMin + 2, yMin + 4);
+            })
+        }
+        img.onerror = err => { throw err }
+        img.src = imageData;
+        return canvas.toBuffer();
+    } catch (e) {
+        console.log(`error processing image - ${ e }`);
+        return null;
+    }
+}
