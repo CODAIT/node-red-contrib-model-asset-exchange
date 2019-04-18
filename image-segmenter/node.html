@@ -6,7 +6,7 @@
             service: { value: "", type: "image-segmenter-service", required: true },
             method: { value: "predict", required: true },
             passthrough: { value: "" },
-            bounding_box: { value: "" },
+            annotated_input: { value: "" },
             predict_image: { value: "" },
             predict_imageType: { value: "str" },
             name: { value: "" }
@@ -35,7 +35,7 @@
 
                 $("#predict_image").hide();
                 $("#passthrough").hide();
-                $("#bounding_box").hide();
+                $("#annotated_input").hide();
 
                 $("#optional-parameters").hide();
                 $("#optional-parameters-label").hide();
@@ -44,7 +44,7 @@
                 }
                 if ($("#node-input-method").val() === 'predict') {
                     $("#passthrough").show();
-                    $("#bounding_box").show();
+                    $("#annotated_input").show();
                 }
 
                 if ($("#optional-parameters").prop('checked')) {
@@ -108,9 +108,9 @@
         <input type="checkbox" id="node-input-passthrough">
     </div>
 
-    <div class="form-row" id="bounding_box">
-        <label for="node-input-bounding_box"><i class="fa fa-image"></i> <span data-i18n="ModelAssetExchangeServer.parameters.bounding_box"></span></label>
-        <input type="checkbox" id="node-input-bounding_box">
+    <div class="form-row" id="annotated_input">
+        <label for="node-input-annotated_input"><i class="fa fa-image"></i> <span data-i18n="ModelAssetExchangeServer.parameters.annotated_input"></span></label>
+        <input type="checkbox" id="node-input-annotated_input">
     </div>
 
     <hr/>
@@ -136,10 +136,10 @@
             Include the input image in the output payload in the <code>msg.inputData</code> property.
         </dd>
         <dt>
-            Display Bounding Boxes:
+            Display Annotated Input:
         </dt>
         <dd>
-            Include an augmented image that displays an segmentation colormap in the output payload, in the <code>msg.boundingBoxImage</code> property.
+            Include an annotated image that displays a segmentation colormap in the output payload, in the <code>msg.annotatedInput</code> property.
         </dd>
     </dl>
     <hr>
@@ -159,8 +159,8 @@
         <dd>Input image data.</dd>
     </dl>
     <dl class="message-properties">
-        <dt>boundingBoxImage <span class="property-type">Buffer (optional)</span></dt>
-        <dd>Augmented input image with segmentation colormap.</dd>
+        <dt>annotatedInput <span class="property-type">Buffer (optional)</span></dt>
+        <dd>Annotated input image with segmentation colormap.</dd>
     </dl>
     <br>
     <h1>metadata</h1>

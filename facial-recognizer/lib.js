@@ -147,7 +147,7 @@ ModelAssetExchangeServer.prototype.get_metadata = function(parameters){
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
 
-exports.createBoundingBox = (imageData, modelData) => {
+exports.createAnnotatedInput = (imageData, modelData) => {
     try {
         let canvas;
         const img = new Image();

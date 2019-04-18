@@ -16,7 +16,7 @@
             "predict": "predict",
             "image": "image",
             "passthrough": "Pass Through Input",
-            "bounding_box": "Display Bounding Boxes",
+            "annotated_input": "Display Annotated Input",
             "optionalParameters": "Optionen"
         }
     }

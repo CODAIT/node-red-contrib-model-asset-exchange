@@ -9,7 +9,7 @@ module.exports = function (RED) {
         this.predict_image = config.predict_image;
         this.predict_imageType = config.predict_imageType || 'str';
         this.passthrough = config.passthrough || false;
-        this.bounding_box = config.bounding_box || false;
+        this.annotated_input = config.annotated_input || false;
         var node = this;
 
         node.on('input', function (msg) {
@@ -25,7 +25,7 @@ module.exports = function (RED) {
             if (!errorFlag) {
                 client.body = msg.payload;
             }
-            if (typeof msg.payload === 'object' && (node.passthrough || node.bounding_box)) {
+            if (typeof msg.payload === 'object' && (node.passthrough || node.annotated_input)) {
                 node.inputData = msg.payload;
             }
 
@@ -77,8 +77,8 @@ module.exports = function (RED) {
                         if (node.method === 'predict') {
                             if (data.body !== null && data.body !== undefined) {
                                 msg.payload = data.body.seg_map || "Detection Error";
-                                if (node.bounding_box) {
-                                    msg.boundingBoxImage = lib.createBoundingBox(node.inputData, data.body.seg_map);
+                                if (node.annotated_input) {
+                                    msg.annotatedInput = lib.createAnnotatedInput(node.inputData, data.body.seg_map);
                                 }
                             } else {
                                 msg.payload = null;

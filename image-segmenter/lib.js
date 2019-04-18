@@ -152,7 +152,7 @@ var ModelAssetExchangeServer = (function(){
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
-exports.createBoundingBox = (imageData, modelData) => {
+exports.createAnnotatedInput = (imageData, modelData) => {
     try {
         let canvas;
         const img = new Image();
