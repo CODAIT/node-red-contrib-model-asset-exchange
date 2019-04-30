@@ -12,6 +12,12 @@ To get started follow the [comprehensive tutorial](https://developer.ibm.com/tut
 
 ### Setup
 
+#### Docker installation
+
+If you have Docker installed, you can use this [Docker image](https://github.com/CODAIT/max-node-red-docker-image) to try out the examples.
+
+#### Native installation
+
 1. [Install Node-RED](https://nodered.org/docs/getting-started/installation).
 
     > Before you can install Node-RED, you'll need a working install of Node.js. We recommend the use of Node.js LTS 8.x or 10.x, as Node-RED no longer supports Node.js 6.x or earlier.
