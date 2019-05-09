@@ -56,7 +56,7 @@ module.exports = function (RED) {
                 node.error('Method is not specified.', msg);
                 errorFlag = true;
             }
-            var setData = function (msg, data) {
+            var setData = async function (msg, data) {
                 if (data) {
                     if (data.response) {
                         if (data.response.statusCode) {
@@ -81,7 +81,8 @@ module.exports = function (RED) {
                                 const predictions = data.body.predictions.map(person => person.emotion_predictions[0].label);
                                 msg.payload = predictions[0]
                                 if (node.annotated_input) {
-                                    msg.annotatedInput = lib.createAnnotatedInput(node.inputData, data.body.predictions);
+                                    msg.annotatedInput = await lib.createAnnotatedInput(node.inputData, data.body.predictions);
+                                    //console.log(`output: ${await msg.annotatedInput}`);
                                 }
                             } else {
                                 msg.payload = null;
@@ -98,8 +99,8 @@ module.exports = function (RED) {
             };
             if (!errorFlag) {
                 node.status({ fill: 'blue', shape: 'dot', text: 'ModelAssetExchangeServer.status.requesting' });
-                result.then(function (data) {
-                    node.send(setData(msg, data));
+                result.then(async function (data) {
+                    node.send(await setData(msg, data));
                     node.status({});
                 }).catch(function (error) {
                     var message = null;
