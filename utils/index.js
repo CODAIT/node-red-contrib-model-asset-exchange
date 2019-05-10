@@ -20,7 +20,7 @@ const drawRect = (img, xMin, yMin, xMax, yMax, padSize, color, isFilled) => {
 }
 
 const getScaledFont = (width, color) => {
-  if (width > 1400)
+  if (width > 1600)
     return color === 'black' ? Jimp.FONT_SANS_128_BLACK : Jimp.FONT_SANS_128_WHITE;
   else if (width > 700)
     return color === 'black' ? Jimp.FONT_SANS_32_BLACK : Jimp.FONT_SANS_32_WHITE;
@@ -29,7 +29,7 @@ const getScaledFont = (width, color) => {
 }
 
 const getPadSize = width => {
-  if (width > 1400)
+  if (width > 1600)
     return 7;
   else if (width > 1000)
     return 4;
