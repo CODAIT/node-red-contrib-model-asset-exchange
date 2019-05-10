@@ -165,12 +165,8 @@ exports.createAnnotatedInput = async (imageData, modelData) => {
         const text = String(modelData[i].age_estimation);
         const textHeight = Jimp.measureTextHeight(font, text);
         const xTagMax = Jimp.measureText(font, text) + (padSize*2) + xMin;
-        let yTagMin = yMin;
-        if (yMin - textHeight > 0) {
-            yTagMin = yMin - textHeight;
-        }
-        const yTagMax = textHeight + yTagMin;
-        rectFill(canvas, xMin, yTagMin, xTagMax, yTagMax, padSize, 'cyan');
+        const yTagMin = yMin - textHeight > 0 ? yMin - textHeight : yMin;
+        rectFill(canvas, xMin, yTagMin, xTagMax, textHeight + yTagMin, padSize, 'cyan');
         canvas.print(font, xMin + padSize, yTagMin, text);
     });
     return canvas.getBufferAsync(Jimp.AUTO);
