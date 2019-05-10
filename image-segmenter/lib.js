@@ -1,6 +1,8 @@
 /*jshint -W069 */
 
-const { createCanvas, Image } = require('canvas');
+const Jimp = require('jimp');
+const sizeOf = require('buffer-image-size');
+const { rect, rectFill, getScaledFont, getPadSize } = require('../utils');
 
 /**
  * An API for serving models
@@ -47,7 +49,7 @@ var ModelAssetExchangeServer = (function(){
      * @param {object} form - form data object
      * @param {object} deferred - promise object
      */
-    ModelAssetExchangeServer.prototype.request = function(method, url, parameters, body, headers, queryParameters, form, deferred){
+    ModelAssetExchangeServer.prototype.request = async function(method, url, parameters, body, headers, queryParameters, form, deferred){
         var req = {
             method: method,
             uri: url,
@@ -152,37 +154,24 @@ var ModelAssetExchangeServer = (function(){
 
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
-exports.createAnnotatedInput = (imageData, modelData) => {
-    try {
-        let canvas;
-        const img = new Image();
-        img.onload = async () => {
-            const { scaledWidth, scaledHeight } = getScaledSize(img.width, img.height);
-            canvas = createCanvas(scaledWidth, scaledHeight);
-            const ctx = canvas.getContext('2d');
-            const flatSegMap = modelData.reduce((a, b) => a.concat(b), []);
-            ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
-            const imageData = ctx.getImageData(0, 0, scaledWidth, scaledHeight);
-            const data = imageData.data;
-            let objColor = [0, 0, 0];
-            flatSegMap.forEach((s, i) => {
-                if (s !== OBJ_LIST.indexOf('background')) {
-                    objColor = getColor(s);
-                    data[(i * 4)] = objColor[0]; // red channel
-                    data[(i * 4) + 1] = objColor[1]; // green channel
-                    data[(i * 4) + 2] = objColor[2]; // blue channel
-                    data[(i * 4) + 3] = 200; // alpha
-                }
-            })
-            ctx.putImageData(imageData, 0, 0);
+exports.createAnnotatedInput = async (imageData, modelData) => {
+    const canvas = await Jimp.read(imageData);
+    const {width, height} = sizeOf(imageData);
+    const {scaledWidth, scaledHeight} = getScaledSize(width, height);
+    canvas.scaleToFit(513, 513);
+    const flatSegMap = modelData.reduce((a, b) => a.concat(b), []);
+    const data = canvas.bitmap.data;
+    let objColor = [0, 0, 0];
+    flatSegMap.forEach((s, i) => {
+        if (s !== OBJ_LIST.indexOf('background')) {
+            objColor = getColor(s);
+            data[(i * 4)] = objColor[0]; // red channel
+            data[(i * 4) + 1] = objColor[1]; // green channel
+            data[(i * 4) + 2] = objColor[2]; // blue channel
+            data[(i * 4) + 3] = 200; // alpha
         }
-        img.onerror = err => { throw err }
-        img.src = imageData;
-        return canvas.toBuffer();
-    } catch (e) {
-        console.log(`error processing image - ${ e }`)
-        return null;
-    }
+    })
+    return canvas.getBufferAsync(Jimp.AUTO);
 }
 
 const MAX_SIZE = 513;
@@ -190,12 +179,12 @@ const MAX_SIZE = 513;
 const COLOR_MAP = {
     green: [0, 128, 0],
     red: [255, 0, 0],
-    blue: [0, 0, 255],
+    gray: [192, 192, 192],
     purple: [160, 32, 240],
     pink: [255, 185, 80],
-    teal: [0, 128, 128],
+    teal: [30, 128, 128],
     yellow: [255, 255, 0],
-    gray: [192, 192, 192]
+    cyan: [0, 255, 255]
 };
 const COLOR_LIST = Object.values(COLOR_MAP);
 
