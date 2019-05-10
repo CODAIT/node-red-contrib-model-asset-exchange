@@ -82,7 +82,6 @@ module.exports = function (RED) {
                                 msg.payload = predictions[0]
                                 if (node.annotated_input) {
                                     msg.annotatedInput = await lib.createAnnotatedInput(node.inputData, data.body.predictions);
-                                    //console.log(`output: ${await msg.annotatedInput}`);
                                 }
                             } else {
                                 msg.payload = null;
