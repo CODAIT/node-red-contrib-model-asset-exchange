@@ -19,6 +19,25 @@ const drawRect = (img, xMin, yMin, xMax, yMax, padSize, color, isFilled) => {
   }
 }
 
+const drawLine = (img, xMin, yMin, xMax, yMax, padSize, color) => {
+  const xLength = xMax - xMin;
+  const yLength = yMax - yMin;
+  for (x of range(xMin, xMax)) {
+    let y = yMin + yLength * (x - xMin) / xLength;
+    img.setPixelColor(Jimp.cssColorToHex(color), x-1, y);
+    img.setPixelColor(Jimp.cssColorToHex(color), x, y);
+    img.setPixelColor(Jimp.cssColorToHex(color), x+1, y);
+
+    img.setPixelColor(Jimp.cssColorToHex(color), x-1, y-1);
+    img.setPixelColor(Jimp.cssColorToHex(color), x, y-1);
+    img.setPixelColor(Jimp.cssColorToHex(color), x+1, y-1);
+
+    img.setPixelColor(Jimp.cssColorToHex(color), x-1, y+1);
+    img.setPixelColor(Jimp.cssColorToHex(color), x, y+1);
+    img.setPixelColor(Jimp.cssColorToHex(color), x+1, y+1);
+  }
+}
+
 const getScaledFont = (width, color) => {
   if (width > 1600)
     return color === 'black' ? Jimp.FONT_SANS_128_BLACK : Jimp.FONT_SANS_128_WHITE;
@@ -52,5 +71,6 @@ module.exports = {
   rect, 
   rectFill,
   getScaledFont,
-  getPadSize
+  getPadSize,
+  drawLine
 };
