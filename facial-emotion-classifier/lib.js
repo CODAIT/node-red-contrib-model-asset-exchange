@@ -1,6 +1,8 @@
 /*jshint -W069 */
 
-const { createCanvas, Image } = require('canvas');
+const Jimp = require('jimp');
+const sizeOf = require('buffer-image-size');
+const { rect, rectFill, getScaledFont, getPadSize } = require('../utils');
 
 /**
  * Detect faces in an image and predict the emotional state of each person
@@ -175,49 +177,26 @@ var MaxFacialEmotionClassifier = (function(){
 
 exports.MaxFacialEmotionClassifier = MaxFacialEmotionClassifier;
 
-exports.createAnnotatedInput = (imageData, modelData) => {
-    try {
-        let canvas;
-        const img = new Image();
-        img.onload = async () => {
-            canvas = createCanvas(img.width, img.height);
-            const ctx = canvas.getContext('2d');
-            const solidColor = '#1bc6c0';
-            const textColor = '#000';
-            ctx.drawImage(img, 0, 0);
-            const boxesArray = modelData.map((obj, i) => obj.detection_box);
-            boxesArray.forEach((box, i) => {
-                ctx.font = '36px sans-serif';
-                ctx.textBaseline = 'top';
-                ctx.fillStyle = solidColor;
-                ctx.strokeStyle = solidColor;
-                ctx.lineWidth = "3";
-                // BOX GENERATION
-                const yMin = box[0] * img.height;
-                const xMin = box[1] * img.width;
-                const boxHeight = (box[2] - box[0]) * img.height;
-                const boxWidth = (box[3] - box[1]) * img.width;
-                ctx.strokeRect(xMin, yMin, boxWidth, boxHeight);
-                // LABEL GENERATION
-                const confidence = (modelData[i].emotion_predictions[0].probability * 100).toFixed(1) + '%';
-                const label = modelData[i].emotion_predictions[0].label;
-                let text = label + ' : ' + confidence;
-                let tagWidth = ctx.measureText(text).width;
-                if (tagWidth > boxWidth) {
-                    tagWidth = ctx.measureText(label).width;
-                    text = label;
-                }
-                const tHeight = parseInt(ctx.font, 10) * 1.2;
-                ctx.fillRect(xMin, yMin, tagWidth + 3, tHeight);
-                ctx.fillStyle = textColor;
-                ctx.fillText(text, xMin + 2, yMin + 4);
-            })
-        }
-        img.onerror = err => { throw err }
-        img.src = imageData;
-        return canvas.toBuffer();
-    } catch (e) {
-        console.log(`error processing image - ${ e }`);
-        return null;
-    }
+exports.createAnnotatedInput = async (imageData, modelData) => {
+    const {width, height} = sizeOf(imageData);
+    let fontType = getScaledFont(width, 'black');
+    const font = await Jimp.loadFont(fontType);
+    const canvas = await Jimp.read(imageData);
+    const padSize = getPadSize(width);
+    modelData.map(obj => obj.detection_box).forEach((box, i) => {
+        // BOX GENERATION
+        const xMax = box[3] * width;
+        const xMin = box[1] * width;
+        const yMax = box[2] * height;
+        const yMin = box[0] * height;
+        rect(canvas, xMin, yMin, xMax, yMax, padSize, 'cyan');
+        // LABEL GENERATION
+        const text = modelData[i].emotion_predictions[0].label;       
+        const textHeight = Jimp.measureTextHeight(font, text);
+        const xTagMax = Jimp.measureText(font, text) + (padSize*2) + xMin;
+        const yTagMin = yMin - textHeight > 0 ? yMin - textHeight : yMin;
+        rectFill(canvas, xMin, yTagMin, xTagMax, textHeight + yTagMin, padSize, 'cyan');
+        canvas.print(font, xMin + padSize, yTagMin, text);
+    });
+    return canvas.getBufferAsync(Jimp.AUTO);
 }
