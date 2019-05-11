@@ -156,7 +156,6 @@ exports.createAnnotatedInput = async (imageData, modelData) => {
     modelData.map(obj => obj.pose_lines).forEach((skeleton, i) => {
         skeleton.forEach((lineObj, i) => {
             const { line } = lineObj;
-            //console.log(`${i} ${line}`)
             // LINE GENERATION
             const xMin = line[0];
             const yMin = line[1];
