@@ -151,13 +151,12 @@ exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
 exports.createAnnotatedInput = async (imageData, modelData) => {
     const {width, height} = sizeOf(imageData);
-    let fontType = getScaledFont(width, 'black');
-    const font = await Jimp.loadFont(fontType);
     const canvas = await Jimp.read(imageData);
     const padSize = getPadSize(width);
     modelData.map(obj => obj.pose_lines).forEach((skeleton, i) => {
         skeleton.forEach((lineObj, i) => {
             const { line } = lineObj;
+            //console.log(`${i} ${line}`)
             // LINE GENERATION
             const xMin = line[0];
             const yMin = line[1];

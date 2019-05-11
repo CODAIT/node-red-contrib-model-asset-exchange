@@ -1,8 +1,6 @@
 /*jshint -W069 */
 
 const Jimp = require('jimp');
-const sizeOf = require('buffer-image-size');
-const { rect, rectFill, getScaledFont, getPadSize } = require('../utils');
 
 /**
  * An API for serving models
@@ -155,15 +153,14 @@ var ModelAssetExchangeServer = (function(){
 exports.ModelAssetExchangeServer = ModelAssetExchangeServer;
 
 exports.createAnnotatedInput = async (imageData, modelData) => {
-    const canvas = await Jimp.read(imageData);
-    const {width, height} = sizeOf(imageData);
-    const {scaledWidth, scaledHeight} = getScaledSize(width, height);
-    canvas.scaleToFit(513, 513);
+    let canvas = await Jimp.read(imageData);
+    canvas.scaleToFit(MAX_SIZE,MAX_SIZE-1);
     const flatSegMap = modelData.reduce((a, b) => a.concat(b), []);
     const data = canvas.bitmap.data;
     let objColor = [0, 0, 0];
+    const bgVal = OBJ_LIST.indexOf('background');
     flatSegMap.forEach((s, i) => {
-        if (s !== OBJ_LIST.indexOf('background')) {
+        if (s !== bgVal) {
             objColor = getColor(s);
             data[(i * 4)] = objColor[0]; // red channel
             data[(i * 4) + 1] = objColor[1]; // green channel
@@ -187,6 +184,7 @@ const COLOR_MAP = {
     cyan: [0, 255, 255]
 };
 const COLOR_LIST = Object.values(COLOR_MAP);
+const getColor = pixel => COLOR_LIST[pixel % COLOR_LIST.length];
 
 const OBJ_LIST = ['background', 'airplane', 'bicycle', 'bird', 'boat', 
 'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'dining table', 
@@ -195,20 +193,4 @@ const OBJ_LIST = ['background', 'airplane', 'bicycle', 'bird', 'boat',
 
 const flatten = function (a) {
     return Array.isArray(a) ? [].concat(...a.map(flatten)) : a;
-}
-
-const getColor = pixel => COLOR_LIST[pixel % COLOR_LIST.length];
-
-const getScaledSize = (width, height) => {
-    if (width > height) {
-        return {
-            scaledWidth: MAX_SIZE,
-            scaledHeight: Math.round((height / width) * MAX_SIZE)
-        };
-    } else {
-        return {
-            scaledWidth: Math.round((width / height) * MAX_SIZE),
-            scaledHeight: MAX_SIZE
-        };
-    }
 }

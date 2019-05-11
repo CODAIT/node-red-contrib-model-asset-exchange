@@ -20,21 +20,22 @@ const drawRect = (img, xMin, yMin, xMax, yMax, padSize, color, isFilled) => {
 }
 
 const drawLine = (img, xMin, yMin, xMax, yMax, padSize, color) => {
-  const xLength = xMax - xMin;
-  const yLength = yMax - yMin;
-  for (x of range(xMin, xMax)) {
-    let y = yMin + yLength * (x - xMin) / xLength;
-    img.setPixelColor(Jimp.cssColorToHex(color), x-1, y);
-    img.setPixelColor(Jimp.cssColorToHex(color), x, y);
-    img.setPixelColor(Jimp.cssColorToHex(color), x+1, y);
-
-    img.setPixelColor(Jimp.cssColorToHex(color), x-1, y-1);
-    img.setPixelColor(Jimp.cssColorToHex(color), x, y-1);
-    img.setPixelColor(Jimp.cssColorToHex(color), x+1, y-1);
-
-    img.setPixelColor(Jimp.cssColorToHex(color), x-1, y+1);
-    img.setPixelColor(Jimp.cssColorToHex(color), x, y+1);
-    img.setPixelColor(Jimp.cssColorToHex(color), x+1, y+1);
+  const xLength = Math.abs(xMax - xMin);
+  const yLength = Math.abs(yMax - yMin);
+  const steps = xLength > yLength ? xLength : yLength;
+  const xStep = (xMax - xMin) / steps;
+  const yStep = (yMax - yMin) / steps;
+  let x = xMin;
+  let y = yMin;
+  for (s of range(0, steps)) {
+    x = x + xStep;
+    y = y + yStep;
+    for (i of range(x - padSize, x + padSize)) {
+      img.setPixelColor(Jimp.cssColorToHex(color), i, y);
+    }
+    for (j of range(y - padSize, y + padSize)) {
+      img.setPixelColor(Jimp.cssColorToHex(color), x, j);
+    }  
   }
 }
 
