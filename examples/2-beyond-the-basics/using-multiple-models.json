@@ -1,15 +1,15 @@
 [
     {
-        "id": "fb9f2f1a.6de7f",
+        "id": "c85d6fc6.073c8",
         "type": "tab",
         "label": "Using Multiple Models",
         "disabled": false,
-        "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation."
+        "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation.\n\nTo adjust the size of the image output in this flow, double-click the **Image output** node. Image width is set to 300px by default."
     },
     {
-        "id": "6c39a79e.485748",
+        "id": "21299efc.027202",
         "type": "debug",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -18,14 +18,14 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 1156,
-        "y": 120,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "8bafdf80.fa7da",
+        "id": "749ca183.2c516",
         "type": "object-detector",
-        "z": "fb9f2f1a.6de7f",
-        "service": "96195b68.679e18",
+        "z": "c85d6fc6.073c8",
+        "service": "94e51296.226d3",
         "method": "predict",
         "passthrough": true,
         "annotated_input": true,
@@ -35,44 +35,44 @@
         "predict_thresholdType": "str",
         "name": "",
         "x": 360,
-        "y": 120,
+        "y": 140,
         "wires": [
             [
-                "dd67bf05.d8256",
-                "e3f9db88.50b798"
+                "3c7b9a30.a37726",
+                "982c6b4a.83d268"
             ]
         ]
     },
     {
-        "id": "2384d389.022c1c",
+        "id": "3f7754d6.450b7c",
         "type": "fileinject",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "",
         "x": 140,
-        "y": 120,
+        "y": 140,
         "wires": [
             [
-                "8bafdf80.fa7da"
+                "749ca183.2c516"
             ]
         ]
     },
     {
-        "id": "7a3149a4.b9f218",
+        "id": "c6d9271a.9f1638",
         "type": "camera",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "",
         "x": 130,
-        "y": 214,
+        "y": 234,
         "wires": [
             [
-                "8bafdf80.fa7da"
+                "749ca183.2c516"
             ]
         ]
     },
     {
-        "id": "5992ec00.f522e4",
+        "id": "58d91743.9557b8",
         "type": "comment",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "Display bounding boxes on an input image using the object-detector node, then pass the input to the image-caption-generator to display a generated caption.",
         "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation.",
         "x": 560,
@@ -80,66 +80,76 @@
         "wires": []
     },
     {
-        "id": "62fba4c.11ec95c",
+        "id": "734d61db.26efc",
         "type": "image",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "",
         "width": "300",
         "x": 774.5,
-        "y": 220,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "dd67bf05.d8256",
+        "id": "3c7b9a30.a37726",
         "type": "function",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "Extract Bounding Box Image Data",
         "func": "// if the incoming message contains the annotated image\n// send it to the image output node to display\n\nmsg.payload = msg.annotatedInput;\nif (msg.payload) {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 479.5,
-        "y": 220,
+        "y": 240,
         "wires": [
             [
-                "62fba4c.11ec95c"
+                "734d61db.26efc"
             ]
         ]
     },
     {
-        "id": "49c3158c.658edc",
+        "id": "15a109d.d83fdf6",
         "type": "image-caption-generator",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "service": "82a87cae.a2fec",
         "method": "predict",
         "predict_body": "",
         "predict_bodyType": "str",
         "name": "",
         "x": 901.5,
-        "y": 120,
+        "y": 140,
         "wires": [
             [
-                "6c39a79e.485748"
+                "21299efc.027202"
             ]
         ]
     },
     {
-        "id": "e3f9db88.50b798",
+        "id": "982c6b4a.83d268",
         "type": "function",
-        "z": "fb9f2f1a.6de7f",
+        "z": "c85d6fc6.073c8",
         "name": "Extract Input Image Data",
         "func": "// if the incoming message contains the input image\n// send it to the image-caption-generator node\n// for further processing\n\nmsg.payload = msg.inputData;\nif (msg.payload) {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "x": 609,
-        "y": 120,
+        "y": 140,
         "wires": [
             [
-                "49c3158c.658edc"
+                "15a109d.d83fdf6"
             ]
         ]
     },
     {
-        "id": "96195b68.679e18",
+        "id": "fba399f2.69a038",
+        "type": "comment",
+        "z": "c85d6fc6.073c8",
+        "name": "To adjust the size of the preview image, double-click the \"Image output\" node",
+        "info": "By default, the image width is set to 300px.",
+        "x": 310,
+        "y": 77,
+        "wires": []
+    },
+    {
+        "id": "94e51296.226d3",
         "type": "object-detector-service",
         "z": "",
         "host": "https://max-object-detector.max.us-south.containers.appdomain.cloud",
@@ -148,7 +158,7 @@
     {
         "id": "82a87cae.a2fec",
         "type": "image-caption-generator-service",
-        "z": "",
+        "z": 0,
         "host": "https://max-image-caption-generator.max.us-south.containers.appdomain.cloud",
         "name": "cloud"
     }
