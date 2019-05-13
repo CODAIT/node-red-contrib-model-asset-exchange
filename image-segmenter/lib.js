@@ -1,11 +1,6 @@
 /*jshint -W069 */
 
 const Jimp = require('jimp');
-<<<<<<< HEAD
-=======
-const sizeOf = require('buffer-image-size');
-const { rect, rectFill, getScaledFont, getPadSize } = require('../utils');
->>>>>>> ce6559f5e67265672bd6ea4e4e8158e1dd02699b
 
 /**
  * An API for serving models
