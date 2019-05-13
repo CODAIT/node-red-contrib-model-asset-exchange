@@ -1,30 +1,30 @@
 [
     {
-        "id": "257b0fcf.c1302",
+        "id": "139602c0.ce5c8d",
         "type": "tab",
         "label": "Object detection example flow",
         "disabled": false,
-        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation."
+        "info": "This flow uses the https://developer.ibm.com/exchanges/models/all/max-object-detector/ deep learning model from the Model Asset Exchange to localize and identify multiple objects in a single image. Refer to the documentation for information about the returned message.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector node has been pre-configured to use a hosted model evaluation instance. We recommend using your own local or cloud instance for purposes other than evaluation.\n\nTo adjust the size of the image output in this flow, double-click the **Image output** node. Image width is set to 300px by default."
     },
     {
-        "id": "5680e5ee.1441cc",
+        "id": "a1293bd8.418448",
         "type": "debug",
-        "z": "257b0fcf.c1302",
+        "z": "139602c0.ce5c8d",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "true",
-        "x": 650,
-        "y": 120,
+        "x": 630,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "d266c943.67ce48",
+        "id": "f596981b.ed9368",
         "type": "object-detector",
-        "z": "257b0fcf.c1302",
-        "service": "96195b68.679e18",
+        "z": "139602c0.ce5c8d",
+        "service": "594e4ad2.a17944",
         "method": "predict",
         "passthrough": false,
         "annotated_input": true,
@@ -33,45 +33,45 @@
         "predict_threshold": "0.7",
         "predict_thresholdType": "str",
         "name": "",
-        "x": 360,
-        "y": 120,
+        "x": 340,
+        "y": 140,
         "wires": [
             [
-                "5680e5ee.1441cc",
-                "9f36df26.ff3c9"
+                "a1293bd8.418448",
+                "ea4eeb9c.24b4f8"
             ]
         ]
     },
     {
-        "id": "b20eb66e.1fa248",
+        "id": "349ab2c1.15dc1e",
         "type": "fileinject",
-        "z": "257b0fcf.c1302",
+        "z": "139602c0.ce5c8d",
         "name": "",
-        "x": 140,
-        "y": 120,
+        "x": 120,
+        "y": 140,
         "wires": [
             [
-                "d266c943.67ce48"
+                "f596981b.ed9368"
             ]
         ]
     },
     {
-        "id": "520cd665.7725c8",
+        "id": "e468264a.e47008",
         "type": "camera",
-        "z": "257b0fcf.c1302",
+        "z": "139602c0.ce5c8d",
         "name": "",
-        "x": 130,
-        "y": 178,
+        "x": 110,
+        "y": 198,
         "wires": [
             [
-                "d266c943.67ce48"
+                "f596981b.ed9368"
             ]
         ]
     },
     {
-        "id": "f124cc22.5c93a",
+        "id": "37b11dcf.5010e2",
         "type": "comment",
-        "z": "257b0fcf.c1302",
+        "z": "139602c0.ce5c8d",
         "name": "Localize and identify multiple objects in a single image, then display the output",
         "info": "",
         "x": 320,
@@ -79,33 +79,43 @@
         "wires": []
     },
     {
-        "id": "fd5d2cbc.ed717",
+        "id": "13f86581.2e775a",
         "type": "image",
-        "z": "257b0fcf.c1302",
+        "z": "139602c0.ce5c8d",
         "name": "",
-        "width": "300",
-        "x": 670.5,
-        "y": 178,
+        "width": "600",
+        "x": 650.5,
+        "y": 198,
         "wires": []
     },
     {
-        "id": "9f36df26.ff3c9",
+        "id": "ea4eeb9c.24b4f8",
         "type": "function",
-        "z": "257b0fcf.c1302",
+        "z": "139602c0.ce5c8d",
         "name": "Extract Bounding Box Image Data",
         "func": "// if the incoming message contains the annotated image\n// send it to the image output node to display\n\nmsg.payload = msg.annotatedInput;\nif (msg.payload) {\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
-        "x": 419.5,
-        "y": 178,
+        "x": 399.5,
+        "y": 198,
         "wires": [
             [
-                "fd5d2cbc.ed717"
+                "13f86581.2e775a"
             ]
         ]
     },
     {
-        "id": "96195b68.679e18",
+        "id": "b9fb347f.0c46d8",
+        "type": "comment",
+        "z": "139602c0.ce5c8d",
+        "name": "To adjust the size of the preview image, double-click the \"Image output\" node",
+        "info": "By default, the image width is set to 300px.",
+        "x": 310,
+        "y": 77,
+        "wires": []
+    },
+    {
+        "id": "594e4ad2.a17944",
         "type": "object-detector-service",
         "z": "",
         "host": "https://max-object-detector.max.us-south.containers.appdomain.cloud",
