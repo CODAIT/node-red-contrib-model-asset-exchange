@@ -38,8 +38,9 @@
     "deep learning"
   ],
   "dependencies": {
-    "canvas": "^2.4.1",
+    "buffer-image-size": "^0.6.4",
     "file-type": "^10.7.1",
+    "jimp": "^0.6.4",
     "q": "1.5.1",
     "request": "2.83.0"
   },
