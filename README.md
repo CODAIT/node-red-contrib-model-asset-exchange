@@ -74,11 +74,8 @@ This Node-RED node module supports the following application domains:
 
 - [Facial Age Estimator](https://developer.ibm.com/exchanges/models/all/max-facial-age-estimator/)
 
-    Recognize faces in an image and estimate the age of each face.
+    Detects faces in an image and estimate the age of each face.
 
-- [Facial Recognizer](https://developer.ibm.com/exchanges/models/all/max-facial-recognizer/)
-
-    Recognize faces in an image and extract embedding vectors for each face.
 
 - [Object Detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/)
 
