@@ -8,14 +8,12 @@
   "node-red": {
     "nodes": {
       "image-caption-generator": "image-caption-generator/node.js",
-      "facial-age-estimator": "facial-age-estimator/node.js",
       "object-detector": "object-detector/node.js",
       "human-pose-estimator": "human-pose-estimator/node.js",
       "audio-classifier": "audio-classifier/node.js",
       "image-segmenter": "image-segmenter/node.js",
       "scene-classifier": "scene-classifier/node.js",
-      "inception-resnet-v2": "inception-resnet-v2/node.js",
-      "facial-emotion-classifier": "facial-emotion-classifier/node.js"
+      "inception-resnet-v2": "inception-resnet-v2/node.js"
     }
   },
   "repository": {
@@ -26,13 +24,11 @@
     "node-red",
     "model asset exchange",
     "image caption generator",
-    "facial age estimator",
     "object detector",
     "human pose estimator",
     "audio classifier",
     "image segmenter",
     "scene classifier",
-    "facial emotion classifier",
     "deep learning"
   ],
   "dependencies": {

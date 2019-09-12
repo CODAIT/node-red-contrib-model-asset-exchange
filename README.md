@@ -35,7 +35,7 @@ If you have Docker installed, you can use this [Docker image](https://github.com
           ...
           ... - [info] Server now running at http://127.0.0.1:1880/
         
-4. The nodes are displayed in the palette under the  _Model-Asset-eXchange_ category.    
+4. The nodes are displayed in the palette under the  _Model-Asset-eXchange_ category. 
 
 ### Explore the sample flows
 
@@ -72,10 +72,6 @@ This Node-RED node module supports the following application domains:
 
     Generate captions that describe the contents of images.
 
-- [Facial Age Estimator](https://developer.ibm.com/exchanges/models/all/max-facial-age-estimator/)
-
-    Detects faces in an image and estimate the age of each face.
-
 
 - [Object Detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/)
 
@@ -91,7 +87,7 @@ This Node-RED node module supports the following application domains:
 
 - [Inception ResNet v2](https://developer.ibm.com/exchanges/models/all/max-inception-resnet-v2/)
 
-    Identify objects in images using a third-generation deep residual network.   
+    Identify objects in images using a third-generation deep residual network.
 
 - [Image Segmenter](https://developer.ibm.com/exchanges/models/all/max-image-segmenter/)
 
@@ -101,9 +97,6 @@ This Node-RED node module supports the following application domains:
 
     Classify images according to the place/location labels in the Places365 data set.
 
-- [Facial Emotion Classifier](https://developer.ibm.com/exchanges/models/all/max-facial-emotion-classifier/)
-
-    Detect faces in an image and predict the emotional state of each person
 
 Note: file inject node in [node-red-contrib-browser-utils](https://flows.nodered.org/node/node-red-contrib-browser-utils) is useful to test these nodes.
 
