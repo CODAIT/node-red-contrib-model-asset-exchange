@@ -29,6 +29,7 @@
     "audio classifier",
     "image segmenter",
     "scene classifier",
+    "inception resnet v2",
     "deep learning"
   ],
   "dependencies": {
