@@ -77,7 +77,7 @@
         "id": "e62c2961.f98f58",
         "type": "audio-classifier-service",
         "z": "",
-        "host": "https://max-audio-classifier.max.us-south.containers.appdomain.cloud",
+        "host": "https://max-audio-classifier.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud",
         "name": "cloud"
     }
 ]
