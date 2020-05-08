@@ -34,7 +34,7 @@ describe('image-segmenter node', function () {
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-segmenter-service', host: 'https://max-image-segmenter.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'image-segmenter-service', host: 'https://max-image-segmenter.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -57,7 +57,7 @@ describe('image-segmenter node', function () {
                 method: 'predict',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'image-segmenter-service', host: 'https://max-image-segmenter.max.us-south.containers.appdomain.cloud' }, 
+            { id: 'n2', type: 'image-segmenter-service', host: 'https://max-image-segmenter.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' }, 
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {

@@ -34,7 +34,7 @@ describe('inception-resnet-v2 node', function () {
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'inception-resnet-v2-service', host: 'https://max-inception-resnet-v2.max.us-south.containers.appdomain.cloud' }, // hosted instance URL
+            { id: 'n2', type: 'inception-resnet-v2-service', host: 'https://max-inception-resnet-v2.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' }, // hosted instance URL
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -57,7 +57,7 @@ describe('inception-resnet-v2 node', function () {
                 method: 'predict',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'inception-resnet-v2-service', host: 'https://max-inception-resnet-v2.max.us-south.containers.appdomain.cloud' }, // hosted instance URL
+            { id: 'n2', type: 'inception-resnet-v2-service', host: 'https://max-inception-resnet-v2.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' }, // hosted instance URL
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {

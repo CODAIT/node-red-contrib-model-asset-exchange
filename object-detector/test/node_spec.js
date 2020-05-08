@@ -34,7 +34,7 @@ describe('object-detector node', function () {
                 method: 'get_labels',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'object-detector-service', host: 'https://max-object-detector.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'object-detector-service', host: 'https://max-object-detector.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -141,7 +141,7 @@ describe('object-detector node', function () {
                 method: 'get_metadata',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'object-detector-service', host: 'https://max-object-detector.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'object-detector-service', host: 'https://max-object-detector.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
@@ -165,7 +165,7 @@ describe('object-detector node', function () {
                 predict_threshold: '0.7',
                 wires: [['n3']],
                 service: 'n2' },
-            { id: 'n2', type: 'object-detector-service', host: 'https://max-object-detector.max.us-south.containers.appdomain.cloud' },
+            { id: 'n2', type: 'object-detector-service', host: 'https://max-object-detector.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud' },
             { id: 'n3', type: 'helper' }
         ];
         helper.load(node, flow, function () {
