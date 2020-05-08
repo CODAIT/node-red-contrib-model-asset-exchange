@@ -1,15 +1,15 @@
 [
     {
-        "id": "c85d6fc6.073c8",
+        "id": "3ca2d663.52e4ba",
         "type": "tab",
         "label": "Using Multiple Models",
         "disabled": false,
         "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation.\n\nTo adjust the size of the image output in this flow, double-click the **Image output** node. Image width is set to 300px by default."
     },
     {
-        "id": "21299efc.027202",
+        "id": "559c451c.fb49ac",
         "type": "debug",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -22,10 +22,10 @@
         "wires": []
     },
     {
-        "id": "749ca183.2c516",
+        "id": "55269b46.a91634",
         "type": "object-detector",
-        "z": "c85d6fc6.073c8",
-        "service": "94e51296.226d3",
+        "z": "3ca2d663.52e4ba",
+        "service": "79f1e1db.2db3a",
         "method": "predict",
         "passthrough": true,
         "annotated_input": true,
@@ -38,41 +38,41 @@
         "y": 140,
         "wires": [
             [
-                "3c7b9a30.a37726",
-                "982c6b4a.83d268"
+                "48c4608d.dd72b",
+                "a65434b7.b158c8"
             ]
         ]
     },
     {
-        "id": "3f7754d6.450b7c",
+        "id": "c714a58f.95e288",
         "type": "fileinject",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "",
         "x": 140,
         "y": 140,
         "wires": [
             [
-                "749ca183.2c516"
+                "55269b46.a91634"
             ]
         ]
     },
     {
-        "id": "c6d9271a.9f1638",
+        "id": "8812be34.b980e",
         "type": "camera",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "",
         "x": 130,
         "y": 234,
         "wires": [
             [
-                "749ca183.2c516"
+                "55269b46.a91634"
             ]
         ]
     },
     {
-        "id": "58d91743.9557b8",
+        "id": "c5dd9f15.f1687",
         "type": "comment",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "Display bounding boxes on an input image using the object-detector node, then pass the input to the image-caption-generator to display a generated caption.",
         "info": "This flow uses the [object-detector](https://developer.ibm.com/exchanges/models/all/max-object-detector/) and [image-caption-generator](https://developer.ibm.com/exchanges/models/all/max-image-caption-generator/) deep learning models from the Model Asset Exchange to display bounding boxes on an input image, then displays a generated caption. Refer to the model documentation for information about the returned messages.\n\nInstall the following three modules to run this example flow:\n - [node-red-contrib-model-asset-exchange](https://www.npmjs.com/package/node-red-contrib-model-asset-exchange)\n - [node-red-contrib-browser-utils](https://www.npmjs.com/package/node-red-contrib-browser-utils)\n - [node-red-contrib-image-output](https://npmjs.org/package/node-red-contrib-image-output)\n \n> Note: The object-detector and image-caption-generator nodes have been pre-configured to use hosted model evaluation instances. We recommend using your own local or cloud instance for purposes other than evaluation.",
         "x": 560,
@@ -80,19 +80,24 @@
         "wires": []
     },
     {
-        "id": "734d61db.26efc",
+        "id": "cb8ae30c.c03f1",
         "type": "image",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "",
         "width": "300",
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "pass": false,
+        "outputs": 0,
         "x": 774.5,
         "y": 240,
         "wires": []
     },
     {
-        "id": "3c7b9a30.a37726",
+        "id": "48c4608d.dd72b",
         "type": "function",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "Extract Bounding Box Image Data",
         "func": "// if the incoming message contains the annotated image\n// send it to the image output node to display\n\nmsg.payload = msg.annotatedInput;\nif (msg.payload) {\n    return msg;\n}",
         "outputs": 1,
@@ -101,15 +106,15 @@
         "y": 240,
         "wires": [
             [
-                "734d61db.26efc"
+                "cb8ae30c.c03f1"
             ]
         ]
     },
     {
-        "id": "15a109d.d83fdf6",
+        "id": "b53bfc6d.3540b",
         "type": "image-caption-generator",
-        "z": "c85d6fc6.073c8",
-        "service": "82a87cae.a2fec",
+        "z": "3ca2d663.52e4ba",
+        "service": "a245bbce.8b17c8",
         "method": "predict",
         "predict_body": "",
         "predict_bodyType": "str",
@@ -118,14 +123,14 @@
         "y": 140,
         "wires": [
             [
-                "21299efc.027202"
+                "559c451c.fb49ac"
             ]
         ]
     },
     {
-        "id": "982c6b4a.83d268",
+        "id": "a65434b7.b158c8",
         "type": "function",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "Extract Input Image Data",
         "func": "// if the incoming message contains the input image\n// send it to the image-caption-generator node\n// for further processing\n\nmsg.payload = msg.inputData;\nif (msg.payload) {\n    return msg;\n}",
         "outputs": 1,
@@ -134,14 +139,14 @@
         "y": 140,
         "wires": [
             [
-                "15a109d.d83fdf6"
+                "b53bfc6d.3540b"
             ]
         ]
     },
     {
-        "id": "fba399f2.69a038",
+        "id": "2de8be7d.e115b2",
         "type": "comment",
-        "z": "c85d6fc6.073c8",
+        "z": "3ca2d663.52e4ba",
         "name": "To adjust the size of the preview image, double-click the \"Image output\" node",
         "info": "By default, the image width is set to 300px.",
         "x": 310,
@@ -149,14 +154,14 @@
         "wires": []
     },
     {
-        "id": "94e51296.226d3",
+        "id": "79f1e1db.2db3a",
         "type": "object-detector-service",
         "z": "",
         "host": "https://max-object-detector.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud",
         "name": "cloud"
     },
     {
-        "id": "82a87cae.a2fec",
+        "id": "a245bbce.8b17c8",
         "type": "image-caption-generator-service",
         "z": 0,
         "host": "https://max-image-caption-generator.codait-prod-41208c73af8fca213512856c7a09db52-0000.us-east.containers.appdomain.cloud",
